@@ -120,6 +120,11 @@ func convert(data []byte, w io.Writer) {
 		os.Exit(1)
 	}
 
+	if buildKit.LinuxAmd64 == nil {
+		fmt.Println("Error: image does not contain provenance information")
+		os.Exit(5)
+	}
+
 	provV1 := format.ConvertV02ToV1(buildKit.LinuxAmd64.SLSA)
 
 	outData, err := json.MarshalIndent(provV1, "", "  ")
