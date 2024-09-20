@@ -4,8 +4,8 @@ ifeq ($(VERSION),)
 	VERSION = v0.0.0-$(shell git rev-parse --short HEAD)
 endif
 
-GO_TAGS = -tags "netgo,osusergo,static_build"
-LDFLAGS = -ldflags "-extldflags -static -s -w -X github.com/rancher/slsactl/cmd.version=$(VERSION)"
+GO_TAGS = -tags "netgo,osusergo"
+LDFLAGS = -ldflags "-extldflags -s -w -X github.com/rancher/slsactl/cmd.version=$(VERSION)"
 
 .PHONY: build
 build:
