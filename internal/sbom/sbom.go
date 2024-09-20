@@ -3,6 +3,7 @@ package sbom
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -15,6 +16,15 @@ import (
 	"github.com/anchore/syft/syft/format/spdxjson"
 	"github.com/anchore/syft/syft/sbom"
 )
+
+type BuildKitSBOM struct {
+	LinuxAmd64 *archSBOM `json:"linux/amd64,omitempty"`
+	LinuxArm64 *archSBOM `json:"linux/arm64,omitempty"`
+}
+
+type archSBOM struct {
+	SPDX json.RawMessage `json:"SPDX,omitempty"`
+}
 
 func Generate(img, outformat string, writer io.Writer) error {
 	defer cleanup()
@@ -74,5 +84,29 @@ func cleanup() error {
 	for _, d := range m {
 		_ = os.RemoveAll(d)
 	}
+	return nil
+}
+
+func ConvertToCyclonedxJson(reader io.Reader, writer io.Writer) error {
+	s, _, _, err := format.Decode(reader)
+	if err != nil {
+		return fmt.Errorf("failed to decode SPDX JSON SBOM: %w", err)
+	}
+
+	enc, err := cyclonedxjson.NewFormatEncoderWithConfig(cyclonedxjson.DefaultEncoderConfig())
+	if err != nil {
+		return fmt.Errorf("failed to create cyclonedxjson encoder: %w", err)
+	}
+
+	data, err := format.Encode(*s, enc)
+	if err != nil {
+		return fmt.Errorf("failed to encode sbom: %w", err)
+	}
+
+	_, err = io.Copy(writer, bytes.NewReader(data))
+	if err != nil {
+		return fmt.Errorf("failed to copy sbom to writer: %w", err)
+	}
+
 	return nil
 }

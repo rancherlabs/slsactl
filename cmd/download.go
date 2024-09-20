@@ -29,9 +29,9 @@ func downloadCmd(args []string) error {
 		showDownloadUsage()
 	}
 
+	var format string
 	img := f.Arg(f.NArg() - 1)
 	if f.Arg(0) == "provenance" {
-		var format string
 		f.StringVar(&format, "format", "slsav1", "Format used to return the information.")
 
 		err := f.Parse(args[1:])
@@ -46,8 +46,12 @@ func downloadCmd(args []string) error {
 	}
 
 	if f.Arg(0) == "sbom" {
-		var format string
 		f.StringVar(&format, "format", "spdxjson", "Format used to return the information.")
+
+		err := f.Parse(args[1:])
+		if err != nil {
+			return err
+		}
 
 		return sbomCmd(img, format)
 	}
