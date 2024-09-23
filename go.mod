@@ -1,4 +1,4 @@
-module github.com/rancher/slsactl
+module github.com/rancherlabs/slsactl
 
 go 1.22.6
 

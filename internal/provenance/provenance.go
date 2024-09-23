@@ -18,6 +18,7 @@ type SLSAV1Provenance struct {
 	LinuxAmd64 *ArchProvenanceV1 `json:"linux/amd64,omitempty"`
 	LinuxArm64 *ArchProvenanceV1 `json:"linux/arm64,omitempty"`
 }
+
 type ArchProvenanceV1 struct {
 	SLSA v1.ProvenancePredicate `json:"SLSA,omitempty"`
 }

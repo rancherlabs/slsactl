@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/rancher/slsactl/cmd"
+	"github.com/rancherlabs/slsactl/cmd"
 )
 
 func main() {

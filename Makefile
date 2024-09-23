@@ -5,7 +5,7 @@ ifeq ($(VERSION),)
 endif
 
 GO_TAGS = -tags "netgo,osusergo"
-LDFLAGS = -ldflags "-extldflags -s -w -X github.com/rancher/slsactl/cmd.version=$(VERSION)"
+LDFLAGS = -ldflags "-extldflags -s -w -X github.com/rancherlabs/slsactl/cmd.version=$(VERSION)"
 
 .PHONY: build
 build:

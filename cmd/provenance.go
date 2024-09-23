@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/rancher/slsactl/internal/provenance"
+	"github.com/rancherlabs/slsactl/internal/provenance"
 )
 
 func provenanceCmd(img string) error {

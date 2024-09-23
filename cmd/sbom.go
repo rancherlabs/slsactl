@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/rancher/slsactl/internal/sbom"
+	"github.com/rancherlabs/slsactl/internal/sbom"
 )
 
 func sbomCmd(img, outformat string) error {
