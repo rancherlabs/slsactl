@@ -26,12 +26,12 @@ type archSBOM struct {
 	SPDX json.RawMessage `json:"SPDX,omitempty"`
 }
 
-func Generate(img, outformat string, writer io.Writer) error {
-	defer cleanup()
+var createSBOM = defaultCreateSBOM
 
+func defaultCreateSBOM(img string) (*sbom.SBOM, error) {
 	src, err := syft.GetSource(context.Background(), img, nil)
 	if err != nil {
-		return fmt.Errorf("failed to get source: %w", err)
+		return nil, fmt.Errorf("failed to get source: %w", err)
 	}
 
 	cfg := syft.DefaultCreateSBOMConfig().
@@ -43,7 +43,13 @@ func Generate(img, outformat string, writer io.Writer) error {
 				),
 		)
 
-	s, err := syft.CreateSBOM(context.Background(), src, cfg)
+	return syft.CreateSBOM(context.Background(), src, cfg)
+}
+
+func Generate(img, outformat string, writer io.Writer) error {
+	defer cleanup()
+
+	s, err := createSBOM(img)
 	if err != nil {
 		return fmt.Errorf("failed to create SBOM: %w", err)
 	}

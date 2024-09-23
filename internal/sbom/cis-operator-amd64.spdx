@@ -1,0 +1,3599 @@
+{
+      "SPDXID": "SPDXRef-DOCUMENT",
+      "creationInfo": {
+        "created": "2024-09-16T07:18:04Z",
+        "creators": [
+          "Organization: Anchore, Inc",
+          "Tool: syft-v0.105.0",
+          "Tool: buildkit-v0.15.2"
+        ],
+        "licenseListVersion": "3.23"
+      },
+      "dataLicense": "CC0-1.0",
+      "documentNamespace": "https://anchore.com/syft/dir/sbom-62656f38-ea18-49d7-a4c6-a7a358804dac",
+      "files": [
+        {
+          "SPDXID": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "checksums": [
+            {
+              "algorithm": "SHA1",
+              "checksumValue": "0000000000000000000000000000000000000000"
+            }
+          ],
+          "comment": "layerID: sha256:d7795f84b9a7db384bb3455e484dd1647d28031b67642b40c1b7febdd2ec9ff0",
+          "copyrightText": "",
+          "fileName": "/usr/bin/cis-operator",
+          "licenseConcluded": "NOASSERTION"
+        }
+      ],
+      "name": "sbom",
+      "packages": [
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-aquasecurity-kube-bench-fd24d06671f888cd",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "b384464640af60abc19a3e6b146577c52b6c0301578fdbfc63a16a19246abcc1"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:aquasecurity:kube-bench:v0.7.3:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:aquasecurity:kube_bench:v0.7.3:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/aquasecurity/kube-bench@v0.7.3",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/aquasecurity/kube-bench",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.7.3"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-aws-aws-sdk-go-v2-ee427b6631c5a754",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "fc27b838288cdc49295bb63ec549df005a5c854efc2bbfd4834d6c6678bd3e00"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:aws:aws-sdk-go-v2:v1.26.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:aws:aws_sdk_go_v2:v1.26.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/aws/aws-sdk-go-v2@v1.26.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/aws/aws-sdk-go-v2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.26.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-aws-aws-sdk-go-v2-service-securityhub-af542241ab2f72cc",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "48af79532f32c7192482e17e55543d80ccea04a80fe4b0a0236a6ce0c34b009a"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:aws:aws-sdk-go-v2\\/service\\/securityhub:v1.37.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:aws:aws_sdk_go_v2\\/service\\/securityhub:v1.37.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/aws/aws-sdk-go-v2@v1.37.0#service/securityhub",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/aws/aws-sdk-go-v2/service/securityhub",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.37.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-aws-smithy-go-05ba1a0a65165068",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "e126654a532bdfa504a82ed73b24556f6ed731e66e6cd70134dfbd22010f210c"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:aws:smithy-go:v1.20.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:aws:smithy_go:v1.20.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/aws/smithy-go@v1.20.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/aws/smithy-go",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.20.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-beorn7-perks-0f40b67372abc376",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "5656ca2a735f57c6c9cdeaa86b870e2aa3ba6d8af75a0299c4ef19d7afa1b0e3"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:beorn7:perks:v1.0.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/beorn7/perks@v1.0.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/beorn7/perks",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.0.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-blang-semver-a8c9a910e0df23c7",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "7103530a3a75dea2fc282dcd6f1affcb606a6fade85fac1d9e78e925b90ce094"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:blang:semver:v3.5.1\\+incompatible:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/blang/semver@v3.5.1+incompatible",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/blang/semver",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v3.5.1+incompatible"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-cespare-xxhash-v2-f769f6bf46614ac2",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "0c2d82675129e58e24dd943cf7d0e575ea60adac9150613a04167f71df428f8e"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:cespare:xxhash\\/v2:v2.2.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/cespare/xxhash@v2.2.0#v2",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/cespare/xxhash/v2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v2.2.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-cpuguy83-go-md2man-v2-78692f4f785e27af",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "c1f2163fddbb05491625bd8d994fe434360805387fce2517f75fa555f47166ae"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:cpuguy83:go-md2man\\/v2:v2.0.4:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:cpuguy83:go_md2man\\/v2:v2.0.4:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/cpuguy83/go-md2man@v2.0.4#v2",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/cpuguy83/go-md2man/v2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v2.0.4"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-davecgh-go-spew-5f5e86f80e93253f",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "53da8f488d8f216492d55c285d04fd0375b2f4c3375a0bea4b11567a7a8976e3"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:davecgh:go-spew:v1.1.2-0.20180830191138-d8f796af33cc:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:davecgh:go_spew:v1.1.2-0.20180830191138-d8f796af33cc:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/davecgh/go-spew@v1.1.2-0.20180830191138-d8f796af33cc",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/davecgh/go-spew",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.1.2-0.20180830191138-d8f796af33cc"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-emicklei-go-restful-v3-705250cb370f4d5b",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "ac041e307c3573bcd39a7728832cbc56f459c2d926919e05c44466318e2b0fe8"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:emicklei:go-restful\\/v3:v3.11.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:emicklei:go_restful\\/v3:v3.11.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/emicklei/go-restful@v3.11.0#v3",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/emicklei/go-restful/v3",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v3.11.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-evanphx-json-patch-6ceb5f528d2b936d",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "be01a47d3ffd7fccc4eadbd209eef89dfa40543436b46eb2b9d25df0b064b202"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:evanphx:json-patch:v5.7.0\\+incompatible:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:evanphx:json_patch:v5.7.0\\+incompatible:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/evanphx/json-patch@v5.7.0+incompatible",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/evanphx/json-patch",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v5.7.0+incompatible"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-fsnotify-fsnotify-aacef145b4c98eb0",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "f091213c56b95b6594ed87de6733cdab330fe8bc2decbdbbd791a0a349e8b2f0"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:fsnotify:fsnotify:v1.7.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/fsnotify/fsnotify@v1.7.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/fsnotify/fsnotify",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.7.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-ghodss-yaml-a676e949a404c5a0",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "c101ca11a8612fac265ddcf0586d7580854290ebf4e5b34e87e4719f4ca78009"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:ghodss:yaml:v1.0.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/ghodss/yaml@v1.0.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/ghodss/yaml",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.0.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-go-logr-logr-bcd415fcd2e27e1e",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "a4aa2e4f913cc6ef737850b7f495d10ee91be891503d7339a7923dd75f3c5404"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go-logr:logr:v1.4.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go_logr:logr:v1.4.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go:logr:v1.4.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/go-logr/logr@v1.4.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/go-logr/logr",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.4.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-go-openapi-jsonpointer-a4710d547f1e1e30",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "112289754f404917da3cd38f471d76214c80d6f9f747d1a21372980f5e015dd4"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go-openapi:jsonpointer:v0.20.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go_openapi:jsonpointer:v0.20.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go:jsonpointer:v0.20.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/go-openapi/jsonpointer@v0.20.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/go-openapi/jsonpointer",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.20.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-go-openapi-jsonreference-7ebad6796b0c8a42",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "dec56388aebafae5caffaa10f3181c44a705810e4a5dad8abe7251ba6a4c19b1"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go-openapi:jsonreference:v0.20.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go_openapi:jsonreference:v0.20.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go:jsonreference:v0.20.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/go-openapi/jsonreference@v0.20.2",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/go-openapi/jsonreference",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.20.2"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-go-openapi-swag-d8a9900d9dd3c6c6",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "40b3333499cc18f44d0c26f24a5723d71d35b7353cffd2d34cbf616596688015"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go-openapi:swag:v0.22.4:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go_openapi:swag:v0.22.4:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:go:swag:v0.22.4:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/go-openapi/swag@v0.22.4",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/go-openapi/swag",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.22.4"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-gogo-protobuf-f2f0e52697bba78c",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "3afd5cbdce7c505ddbe578c19d9bfbfa8a5c4dc40565e6d88d6ce2df8bdd9b84"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:gogo:protobuf:v1.3.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/gogo/protobuf@v1.3.2",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/gogo/protobuf",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.3.2"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-golang-glog-bdf2a1f3cbb4f415",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "b827669e66adaca0a030194ce2b32e25958e90f0ea75b64f9eb3170d8e2023af"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:glog:v1.2.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/golang/glog@v1.2.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/golang/glog",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.2.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-golang-protobuf-c24025bf3cd96c45",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "8bb7892fca994e94845ce3d3c4d2a1012629327fbc7b943a01d9dd55ad5d59e9"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:protobuf:v1.5.4:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/golang/protobuf@v1.5.4",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/golang/protobuf",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.5.4"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-google-gnostic-models-547cf7a959a5dc11",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "ca8fc00407cce48311b12d559d78d306f51beb5b45207a3386562f4601ab7bd2"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:google:gnostic-models:v0.6.8:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:google:gnostic_models:v0.6.8:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/google/gnostic-models@v0.6.8",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/google/gnostic-models",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.6.8"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-google-go-cmp-81a6ce6a8fd5dcc4",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "a1fca1c6f5dc66132c539ba56c588b2a5fd7045a84d464aaedab6ef2d0264d12"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:google:go-cmp:v0.6.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:google:go_cmp:v0.6.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/google/go-cmp@v0.6.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/google/go-cmp",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.6.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-google-gofuzz-fd52556023fe7f3d",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "c51cb803e46165a88a8c9d5b3dfc10f2c79d080f984b661c0875ba79cec9322d"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:google:gofuzz:v1.2.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/google/gofuzz@v1.2.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/google/gofuzz",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.2.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-google-uuid-1915e8ede55221dc",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "348bda24330eb231c0f27d630212d2833ac0cf2d4782bfa136b6f9edefbde05d"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:google:uuid:v1.6.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/google/uuid@v1.6.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/google/uuid",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.6.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-hashicorp-hcl-0fd28acce821b508",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "d009e5ce3a62e2f11ab1378d167da62c98134b0b74fbab1fb224c6f2a7161b1e"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:hashicorp:hcl:v1.0.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/hashicorp/hcl@v1.0.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/hashicorp/hcl",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.0.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-imdario-mergo-5d7ae6fa3f299429",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "6fa47606c9536c8113a002ca3fb2f152f8a34ec348f5301ef34a4b58dda0fc75"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:imdario:mergo:v0.3.12:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/imdario/mergo@v0.3.12",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/imdario/mergo",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.3.12"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-josharian-intern-75b1d43d6fbe68b3",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "be54b8cf9e2849d8e6d1b823462808f86d47a45fad23ef6b1392cbcce83c1e66"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:josharian:intern:v1.0.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/josharian/intern@v1.0.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/josharian/intern",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.0.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-json-iterator-go-09bb85e73b789602",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "3d5f29788e1ad32b27733ae0f8bb71ca40fc2df298f4c2fabb68e7c5a127ae73"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:json-iterator:go:v1.1.12:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:json_iterator:go:v1.1.12:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:json:go:v1.1.12:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/json-iterator/go@v1.1.12",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/json-iterator/go",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.1.12"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-magiconair-properties-9e2343c014950489",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "21e4176408907292fd9a07007b536ee9c5fd2cbc3a1311072a337455076f3c36"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:magiconair:properties:v1.8.7:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/magiconair/properties@v1.8.7",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/magiconair/properties",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.8.7"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-mailru-easyjson-08d9eec22f7c2dbe",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "506600bcac5edec06c103ccef1979639294841f5859716f32d97bb87015446bd"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:mailru:easyjson:v0.7.7:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/mailru/easyjson@v0.7.7",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/mailru/easyjson",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.7.7"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-mitchellh-mapstructure-3bb52561b41600a1",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "8de32c648604ff4f6c58b6b3e373cbec6cba46e3230f6789572b9a73967685d6"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:mitchellh:mapstructure:v1.5.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/mitchellh/mapstructure@v1.5.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/mitchellh/mapstructure",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.5.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-modern-go-concurrent-280e19617c7ad75a",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "4d12da67d703ff0f0f561f779ec3d76b556b43a8e5c0be6837c975e1095c35f8"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:modern-go:concurrent:v0.0.0-20180306012644-bacd9c7ef1dd:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:modern_go:concurrent:v0.0.0-20180306012644-bacd9c7ef1dd:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:modern:concurrent:v0.0.0-20180306012644-bacd9c7ef1dd:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/modern-go/concurrent@v0.0.0-20180306012644-bacd9c7ef1dd",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/modern-go/concurrent",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.0.0-20180306012644-bacd9c7ef1dd"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-modern-go-reflect2-28dbd13b578a6921",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "c416a0a0bb45b3de02067b7196e29e696813329bcbc42e2eaf79cc682f46cf43"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:modern-go:reflect2:v1.0.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:modern_go:reflect2:v1.0.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:modern:reflect2:v1.0.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/modern-go/reflect2@v1.0.2",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/modern-go/reflect2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.0.2"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-munnerz-goautoneg-dad6665c04e3519c",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "0b7c3d3ea208d35fceab57359d4026f3c30e1dc402f65e6622548c02964cac70"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:munnerz:goautoneg:v0.0.0-20191010083416-a7dc8b61c822:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/munnerz/goautoneg@v0.0.0-20191010083416-a7dc8b61c822",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/munnerz/goautoneg",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.0.0-20191010083416-a7dc8b61c822"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-onsi-ginkgo-580e5e65bcee0dae",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "f318b445351fe7d48e49f12d64cbf04ef5d83331b8815db75d51ce6625cdb671"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:onsi:ginkgo:v1.16.5:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/onsi/ginkgo@v1.16.5",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/onsi/ginkgo",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.16.5"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-pelletier-go-toml-v2-822b84538aa3c156",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "698522753ee4ef73dc97d9dbda049cbbb352aca0921c80c4f3d6f7fba5aaf8b3"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:pelletier:go-toml\\/v2:v2.2.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:pelletier:go_toml\\/v2:v2.2.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/pelletier/go-toml@v2.2.2#v2",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/pelletier/go-toml/v2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v2.2.2"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-pkg-errors-b0aa815f8aacacf9",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "14404bc75cd2db5e28c298f2eeab017a2c5b51192e850030acae54c0b193c2de"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:pkg:errors:v0.9.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/pkg/errors@v0.9.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/pkg/errors",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.9.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-prometheus-operator-prometheus-operator-pkg-apis-monitoring-515ee07096f4736e",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "1d974f466d00a563e0ec5e2c1e06ea5a42fe75d59fa5366ca299b91ccff6838a"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus-operator:prometheus-operator\\/pkg\\/apis\\/monitoring:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus-operator:prometheus_operator\\/pkg\\/apis\\/monitoring:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus_operator:prometheus-operator\\/pkg\\/apis\\/monitoring:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus_operator:prometheus_operator\\/pkg\\/apis\\/monitoring:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:prometheus-operator\\/pkg\\/apis\\/monitoring:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:prometheus_operator\\/pkg\\/apis\\/monitoring:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/prometheus-operator/prometheus-operator@v0.71.2#pkg/apis/monitoring",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.71.2"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-prometheus-operator-prometheus-operator-pkg-client-63465c6eab5b8b66",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "edec97f0cca97b08d28623858fab0e5fe01df84254210e6acddbccfd4efa707b"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus-operator:prometheus-operator\\/pkg\\/client:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus-operator:prometheus_operator\\/pkg\\/client:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus_operator:prometheus-operator\\/pkg\\/client:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus_operator:prometheus_operator\\/pkg\\/client:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:prometheus-operator\\/pkg\\/client:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:prometheus_operator\\/pkg\\/client:v0.71.2:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/prometheus-operator/prometheus-operator@v0.71.2#pkg/client",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/prometheus-operator/prometheus-operator/pkg/client",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.71.2"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-prometheus-client-golang-03115436e34e0e06",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "c195890f02be35a99e449b8f1838659c5831f1ef073775c741e2da60914904e1"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:client-golang:v1.19.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:client_golang:v1.19.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/prometheus/client_golang@v1.19.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/prometheus/client_golang",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.19.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-prometheus-client-model-cb46c1a1e2fba42a",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "550c3585fbcfbe4dd4bfa41fdbd56b3c5df6241eabb5b808e9c60f6108cbd10c"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:client-model:v0.5.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:client_model:v0.5.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/prometheus/client_model@v0.5.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/prometheus/client_model",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.5.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-prometheus-common-3882a956eb9a9430",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "40ef14d8274ecd29f5041b265c95ddb9a696f9d63fe502e37c1f2cbed4b328a1"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:common:v0.48.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/prometheus/common@v0.48.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/prometheus/common",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.48.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-prometheus-procfs-ec80727817ee8327",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "8e5b93a529e0ed5f616343b647d0f3cc91d86f6c542e4f554d1d55d51fe4e81a"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:prometheus:procfs:v0.12.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/prometheus/procfs@v0.12.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/prometheus/procfs",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.12.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-rancher-cis-operator-f96b6431c2a1d7b7",
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:rancher:cis-operator:\\(devel\\):*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:rancher:cis_operator:\\(devel\\):*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/rancher/cis-operator@(devel)",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/rancher/cis-operator",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "(devel)"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-rancher-kubernetes-provider-detector-af3a911978d2feb9",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "856440b16b8939e9b31a3cff5eb6d394ced099f3b839e76f144dd0c17887eb42"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:rancher:kubernetes-provider-detector:v0.1.5:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:rancher:kubernetes_provider_detector:v0.1.5:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/rancher/kubernetes-provider-detector@v0.1.5",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/rancher/kubernetes-provider-detector",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.1.5"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-rancher-lasso-390ff28102573b28",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "81b57ba8b39c120c9381ea76a1c97c14585f18e50c42ebdf579388204347593e"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:rancher:lasso:v0.0.0-20240828170735-d79536cac289:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/rancher/lasso@v0.0.0-20240828170735-d79536cac289",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/rancher/lasso",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.0.0-20240828170735-d79536cac289"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-rancher-security-scan-02a3059d25577b02",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "79f14e2a04e052d00ddb3463aeb792a324f0e966be97e41ba40a575c483d8a49"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:rancher:security-scan:v0.2.16:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:rancher:security_scan:v0.2.16:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/rancher/security-scan@v0.2.16",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/rancher/security-scan",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.2.16"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-rancher-wrangler-7a87b773233d79cd",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "c26a94c2a73633b0037d79c10894c5913079651116a43efcae764cce6c7032f3"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:rancher:wrangler:v1.1.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/rancher/wrangler@v1.1.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/rancher/wrangler",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.1.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-robfig-cron-bb26e6b980796d7b",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "66349c5efbf1790eb70dbcb1cbbe858f7013dd4b7468ab32776fed9770d332e4"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:robfig:cron:v1.2.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/robfig/cron@v1.2.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/robfig/cron",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.2.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-russross-blackfriday-v2-481007f6fca68303",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "248387e79ff4716c8eba296bf7faa5ae6d0149795daa7ab032c7f7e4b77aee69"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:russross:blackfriday\\/v2:v2.1.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/russross/blackfriday@v2.1.0#v2",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/russross/blackfriday/v2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v2.1.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-sagikazarmark-slog-shim-3834ba31f8059c0d",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "7620c19d434af4dff7e783e0af1332c179c0c04af541970eafa82da3eba08d81"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:sagikazarmark:slog-shim:v0.1.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:sagikazarmark:slog_shim:v0.1.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/sagikazarmark/slog-shim@v0.1.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/sagikazarmark/slog-shim",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.1.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-sirupsen-logrus-0c49667e014413a7",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "76e794409d42daaf6813717bc2f992180695b539948b345ebba7e337cbaacdb4"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:sirupsen:logrus:v1.9.3:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/sirupsen/logrus@v1.9.3",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/sirupsen/logrus",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.9.3"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-spf13-afero-48a68dbca4160cd0",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "58940a86da5d9b7bf6233a86f1532aaebe917f7518a44176dfd272f7035ea4cf"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:spf13:afero:v1.11.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/spf13/afero@v1.11.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/spf13/afero",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.11.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-spf13-cast-886cbcc94f89432a",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "1848931c42c5faf691e5d873dd5a997c54b366361b81e283a41c50552e06609d"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:spf13:cast:v1.6.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/spf13/cast@v1.6.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/spf13/cast",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.6.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-spf13-pflag-03a0c68bfe9cb0f5",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "8b2f951543823f56bef3216da3f76b836089e6ed3246807b7d9c370cabff2570"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:spf13:pflag:v1.0.5:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/spf13/pflag@v1.0.5",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/spf13/pflag",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.0.5"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-spf13-viper-89e11a5eb82b99be",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "456ab94848edf28db94913b2377cf63ab0c1f65ed13ddde5c13594f0470475c2"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:spf13:viper:v1.19.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/spf13/viper@v1.19.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/spf13/viper",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.19.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-subosito-gotenv-773794ad4b31aa59",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "f4d9530dcd454ece2abb40c3abb004b533cdc3a4959bbb8132c50252300121ff"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:subosito:gotenv:v1.6.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/subosito/gotenv@v1.6.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/subosito/gotenv",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.6.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-github.com-urfave-cli-f5b5f2f957e6c16b",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "9eeaadfa9742fcaaacc102a1113263a3ba6f9ff938c4c531816ea5888ed7a673"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:urfave:cli:v1.22.15:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/github.com/urfave/cli@v1.22.15",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "github.com/urfave/cli",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.22.15"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-golang.org-x-crypto-x509roots-fallback-9b12e10240ef82f6",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "c10ef97429959f9131af2b885336e2d8c0b5ff5d1f50d20bd453fdd7caf88f1f"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:x\\/crypto\\/x509roots\\/fallback:v0.0.0-20231030152948-74c2ba9521f1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/golang.org/x/crypto@v0.0.0-20231030152948-74c2ba9521f1#x509roots/fallback",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "golang.org/x/crypto/x509roots/fallback",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.0.0-20231030152948-74c2ba9521f1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-golang.org-x-net-4972dd79328444f1",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "ec4609f77459f6f61264021bdb1de59eebea3b9ce77a80fa22f5a3ba17f18d3b"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:x\\/net:v0.23.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/golang.org/x/net@v0.23.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "golang.org/x/net",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.23.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-golang.org-x-oauth2-a1410da38065f8d3",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "d3daa7b88020cddc755e996a26f5ba090a8c0ad199ca4656717ccf30f52eb2f2"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:x\\/oauth2:v0.18.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/golang.org/x/oauth2@v0.18.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "golang.org/x/oauth2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.18.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-golang.org-x-sync-5afe4905e3a834ba",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "e4131e50367bbe45c67c4af5c7d0786d17131f8969913929761d13fc9faa8db4"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:x\\/sync:v0.6.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/golang.org/x/sync@v0.6.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "golang.org/x/sync",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.6.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-golang.org-x-sys-37f4ca06abbeea48",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "ab97f5447da38a0275328016a76293a77826e730061544daad0679537f3afb8a"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:x\\/sys:v0.19.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/golang.org/x/sys@v0.19.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "golang.org/x/sys",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.19.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-golang.org-x-term-25aedc08ffa02771",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "15c1e36570ccc48f263379f0857f4794aa29e02d1842f09509dc18976c0eb44f"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:x\\/term:v0.18.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/golang.org/x/term@v0.18.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "golang.org/x/term",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.18.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-golang.org-x-text-d01b6f53dae33b5d",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "49c5f9c357936b742a4fca22ebece23fb7535754b6f802d4d1b23ed335ca5a24"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:x\\/text:v0.14.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/golang.org/x/text@v0.14.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "golang.org/x/text",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.14.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-golang.org-x-time-30f267cad74061a4",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "a3b72acba6a62bfe7661c00a20f94cddaf85a63df9cef463d933fe7b5c4549f9"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:x\\/time:v0.5.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/golang.org/x/time@v0.5.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "golang.org/x/time",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.5.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-google.golang.org-protobuf-d263e3240eee4750",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "b8d3b6aec00836afc9945a5275810a219d2e283fd1f5ca5dbf44feca81b01a62"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:google:protobuf:v1.33.0:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/google.golang.org/protobuf@v1.33.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "google.golang.org/protobuf",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.33.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-gopkg.in-inf.v0-9a42357419b30e00",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "ef73390a86728b764b30ec83950874df50b1e8df4d0c9d95bdf97be840c08037"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/gopkg.in/inf.v0@v0.9.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "gopkg.in/inf.v0",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.9.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-gopkg.in-ini.v1-57261b23b9a2cd39",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "0e09f1fbafa77c4f887f38d410848d7b274f261f405cd36c59b18ff4acc2b0e0"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/gopkg.in/ini.v1@v1.67.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "gopkg.in/ini.v1",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.67.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-gopkg.in-yaml.v2-87a67dd39046b067",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "0fcc60c04098ec262fc7e6369f8b01cfddc99fd251bf1762cb2a3c0937ee29a6"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/gopkg.in/yaml.v2@v2.4.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "gopkg.in/yaml.v2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v2.4.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-gopkg.in-yaml.v3-fe33dfa8aaf1e4d8",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "7f1566fc6cc0cc45aa2c7baf72d23dd4a4bd8613669963a85aed174d8252ec20"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/gopkg.in/yaml.v3@v3.0.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "gopkg.in/yaml.v3",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v3.0.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-k8s.io-api-549cb9bf0ff1bf4d",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "b225a146aedc363cb6887b2c381f52086342976b29885d5d3b774006a67c9e20"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/k8s.io/api@v0.30.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "k8s.io/api",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.30.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-k8s.io-apiextensions-apiserver-70130f752cdc60ba",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "019a4a63fef043c9fe6580ed3476c02416fe3780175c9bf2671eb0c3ac8026f5"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/k8s.io/apiextensions-apiserver@v0.28.4",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "k8s.io/apiextensions-apiserver",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.28.4"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-k8s.io-apimachinery-9e6cb63f1a517700",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "ab154fb320cce574bde8d221f4e8fa2dabe854561f7ff3e89fd7197832241c70"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/k8s.io/apimachinery@v0.30.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "k8s.io/apimachinery",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.30.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-k8s.io-client-go-df8c1e6887531ad9",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "b01d4018696163fa3b282c82110d1b3d6cd80cbd29c0e64ee2f02d4d287f8094"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/k8s.io/client-go@v0.30.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "k8s.io/client-go",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.30.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-k8s.io-klog-v2-54c869f39cbfeb7b",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "41753a70f10e22c9531af65a5ef15688ff552b279eb77b1ac334cebdd5dbe15c"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:klog:v2:v2.120.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/k8s.io/klog/v2@v2.120.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "k8s.io/klog/v2",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v2.120.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-k8s.io-kube-openapi-32a0c24a611237ec",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "059aa57c896ae586d1305928ebf3ccec58d9a546f8e566a596082ead884a19a8"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/k8s.io/kube-openapi@v0.0.0-20240228011516-70dd3763d340",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "k8s.io/kube-openapi",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.0.0-20240228011516-70dd3763d340"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-k8s.io-utils-ac50f575d83f7ec5",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "8e0193945627845d4f335031fe5025c543c4f8a7c22171da6ad86f260d42dda9"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/k8s.io/utils@v0.0.0-20240502163921-fe8a2dddb1d0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "k8s.io/utils",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.0.0-20240502163921-fe8a2dddb1d0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-sigs.k8s.io-controller-runtime-95e3bf28a35dbd15",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "d93bafba89267d7bc351a992c754ae00e3b7793cb27bee3b9890a28301bad9ce"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/sigs.k8s.io/controller-runtime@v0.16.3",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "sigs.k8s.io/controller-runtime",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.16.3"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-sigs.k8s.io-json-6344af23931aebfb",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "1033c15c202ca72195e23425a594ae74f78c9abd5b34979f9eea8bb1102c1d9a"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/sigs.k8s.io/json@v0.0.0-20221116044647-bc3834ca7abd",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "sigs.k8s.io/json",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v0.0.0-20221116044647-bc3834ca7abd"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-sigs.k8s.io-structured-merge-diff-v4-6b1a7c7570513a43",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "d79d0bfb4becffc0c0efc875bb4da8a16d7f7c5abf2f0afeb068aa973bebb6ae"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:structured-merge-diff:v4:v4.4.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:structured_merge_diff:v4:v4.4.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:structured-merge:v4:v4.4.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:structured_merge:v4:v4.4.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:structured:v4:v4.4.1:*:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/sigs.k8s.io/structured-merge-diff/v4@v4.4.1",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "sigs.k8s.io/structured-merge-diff/v4",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v4.4.1"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-sigs.k8s.io-yaml-f3ebcac0cff695d0",
+          "checksums": [
+            {
+              "algorithm": "SHA256",
+              "checksumValue": "324d7009cda0cbf1744c71f44c0a75418c89373466d8a08bcb7a390125d52391"
+            }
+          ],
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/sigs.k8s.io/yaml@v1.4.0",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "NOASSERTION",
+          "name": "sigs.k8s.io/yaml",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "v1.4.0"
+        },
+        {
+          "SPDXID": "SPDXRef-Package-go-module-stdlib-9f2a49d8273c0896",
+          "copyrightText": "NOASSERTION",
+          "downloadLocation": "NOASSERTION",
+          "externalRefs": [
+            {
+              "referenceCategory": "SECURITY",
+              "referenceLocator": "cpe:2.3:a:golang:go:1.22.6:-:*:*:*:*:*:*",
+              "referenceType": "cpe23Type"
+            },
+            {
+              "referenceCategory": "PACKAGE-MANAGER",
+              "referenceLocator": "pkg:golang/stdlib@1.22.6",
+              "referenceType": "purl"
+            }
+          ],
+          "filesAnalyzed": false,
+          "licenseConcluded": "NOASSERTION",
+          "licenseDeclared": "BSD-3-Clause",
+          "name": "stdlib",
+          "sourceInfo": "acquired package info from go module information: /usr/bin/cis-operator",
+          "supplier": "NOASSERTION",
+          "versionInfo": "go1.22.6"
+        },
+        {
+          "SPDXID": "SPDXRef-DocumentRoot-Directory-sbom",
+          "downloadLocation": "NOASSERTION",
+          "filesAnalyzed": false,
+          "name": "sbom",
+          "primaryPackagePurpose": "FILE",
+          "supplier": "NOASSERTION"
+        }
+      ],
+      "relationships": [
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-rancher-security-scan-02a3059d25577b02"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-prometheus-client-golang-03115436e34e0e06"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-spf13-pflag-03a0c68bfe9cb0f5"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-aws-smithy-go-05ba1a0a65165068"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-mailru-easyjson-08d9eec22f7c2dbe"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-json-iterator-go-09bb85e73b789602"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-sirupsen-logrus-0c49667e014413a7"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-beorn7-perks-0f40b67372abc376"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-hashicorp-hcl-0fd28acce821b508"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-google-uuid-1915e8ede55221dc"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-golang.org-x-term-25aedc08ffa02771"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-modern-go-concurrent-280e19617c7ad75a"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-modern-go-reflect2-28dbd13b578a6921"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-golang.org-x-time-30f267cad74061a4"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-k8s.io-kube-openapi-32a0c24a611237ec"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-golang.org-x-sys-37f4ca06abbeea48"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-sagikazarmark-slog-shim-3834ba31f8059c0d"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-prometheus-common-3882a956eb9a9430"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-rancher-lasso-390ff28102573b28"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-mitchellh-mapstructure-3bb52561b41600a1"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-russross-blackfriday-v2-481007f6fca68303"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-spf13-afero-48a68dbca4160cd0"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-golang.org-x-net-4972dd79328444f1"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-prometheus-operator-prometheus-operator-pkg-apis-monitoring-515ee07096f4736e"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-google-gnostic-models-547cf7a959a5dc11"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-k8s.io-api-549cb9bf0ff1bf4d"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-k8s.io-klog-v2-54c869f39cbfeb7b"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-gopkg.in-ini.v1-57261b23b9a2cd39"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-onsi-ginkgo-580e5e65bcee0dae"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-golang.org-x-sync-5afe4905e3a834ba"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-imdario-mergo-5d7ae6fa3f299429"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-davecgh-go-spew-5f5e86f80e93253f"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-sigs.k8s.io-json-6344af23931aebfb"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-prometheus-operator-prometheus-operator-pkg-client-63465c6eab5b8b66"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-sigs.k8s.io-structured-merge-diff-v4-6b1a7c7570513a43"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-evanphx-json-patch-6ceb5f528d2b936d"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-k8s.io-apiextensions-apiserver-70130f752cdc60ba"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-emicklei-go-restful-v3-705250cb370f4d5b"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-josharian-intern-75b1d43d6fbe68b3"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-subosito-gotenv-773794ad4b31aa59"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-cpuguy83-go-md2man-v2-78692f4f785e27af"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-rancher-wrangler-7a87b773233d79cd"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-go-openapi-jsonreference-7ebad6796b0c8a42"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-google-go-cmp-81a6ce6a8fd5dcc4"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-pelletier-go-toml-v2-822b84538aa3c156"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-gopkg.in-yaml.v2-87a67dd39046b067"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-spf13-cast-886cbcc94f89432a"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-spf13-viper-89e11a5eb82b99be"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-sigs.k8s.io-controller-runtime-95e3bf28a35dbd15"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-gopkg.in-inf.v0-9a42357419b30e00"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-golang.org-x-crypto-x509roots-fallback-9b12e10240ef82f6"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-magiconair-properties-9e2343c014950489"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-k8s.io-apimachinery-9e6cb63f1a517700"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-stdlib-9f2a49d8273c0896"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-golang.org-x-oauth2-a1410da38065f8d3"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-go-openapi-jsonpointer-a4710d547f1e1e30"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-ghodss-yaml-a676e949a404c5a0"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-blang-semver-a8c9a910e0df23c7"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-fsnotify-fsnotify-aacef145b4c98eb0"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-k8s.io-utils-ac50f575d83f7ec5"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-rancher-kubernetes-provider-detector-af3a911978d2feb9"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-aws-aws-sdk-go-v2-service-securityhub-af542241ab2f72cc"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-pkg-errors-b0aa815f8aacacf9"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-robfig-cron-bb26e6b980796d7b"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-go-logr-logr-bcd415fcd2e27e1e"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-golang-glog-bdf2a1f3cbb4f415"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-golang-protobuf-c24025bf3cd96c45"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-prometheus-client-model-cb46c1a1e2fba42a"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-golang.org-x-text-d01b6f53dae33b5d"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-google.golang.org-protobuf-d263e3240eee4750"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-go-openapi-swag-d8a9900d9dd3c6c6"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-munnerz-goautoneg-dad6665c04e3519c"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-k8s.io-client-go-df8c1e6887531ad9"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-prometheus-procfs-ec80727817ee8327"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-aws-aws-sdk-go-v2-ee427b6631c5a754"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-gogo-protobuf-f2f0e52697bba78c"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-sigs.k8s.io-yaml-f3ebcac0cff695d0"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-urfave-cli-f5b5f2f957e6c16b"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-cespare-xxhash-v2-f769f6bf46614ac2"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-rancher-cis-operator-f96b6431c2a1d7b7"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-aquasecurity-kube-bench-fd24d06671f888cd"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-github.com-google-gofuzz-fd52556023fe7f3d"
+        },
+        {
+          "comment": "evident-by: indicates the package's existence is evident by the given file",
+          "relatedSpdxElement": "SPDXRef-File-usr-bin-cis-operator-e121ff92fdbce7b7",
+          "relationshipType": "OTHER",
+          "spdxElementId": "SPDXRef-Package-go-module-gopkg.in-yaml.v3-fe33dfa8aaf1e4d8"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-aquasecurity-kube-bench-fd24d06671f888cd",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-aws-aws-sdk-go-v2-ee427b6631c5a754",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-aws-aws-sdk-go-v2-service-securityhub-af542241ab2f72cc",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-aws-smithy-go-05ba1a0a65165068",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-beorn7-perks-0f40b67372abc376",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-blang-semver-a8c9a910e0df23c7",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-cespare-xxhash-v2-f769f6bf46614ac2",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-cpuguy83-go-md2man-v2-78692f4f785e27af",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-davecgh-go-spew-5f5e86f80e93253f",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-emicklei-go-restful-v3-705250cb370f4d5b",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-evanphx-json-patch-6ceb5f528d2b936d",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-fsnotify-fsnotify-aacef145b4c98eb0",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-ghodss-yaml-a676e949a404c5a0",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-go-logr-logr-bcd415fcd2e27e1e",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-go-openapi-jsonpointer-a4710d547f1e1e30",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-go-openapi-jsonreference-7ebad6796b0c8a42",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-go-openapi-swag-d8a9900d9dd3c6c6",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-gogo-protobuf-f2f0e52697bba78c",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-golang-glog-bdf2a1f3cbb4f415",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-golang-protobuf-c24025bf3cd96c45",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-google-gnostic-models-547cf7a959a5dc11",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-google-go-cmp-81a6ce6a8fd5dcc4",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-google-gofuzz-fd52556023fe7f3d",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-google-uuid-1915e8ede55221dc",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-hashicorp-hcl-0fd28acce821b508",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-imdario-mergo-5d7ae6fa3f299429",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-josharian-intern-75b1d43d6fbe68b3",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-json-iterator-go-09bb85e73b789602",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-magiconair-properties-9e2343c014950489",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-mailru-easyjson-08d9eec22f7c2dbe",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-mitchellh-mapstructure-3bb52561b41600a1",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-modern-go-concurrent-280e19617c7ad75a",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-modern-go-reflect2-28dbd13b578a6921",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-munnerz-goautoneg-dad6665c04e3519c",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-onsi-ginkgo-580e5e65bcee0dae",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-pelletier-go-toml-v2-822b84538aa3c156",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-pkg-errors-b0aa815f8aacacf9",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-prometheus-operator-prometheus-operator-pkg-apis-monitoring-515ee07096f4736e",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-prometheus-operator-prometheus-operator-pkg-client-63465c6eab5b8b66",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-prometheus-client-golang-03115436e34e0e06",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-prometheus-client-model-cb46c1a1e2fba42a",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-prometheus-common-3882a956eb9a9430",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-prometheus-procfs-ec80727817ee8327",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-rancher-cis-operator-f96b6431c2a1d7b7",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-rancher-kubernetes-provider-detector-af3a911978d2feb9",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-rancher-lasso-390ff28102573b28",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-rancher-security-scan-02a3059d25577b02",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-rancher-wrangler-7a87b773233d79cd",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-robfig-cron-bb26e6b980796d7b",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-russross-blackfriday-v2-481007f6fca68303",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-sagikazarmark-slog-shim-3834ba31f8059c0d",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-sirupsen-logrus-0c49667e014413a7",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-spf13-afero-48a68dbca4160cd0",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-spf13-cast-886cbcc94f89432a",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-spf13-pflag-03a0c68bfe9cb0f5",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-spf13-viper-89e11a5eb82b99be",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-subosito-gotenv-773794ad4b31aa59",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-github.com-urfave-cli-f5b5f2f957e6c16b",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-golang.org-x-crypto-x509roots-fallback-9b12e10240ef82f6",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-golang.org-x-net-4972dd79328444f1",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-golang.org-x-oauth2-a1410da38065f8d3",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-golang.org-x-sync-5afe4905e3a834ba",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-golang.org-x-sys-37f4ca06abbeea48",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-golang.org-x-term-25aedc08ffa02771",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-golang.org-x-text-d01b6f53dae33b5d",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-golang.org-x-time-30f267cad74061a4",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-google.golang.org-protobuf-d263e3240eee4750",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-gopkg.in-inf.v0-9a42357419b30e00",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-gopkg.in-ini.v1-57261b23b9a2cd39",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-gopkg.in-yaml.v2-87a67dd39046b067",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-gopkg.in-yaml.v3-fe33dfa8aaf1e4d8",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-k8s.io-api-549cb9bf0ff1bf4d",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-k8s.io-apiextensions-apiserver-70130f752cdc60ba",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-k8s.io-apimachinery-9e6cb63f1a517700",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-k8s.io-client-go-df8c1e6887531ad9",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-k8s.io-klog-v2-54c869f39cbfeb7b",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-k8s.io-kube-openapi-32a0c24a611237ec",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-k8s.io-utils-ac50f575d83f7ec5",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-sigs.k8s.io-controller-runtime-95e3bf28a35dbd15",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-sigs.k8s.io-json-6344af23931aebfb",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-sigs.k8s.io-structured-merge-diff-v4-6b1a7c7570513a43",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-sigs.k8s.io-yaml-f3ebcac0cff695d0",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-Package-go-module-stdlib-9f2a49d8273c0896",
+          "relationshipType": "CONTAINS",
+          "spdxElementId": "SPDXRef-DocumentRoot-Directory-sbom"
+        },
+        {
+          "relatedSpdxElement": "SPDXRef-DocumentRoot-Directory-sbom",
+          "relationshipType": "DESCRIBES",
+          "spdxElementId": "SPDXRef-DOCUMENT"
+        }
+      ],
+      "spdxVersion": "SPDX-2.3"
+    }

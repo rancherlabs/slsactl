@@ -1,0 +1,40 @@
+{
+  "buildDefinition": {
+    "buildType": "https://mobyproject.org/buildkit@v1",
+    "externalParameters": {
+      "args": {
+        "build-arg:KUBECTL_SUM_amd64": "aff42d3167685e4d8e86fda0ad9c6ce6ec6c047bc24d608041d54717a18192ba",
+        "build-arg:KUBECTL_SUM_arm64": "13d547495bdea49b223fe06bffb6d2bef96436634847f759107655aa80fc990e",
+        "build-arg:KUBECTL_VERSION": "1.28.7",
+        "build-arg:KUBE_BENCH_SUM_amd64": "8e8f083819678956b6c36623a6a0638741340397ffc209cd71a6b4907f2bb05e",
+        "build-arg:KUBE_BENCH_SUM_arm64": "82256042da9d78bb1cf1726dc8c108459c3cdc34df6298349113f551bde0feff",
+        "build-arg:KUBE_BENCH_VERSION": "v0.8.0",
+        "build-arg:SONOBUOY_SUM_amd64": "0fd3ae735ee25b6b37b713aadd4a836b53aa2b82c8e6ecad0c2359de046f8212",
+        "build-arg:SONOBUOY_SUM_arm64": "b6665011ae337e51cd6032ebfc37a6818dc8481c6cf6f2692e109a08be908e49",
+        "build-arg:SONOBUOY_VERSION": "v0.57.1",
+        "build-arg:VERSION": "v0.0.6"
+      },
+      "frontend": "dockerfile.v0",
+      "locals": [
+        {
+          "name": "context"
+        },
+        {
+          "name": "dockerfile"
+        }
+      ]
+    },
+    "internalParameters": {
+      "platform": "linux/amd64"
+    }
+  },
+  "runDetails": {
+    "builder": {
+      "id": ""
+    },
+    "metadata": {
+      "startedOn": "2024-07-11T14:49:18.126688014Z",
+      "finishedOn": "2024-07-11T14:51:00.499751748Z"
+    }
+  }
+}
