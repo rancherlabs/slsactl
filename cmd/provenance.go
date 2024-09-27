@@ -10,19 +10,22 @@ import (
 	"github.com/rancherlabs/slsactl/internal/provenance"
 )
 
-func provenanceCmd(img string) error {
-	return writeContent(img, "{{json .Provenance}}", os.Stdout)
-}
+func provenanceCmd(img, format string) error {
+	switch format {
+	case "slsav0.2":
+		return writeContent(img, "{{json .Provenance}}", os.Stdout)
+	case "slsav1":
+		var buf bytes.Buffer
+		err := writeContent(img, "{{json .Provenance}}", &buf)
+		if err != nil {
+			return err
+		}
 
-func provenanceSlsaV1(img string) error {
-	var buf bytes.Buffer
-	err := writeContent(img, "{{json .Provenance}}", &buf)
-	if err != nil {
-		return err
+		convert(buf.Bytes(), os.Stdout)
+		return nil
 	}
 
-	convert(buf.Bytes(), os.Stdout)
-	return nil
+	return fmt.Errorf("invalid format %q: supported values are slsav0.2 or slsav1", format)
 }
 
 func convert(data []byte, w io.Writer) {

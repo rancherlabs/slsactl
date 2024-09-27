@@ -32,21 +32,18 @@ func downloadCmd(args []string) error {
 	var format string
 	img := f.Arg(f.NArg() - 1)
 	if f.Arg(0) == "provenance" {
-		f.StringVar(&format, "format", "slsav1", "Format used to return the information.")
+		f.StringVar(&format, "format", "slsav0.2", "The format for the Provenance output. Supported values are slsav0.2 (default) and slsav1.")
 
 		err := f.Parse(args[1:])
 		if err != nil {
 			return err
 		}
 
-		if format == "slsav1" {
-			return provenanceSlsaV1(f.Arg(0))
-		}
-		return provenanceCmd(img)
+		return provenanceCmd(img, format)
 	}
 
 	if f.Arg(0) == "sbom" {
-		f.StringVar(&format, "format", "spdxjson", "Format used to return the information.")
+		f.StringVar(&format, "format", "spdxjson", "The format for the SBOM output. Supported values are spdxjson (default) and cyclonedxjson.")
 
 		err := f.Parse(args[1:])
 		if err != nil {
