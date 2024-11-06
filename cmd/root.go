@@ -12,6 +12,7 @@ var (
 	cmds = map[string]command{
 		"download": downloadCmd,
 		"version":  versionCmd,
+		"verify":   verifyCmd,
 	}
 
 	usagef = `usage: %[1]s <command>
