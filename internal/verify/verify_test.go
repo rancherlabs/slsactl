@@ -17,6 +17,10 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
+			image: "foo/bar:v0.0.7-barfoo2",
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7&#43;barfoo2",
+		},
+		{
 			image:   "",
 			wantErr: "invalid image name",
 		},
@@ -47,6 +51,10 @@ func TestCertificateIdentity(t *testing.T) {
 		{
 			image: "tocker.local/bar/foo/bar:v3.14",
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v3.14",
+		},
+		{
+			image: "rancher/rke2-bar:v0.0.7",
+			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 	}
 

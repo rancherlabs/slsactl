@@ -26,6 +26,8 @@ func Verify(imageName string) error {
 		return err
 	}
 
+	fmt.Println("identity:", certIdentity)
+
 	v := &verify.VerifyCommand{
 		CertVerifyOptions: options.CertVerifyOptions{
 			CertIdentity:   certIdentity,
@@ -64,10 +66,18 @@ func certIdentity(imageName string) (string, error) {
 	}
 
 	repo := strings.Join(names[len(names)-2:], "/")
-	ref := d[1]
+	ref := strings.Replace(d[1], "-", "&#43;", 1)
+	repo = overrideRepo(repo)
 
 	indentity := fmt.Sprintf(
 		"https://github.com/%s/.github/workflows/release.yml@refs/tags/%s", repo, ref)
 
 	return indentity, nil
+}
+
+func overrideRepo(repo string) string {
+	if strings.HasPrefix(repo, "rancher/rke2-") {
+		return "rancher/rke2"
+	}
+	return repo
 }
