@@ -24,7 +24,7 @@ type ArchProvenanceV1 struct {
 }
 
 func ConvertV02ToV1(v02Prov v02.ProvenancePredicate) v1.ProvenancePredicate {
-	return v1.ProvenancePredicate{
+	prov := v1.ProvenancePredicate{
 		BuildDefinition: v1.ProvenanceBuildDefinition{
 			BuildType:          v02Prov.BuildType,
 			ExternalParameters: v02Prov.Invocation.Parameters,
@@ -35,10 +35,23 @@ func ConvertV02ToV1(v02Prov v02.ProvenancePredicate) v1.ProvenancePredicate {
 				ID: v02Prov.Invocation.ConfigSource.URI,
 			},
 			BuildMetadata: v1.BuildMetadata{
-				StartedOn:  v02Prov.Metadata.BuildStartedOn,
-				FinishedOn: v02Prov.Metadata.BuildFinishedOn,
+				StartedOn:    v02Prov.Metadata.BuildStartedOn,
+				FinishedOn:   v02Prov.Metadata.BuildFinishedOn,
+				InvocationID: v02Prov.Metadata.BuildInvocationID,
 			},
 			Byproducts: []v1.ResourceDescriptor{},
 		},
 	}
+
+	deps := make([]v1.ResourceDescriptor, 0, len(v02Prov.Materials))
+	for _, m := range v02Prov.Materials {
+		deps = append(deps, v1.ResourceDescriptor{
+			URI:    m.URI,
+			Digest: m.Digest,
+		})
+	}
+
+	prov.BuildDefinition.ResolvedDependencies = deps
+
+	return prov
 }
