@@ -23,6 +23,9 @@ slsactl download provenance rancher/cis-operator:v1.0.15
 slsactl download provenance --format=slsav1 rancher/cis-operator:v1.0.15
 ```
 
+By default, the returned provenance would be for `linux/amd64`. To select a
+different platform use `--platform`.
+
 ### SBOM
 The latest container images have baked into them a layer containing their SPDX
 SBOM, which can be extracted with:
@@ -36,6 +39,9 @@ If Cyclonedx is required instead:
 ```bash
 slsactl download sbom -format cyclonedxjson rancher/cis-operator:v1.0.15
 ```
+
+By default, the returned provenance would be for `linux/amd64`. To select a
+different platform use `--platform`.
 
 Note that images that haven't got a SBOM layer attached to them, the same
 command will generate a SBOM manifest on-demand, which will take longer.

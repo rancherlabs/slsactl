@@ -30,20 +30,21 @@ func downloadCmd(args []string) error {
 	}
 
 	var format string
+	var platform string
 	img := f.Arg(f.NArg() - 1)
 	if f.Arg(0) == "provenance" {
 		f.StringVar(&format, "format", "slsav0.2", "The format for the Provenance output. Supported values are slsav0.2 (default) and slsav1.")
+		f.StringVar(&platform, "platform", "linux/amd64", "The target platform for the container image. Most supported platforms are linux/amd64 and linux/arm64.")
 
 		err := f.Parse(args[1:])
 		if err != nil {
 			return err
 		}
 
-		return provenanceCmd(img, format)
+		return provenanceCmd(img, format, platform)
 	}
 
 	if f.Arg(0) == "sbom" {
-		var platform string
 		f.StringVar(&format, "format", "spdxjson", "The format for the SBOM output. Supported values are spdxjson (default) and cyclonedxjson.")
 		f.StringVar(&platform, "platform", "linux/amd64", "The target platform for the container image. Most supported platforms are linux/amd64 and linux/arm64.")
 
