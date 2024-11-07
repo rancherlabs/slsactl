@@ -19,7 +19,7 @@ var (
 
 Available commands:
   download:   Download artefacts from container image
-  verify: 	  Verifies the container image's signature
+  verify:     Verifies the container image's signature
   version:    Shows %[1]s version and build information
 
 `
