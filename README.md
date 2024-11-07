@@ -45,6 +45,13 @@ An example being:
 slsactl download sbom rancher/rancher:v2.8.1
 ```
 
+### Verify
+The cosign verification of Rancher Prime images can be done with:
+
+```bash
+slsactl verify <prime_image>:<tag>
+```
+
 ## License
 Copyright (c) 2014-2024 [Rancher Labs, Inc.](http://rancher.com)
 
