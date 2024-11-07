@@ -99,7 +99,10 @@ func ConvertToCyclonedxJson(reader io.Reader, writer io.Writer) error {
 		return fmt.Errorf("failed to decode SPDX JSON SBOM: %w", err)
 	}
 
-	enc, err := cyclonedxjson.NewFormatEncoderWithConfig(cyclonedxjson.DefaultEncoderConfig())
+	cfg := cyclonedxjson.DefaultEncoderConfig()
+	cfg.Pretty = true
+
+	enc, err := cyclonedxjson.NewFormatEncoderWithConfig(cfg)
 	if err != nil {
 		return fmt.Errorf("failed to create cyclonedxjson encoder: %w", err)
 	}

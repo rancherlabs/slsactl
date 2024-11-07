@@ -43,14 +43,16 @@ func downloadCmd(args []string) error {
 	}
 
 	if f.Arg(0) == "sbom" {
+		var platform string
 		f.StringVar(&format, "format", "spdxjson", "The format for the SBOM output. Supported values are spdxjson (default) and cyclonedxjson.")
+		f.StringVar(&platform, "platform", "linux/amd64", "The target platform for the container image. Most supported platforms are linux/amd64 and linux/arm64.")
 
 		err := f.Parse(args[1:])
 		if err != nil {
 			return err
 		}
 
-		return sbomCmd(img, format)
+		return sbomCmd(img, format, platform)
 	}
 
 	showDownloadUsage()

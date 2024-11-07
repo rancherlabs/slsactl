@@ -6,11 +6,12 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/rancherlabs/slsactl/internal/sbom"
 )
 
-func sbomCmd(img, outformat string) error {
+func sbomCmd(img, outformat, platform string) error {
 	var buf bytes.Buffer
 	err := writeContent(img, "{{json .SBOM}}", &buf)
 	if err != nil {
@@ -29,16 +30,30 @@ func sbomCmd(img, outformat string) error {
 	var data sbom.BuildKitSBOM
 	err = json.Unmarshal(buf.Bytes(), &data)
 	if err != nil {
-		fmt.Println("Error to unmarshal SBOM: %w\n", err)
+		fmt.Println("Error cannot unmarshal SBOM: %w\n", err)
 		os.Exit(6)
 	}
 
-	if data.LinuxAmd64 != nil && data.LinuxAmd64.SPDX != nil {
-		m, err := data.LinuxAmd64.SPDX.MarshalJSON()
-		if len(m) > 0 && err == nil {
-			buf.Reset()
-			buf.ReadFrom(bytes.NewBuffer(m))
+	var spdx json.RawMessage
+	if strings.EqualFold(platform, "linux/amd64") {
+		if data.LinuxAmd64 == nil || data.LinuxAmd64.SPDX == nil {
+			return fmt.Errorf("no spdx found for %q", platform)
 		}
+
+		spdx = data.LinuxAmd64.SPDX
+	} else if strings.EqualFold(platform, "linux/arm64") {
+		if data.LinuxArm64 == nil || data.LinuxArm64.SPDX == nil {
+			return fmt.Errorf("no spdx found for %q", platform)
+		}
+		spdx = data.LinuxArm64.SPDX
+	} else {
+		return fmt.Errorf("platform not supported: %q", platform)
+	}
+
+	m, err := spdx.MarshalJSON()
+	if len(m) > 4 && err == nil {
+		buf.Reset()
+		buf.ReadFrom(bytes.NewBuffer(m))
 	}
 
 	if buf.Len() < 10 {
