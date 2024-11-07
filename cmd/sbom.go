@@ -36,27 +36,28 @@ func sbomCmd(img, outformat, platform string) error {
 
 	var spdx json.RawMessage
 	if strings.EqualFold(platform, "linux/amd64") {
-		if data.LinuxAmd64 == nil || data.LinuxAmd64.SPDX == nil {
-			return fmt.Errorf("no spdx found for %q", platform)
+		if data.LinuxAmd64 != nil {
+			spdx = data.LinuxAmd64.SPDX
 		}
 
-		spdx = data.LinuxAmd64.SPDX
 	} else if strings.EqualFold(platform, "linux/arm64") {
-		if data.LinuxArm64 == nil || data.LinuxArm64.SPDX == nil {
-			return fmt.Errorf("no spdx found for %q", platform)
+		if data.LinuxArm64 != nil {
+			spdx = data.LinuxArm64.SPDX
 		}
-		spdx = data.LinuxArm64.SPDX
 	} else {
 		return fmt.Errorf("platform not supported: %q", platform)
 	}
 
-	m, err := spdx.MarshalJSON()
-	if len(m) > 4 && err == nil {
-		buf.Reset()
-		buf.ReadFrom(bytes.NewBuffer(m))
+	if len(spdx) != 0 {
+		m, err := spdx.MarshalJSON()
+		if len(m) > 4 && err == nil {
+			buf.Reset()
+			buf.ReadFrom(bytes.NewBuffer(m))
+		}
 	}
 
 	if buf.Len() < 10 {
+		buf.Reset()
 		// The image does not contain a SBOM layer, generates SBOM on demand.
 		err = sbom.Generate(img, outformat, &buf)
 		if err != nil {
