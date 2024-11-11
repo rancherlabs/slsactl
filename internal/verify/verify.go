@@ -66,7 +66,14 @@ func certIdentity(imageName string) (string, error) {
 	}
 
 	repo := strings.Join(names[len(names)-2:], "/")
-	ref := strings.Replace(d[1], "-", "&#43;", 1)
+	ref := d[1]
+
+	// RKE2 images have container image tags <VERSION>-rke2r1 which are
+	// generated from Git tags <VERSION>+rke2r1.
+	if strings.Contains(imageName, "rke2") {
+		ref = strings.Replace(d[1], "-rke2", "&#43;rke2", 1)
+	}
+
 	repo = overrideRepo(repo)
 
 	indentity := fmt.Sprintf(
@@ -76,8 +83,9 @@ func certIdentity(imageName string) (string, error) {
 }
 
 func overrideRepo(repo string) string {
-	if strings.HasPrefix(repo, "rancher/rke2-") {
-		return "rancher/rke2"
+	if v, ok := imageRepo[repo]; ok {
+		return v
 	}
+
 	return repo
 }
