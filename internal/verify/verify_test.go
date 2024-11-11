@@ -17,8 +17,8 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
-			image: "foo/bar:v0.0.7-barfoo2",
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7&#43;barfoo2",
+			image: "foo/bar:v0.0.7-rke2foo2",
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7&#43;rke2foo2",
 		},
 		{
 			image:   "",
@@ -53,7 +53,7 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v3.14",
 		},
 		{
-			image: "rancher/rke2-bar:v0.0.7",
+			image: "rancher/rke2-runtime:v0.0.7",
 			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 	}
