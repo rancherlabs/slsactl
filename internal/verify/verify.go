@@ -83,8 +83,9 @@ func certIdentity(imageName string) (string, error) {
 }
 
 func overrideRepo(repo string) string {
-	if strings.HasPrefix(repo, "rancher/rke2-") {
-		return "rancher/rke2"
+	if v, ok := imageRepo[repo]; ok {
+		return v
 	}
+
 	return repo
 }
