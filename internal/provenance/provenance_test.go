@@ -23,8 +23,6 @@ func TestConvertV02ToV1(t *testing.T) {
 	err := json.Unmarshal(v02Data, &v02Prov)
 	require.NoError(t, err, "Failed to unmarshal v0.2 data")
 
-	v1Prov := provenance.ConvertV02ToV1(v02Prov)
-
 	started, _ := time.Parse(time.RFC3339Nano, "2024-07-11T14:49:18.126688014Z")
 	finished, _ := time.Parse(time.RFC3339Nano, "2024-07-11T14:51:00.499751748Z")
 
@@ -99,10 +97,22 @@ func TestConvertV02ToV1(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, expectedV1Prov.BuildDefinition.BuildType, v1Prov.BuildDefinition.BuildType, "BuildType mismatch")
-	assert.Equal(t, expectedV1Prov.RunDetails.Builder.ID, v1Prov.RunDetails.Builder.ID, "Builder ID mismatch")
-	assert.Equal(t, expectedV1Prov.RunDetails.BuildMetadata.InvocationID, v1Prov.RunDetails.BuildMetadata.InvocationID, "BuildMetadata InvocationID mismatch")
-	assert.Equal(t, expectedV1Prov.RunDetails.BuildMetadata.StartedOn, v1Prov.RunDetails.BuildMetadata.StartedOn, "BuildMetadata StartedOn mismatch")
-	assert.Equal(t, expectedV1Prov.RunDetails.BuildMetadata.FinishedOn, v1Prov.RunDetails.BuildMetadata.FinishedOn, "BuildMetadata FinishedOn mismatch")
-	assert.Equal(t, expectedV1Prov.BuildDefinition.ResolvedDependencies, v1Prov.BuildDefinition.ResolvedDependencies, "BuildDefinition ResolvedDependencies mismatch")
+	v1Prov := provenance.ConvertV02ToV1(v02Prov, nil)
+	equal(t, expectedV1Prov, v1Prov)
+
+	override := &v1.ProvenancePredicate{}
+	override.RunDetails.Builder.ID = "new-build-id"
+	expectedV1Prov.RunDetails.Builder.ID = "new-build-id"
+
+	v1Prov = provenance.ConvertV02ToV1(v02Prov, override)
+	equal(t, expectedV1Prov, v1Prov)
+}
+
+func equal(t *testing.T, want, got v1.ProvenancePredicate) {
+	assert.Equal(t, want.BuildDefinition.BuildType, got.BuildDefinition.BuildType, "BuildType mismatch")
+	assert.Equal(t, want.RunDetails.Builder.ID, got.RunDetails.Builder.ID, "Builder ID mismatch")
+	assert.Equal(t, want.RunDetails.BuildMetadata.InvocationID, got.RunDetails.BuildMetadata.InvocationID, "BuildMetadata InvocationID mismatch")
+	assert.Equal(t, want.RunDetails.BuildMetadata.StartedOn, got.RunDetails.BuildMetadata.StartedOn, "BuildMetadata StartedOn mismatch")
+	assert.Equal(t, want.RunDetails.BuildMetadata.FinishedOn, got.RunDetails.BuildMetadata.FinishedOn, "BuildMetadata FinishedOn mismatch")
+	assert.Equal(t, want.BuildDefinition.ResolvedDependencies, got.BuildDefinition.ResolvedDependencies, "BuildDefinition ResolvedDependencies mismatch")
 }
