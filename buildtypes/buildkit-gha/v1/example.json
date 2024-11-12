@@ -1,0 +1,62 @@
+{
+    "buildDefinition": {
+        "buildType": "https://mobyproject.org/buildkit@v1",
+        "externalParameters": {
+            "args": {
+                "build-arg:VERSION": "v1.3.0"
+            },
+            "frontend": "dockerfile.v0",
+            "locals": [
+                {
+                    "name": "context"
+                },
+                {
+                    "name": "dockerfile"
+                }
+            ]
+        },
+        "internalParameters": {
+            "trigger": "push",
+            "invocationUri": "https://github.com/rancher/cis-operator/actions/runs/11725698930/attempts/1"
+        },
+        "resolvedDependencies": [
+            {
+                "uri": "pkg:docker/docker/buildkit-syft-scanner@stable-1",
+                "digest": {
+                    "sha256": "176e0869c38aeaede37e594fcf182c91d44391a932e1d71e99ec204873445a33"
+                }
+            },
+            {
+                "uri": "pkg:docker/rancher/mirrored-tonistiigi-xx@1.5.0?platform=linux%2Famd64",
+                "digest": {
+                    "sha256": "9872511e4e59256b73cc3d5577c75c4434d883b64f5365cf2fc5c9d8a43323bd"
+                }
+            },
+            {
+                "uri": "pkg:docker/registry.suse.com/bci/golang@1.22?platform=linux%2Famd64",
+                "digest": {
+                    "sha256": "670d86a82103520f105a97320d3075e5b3d72ccff0b17467ac4277d909ef18cb"
+                }
+            },
+            {
+                "uri": "https://github.com/rancher/cis-operator",
+                "digest": {
+                    "gitCommit": "1151c64ed3f84c4bb6ecb310bbe62f0b7a450aad"
+                },
+                "annotations": {
+                    "ref": "refs/tags/v1.3.0"
+                }
+            }
+        ]
+    },
+    "runDetails": {
+        "builder": {
+            "id": "https://github.com/rancherlabs/slsactl/tree/main/buildtypes/buildkit-gha/v1"
+        },
+        "metadata": {
+            "invocationID": "hxcpfkp0jwmhk8c1is2x2mi01",
+            "startedOn": "2024-11-07T15:15:01.764583687Z",
+            "finishedOn": "2024-11-07T15:15:02.984902536Z"
+        }
+    }
+}
