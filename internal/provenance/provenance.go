@@ -70,7 +70,13 @@ func ConvertV02ToV1(v02Prov v02.ProvenancePredicate, override *v1.ProvenancePred
 					override.BuildDefinition.ResolvedDependencies...)
 		}
 		if override.BuildDefinition.InternalParameters != nil {
-			prov.BuildDefinition.InternalParameters = override.BuildDefinition.InternalParameters
+			v := override.BuildDefinition.InternalParameters.(InternalParameters)
+			env, ok := v02Prov.Invocation.Environment.(map[string]interface{})
+			if ok && len(env) > 0 {
+				v.Platform = env["platform"].(string)
+			}
+
+			prov.BuildDefinition.InternalParameters = v
 		}
 	}
 
