@@ -12,8 +12,9 @@ type InternalParameters struct {
 }
 
 type BuildKitProvenance02 struct {
-	LinuxAmd64 *ArchProvenance `json:"linux/amd64,omitempty"`
-	LinuxArm64 *ArchProvenance `json:"linux/arm64,omitempty"`
+	LinuxAmd64 *ArchProvenance          `json:"linux/amd64,omitempty"`
+	LinuxArm64 *ArchProvenance          `json:"linux/arm64,omitempty"`
+	SLSA       *v02.ProvenancePredicate `json:"SLSA,omitempty"`
 }
 
 type ArchProvenance struct {
