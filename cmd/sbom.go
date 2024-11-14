@@ -35,15 +35,12 @@ func sbomCmd(img, outformat, platform string) error {
 	}
 
 	var spdx json.RawMessage
-	if strings.EqualFold(platform, "linux/amd64") {
-		if data.LinuxAmd64 != nil {
-			spdx = data.LinuxAmd64.SPDX
-		}
-
-	} else if strings.EqualFold(platform, "linux/arm64") {
-		if data.LinuxArm64 != nil {
-			spdx = data.LinuxArm64.SPDX
-		}
+	if strings.EqualFold(platform, "linux/amd64") && data.LinuxAmd64 != nil {
+		spdx = data.LinuxAmd64.SPDX
+	} else if strings.EqualFold(platform, "linux/arm64") && data.LinuxArm64 != nil {
+		spdx = data.LinuxArm64.SPDX
+	} else if data.SPDX != nil {
+		spdx = *data.SPDX
 	} else {
 		return fmt.Errorf("platform not supported: %q", platform)
 	}

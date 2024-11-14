@@ -18,6 +18,7 @@ All internal parameters are REQUIRED.
 
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
+| `platform` | string | The platform used to run BuildKit. This is equivalent to `environment.platform` from `buildkit@v1`. |
 | `trigger` | string | The GitHub Action event that caused the build to be executed. |
 | `invocationUri` | string | Resource URI for the GitHub action workflow instance. |
 

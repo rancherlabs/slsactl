@@ -12,8 +12,9 @@ type InternalParameters struct {
 }
 
 type BuildKitProvenance02 struct {
-	LinuxAmd64 *ArchProvenance `json:"linux/amd64,omitempty"`
-	LinuxArm64 *ArchProvenance `json:"linux/arm64,omitempty"`
+	LinuxAmd64 *ArchProvenance          `json:"linux/amd64,omitempty"`
+	LinuxArm64 *ArchProvenance          `json:"linux/arm64,omitempty"`
+	SLSA       *v02.ProvenancePredicate `json:"SLSA,omitempty"`
 }
 
 type ArchProvenance struct {
@@ -69,7 +70,13 @@ func ConvertV02ToV1(v02Prov v02.ProvenancePredicate, override *v1.ProvenancePred
 					override.BuildDefinition.ResolvedDependencies...)
 		}
 		if override.BuildDefinition.InternalParameters != nil {
-			prov.BuildDefinition.InternalParameters = override.BuildDefinition.InternalParameters
+			v := override.BuildDefinition.InternalParameters.(InternalParameters)
+			env, ok := v02Prov.Invocation.Environment.(map[string]interface{})
+			if ok && len(env) > 0 {
+				v.Platform = env["platform"].(string)
+			}
+
+			prov.BuildDefinition.InternalParameters = v
 		}
 	}
 

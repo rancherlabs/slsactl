@@ -39,14 +39,12 @@ func provenanceCmd(img, format, platform string) error {
 	}
 
 	var predicate *v02.ProvenancePredicate
-	if strings.EqualFold(platform, "linux/amd64") {
-		if buildKit.LinuxAmd64 != nil {
-			predicate = &buildKit.LinuxAmd64.SLSA
-		}
-	} else if strings.EqualFold(platform, "linux/arm64") {
-		if buildKit.LinuxArm64 != nil {
-			predicate = &buildKit.LinuxArm64.SLSA
-		}
+	if strings.EqualFold(platform, "linux/amd64") && buildKit.LinuxAmd64 != nil {
+		predicate = &buildKit.LinuxAmd64.SLSA
+	} else if strings.EqualFold(platform, "linux/arm64") && buildKit.LinuxArm64 != nil {
+		predicate = &buildKit.LinuxArm64.SLSA
+	} else if buildKit.SLSA != nil {
+		predicate = buildKit.SLSA
 	} else {
 		return fmt.Errorf("platform not supported: %q", platform)
 	}

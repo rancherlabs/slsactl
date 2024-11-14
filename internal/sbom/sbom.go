@@ -18,8 +18,9 @@ import (
 )
 
 type BuildKitSBOM struct {
-	LinuxAmd64 *archSBOM `json:"linux/amd64,omitempty"`
-	LinuxArm64 *archSBOM `json:"linux/arm64,omitempty"`
+	LinuxAmd64 *archSBOM        `json:"linux/amd64,omitempty"`
+	LinuxArm64 *archSBOM        `json:"linux/arm64,omitempty"`
+	SPDX       *json.RawMessage `json:"SPDX,omitempty"`
 }
 
 type archSBOM struct {
