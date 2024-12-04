@@ -34,3 +34,8 @@ func showVerifyUsage() {
 	fmt.Printf(verifyf, exeName())
 	os.Exit(1)
 }
+
+// Verify is a public function to be imported and execute Verify function from internal/verify/verify.go
+func Verify(imageName string) error {
+	return verify.Verify(imageName)
+}
