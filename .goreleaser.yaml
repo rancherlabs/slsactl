@@ -1,0 +1,51 @@
+version: 2
+project_name: slsactl
+builds:
+  - id: slsactl
+    binary: slsactl
+    main: main.go
+    flags:
+    - -trimpath
+    ldflags:
+      - -s -w
+      - -X github.com/slsactl/cmd/cmd.version={{.Version}}
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+
+archives:
+  - id: default
+    format: binary
+
+signs:
+  - cmd: cosign
+    certificate: '${artifact}.pem'
+    args:
+      - sign-blob
+      - '--yes'
+      - '--output-signature=${signature}'
+      - '--output-certificate=${certificate}'
+      - '--bundle=${artifact}.bundle'
+      - '${artifact}'
+    artifacts: checksum
+    output: true
+
+source:
+  enabled: true
+  name_template: '{{ .ProjectName }}_{{ .Version }}_source'
+
+sboms:
+  - id: source
+    artifacts: source
+    documents:
+      - '{{ .ProjectName }}_{{ .Version }}_sbom.spdx.json'
+
+release:
+  extra_files:
+    - glob: ./**/*.bundle
