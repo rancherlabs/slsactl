@@ -2,7 +2,7 @@ package sbom
 
 import (
 	"bytes"
-	"fmt"
+	"errors"
 	"testing"
 
 	"github.com/anchore/syft/syft/sbom"
@@ -15,6 +15,8 @@ import (
 var cisoperatorAMD64Spdx string
 
 func TestGenerate(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name       string
 		img        string
@@ -26,7 +28,7 @@ func TestGenerate(t *testing.T) {
 			name:      "successful generation with cyclonedxjson",
 			img:       "test-image",
 			outformat: "cyclonedxjson",
-			createSBOM: func(img string) (*sbom.SBOM, error) {
+			createSBOM: func(_ string) (*sbom.SBOM, error) {
 				return &sbom.SBOM{}, nil
 			},
 			wantErr: false,
@@ -35,7 +37,7 @@ func TestGenerate(t *testing.T) {
 			name:      "successful generation with spdxjson",
 			img:       "test-image",
 			outformat: "spdxjson",
-			createSBOM: func(img string) (*sbom.SBOM, error) {
+			createSBOM: func(_ string) (*sbom.SBOM, error) {
 				return &sbom.SBOM{}, nil
 			},
 			wantErr: false,
@@ -44,7 +46,7 @@ func TestGenerate(t *testing.T) {
 			name:      "invalid format",
 			img:       "test-image",
 			outformat: "invalidformat",
-			createSBOM: func(img string) (*sbom.SBOM, error) {
+			createSBOM: func(_ string) (*sbom.SBOM, error) {
 				return &sbom.SBOM{}, nil
 			},
 			wantErr: true,
@@ -53,8 +55,8 @@ func TestGenerate(t *testing.T) {
 			name:      "failed to get source",
 			img:       "test-image",
 			outformat: "cyclonedxjson",
-			createSBOM: func(img string) (*sbom.SBOM, error) {
-				return nil, fmt.Errorf("failed to get source")
+			createSBOM: func(_ string) (*sbom.SBOM, error) {
+				return nil, errors.New("failed to get source")
 			},
 			wantErr: true,
 		},
@@ -62,8 +64,8 @@ func TestGenerate(t *testing.T) {
 			name:      "failed to create SBOM",
 			img:       "test-image",
 			outformat: "cyclonedxjson",
-			createSBOM: func(img string) (*sbom.SBOM, error) {
-				return nil, fmt.Errorf("failed to generate SBOM")
+			createSBOM: func(_ string) (*sbom.SBOM, error) {
+				return nil, errors.New("failed to generate SBOM")
 			},
 			wantErr: true,
 		},
@@ -87,6 +89,8 @@ func TestGenerate(t *testing.T) {
 }
 
 func TestConvertToCyclonedxJson(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name    string
 		input   string
@@ -106,6 +110,8 @@ func TestConvertToCyclonedxJson(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			reader := bytes.NewReader([]byte(tt.input))
 			var writer bytes.Buffer
 

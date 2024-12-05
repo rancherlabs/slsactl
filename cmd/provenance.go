@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -19,8 +20,8 @@ import (
 )
 
 var (
-	// builderId defines the builder ID when the provenance has been modified.
-	builderId = "https://github.com/rancherlabs/slsactl/tree/main/buildtypes/buildkit-gha/v1"
+	// builderID defines the builder ID when the provenance has been modified.
+	builderID = "https://github.com/rancherlabs/slsactl/tree/main/buildtypes/buildkit-gha/v1"
 	// buildKitV1 holds the buildType supported for provenance enrichment.
 	buildKitV1 = "https://mobyproject.org/buildkit@v1"
 )
@@ -55,7 +56,7 @@ func provenanceCmd(img, format, platform string) error {
 
 	switch format {
 	case "slsav0.2":
-		err = print(os.Stdout, predicate)
+		err = printOutput(os.Stdout, predicate)
 	case "slsav1":
 		if predicate.BuildType != buildKitV1 {
 			return fmt.Errorf("image builtType not supported: %q", predicate.BuildType)
@@ -67,7 +68,7 @@ func provenanceCmd(img, format, platform string) error {
 		}
 
 		provV1 := provenance.ConvertV02ToV1(*predicate, override)
-		err = print(os.Stdout, provV1)
+		err = printOutput(os.Stdout, provV1) //nolint
 
 	default:
 		return fmt.Errorf("invalid format %q: supported values are slsav0.2 or slsav1", format)
@@ -76,7 +77,7 @@ func provenanceCmd(img, format, platform string) error {
 	return err
 }
 
-func print(w io.Writer, v interface{}) error {
+func printOutput(w io.Writer, v interface{}) error {
 	outData, err := json.MarshalIndent(v, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal v1 provenance: %w", err)
@@ -98,7 +99,7 @@ func cosignCertData(img string) (*v1.ProvenancePredicate, error) {
 	}
 
 	if len(payloads) == 0 {
-		return nil, fmt.Errorf("no payloads found for image")
+		return nil, errors.New("no payloads found for image")
 	}
 
 	var inparams provenance.InternalParameters
@@ -135,7 +136,7 @@ func cosignCertData(img string) (*v1.ProvenancePredicate, error) {
 	}
 
 	override.BuildDefinition.ResolvedDependencies = deps
-	override.RunDetails.Builder.ID = builderId
+	override.RunDetails.Builder.ID = builderID
 
 	return override, nil
 }

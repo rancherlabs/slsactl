@@ -1,0 +1,29 @@
+linters:
+  enable-all: true
+  disable:
+  - exportloopref
+  - depguard
+  - wsl
+  - forbidigo
+  - gci
+  - wrapcheck
+  - varnamelen
+  - tagliatelle
+  - mnd
+  - gochecknoglobals
+  - nlreturn
+  - testpackage
+  - exhaustruct
+  - funlen
+  - testifylint
+  - cyclop
+  - copyloopvar
+  - err113
+  - gosimple
+  - lll
+  - gocritic
+  - nestif
+  - errcheck
+  - revive
+  - forcetypeassert
+  - stylecheck

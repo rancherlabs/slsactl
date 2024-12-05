@@ -19,6 +19,8 @@ import (
 var v02Data []byte
 
 func TestConvertV02ToV1(t *testing.T) {
+	t.Parallel()
+
 	var v02Prov v02.ProvenancePredicate
 	err := json.Unmarshal(v02Data, &v02Prov)
 	require.NoError(t, err, "Failed to unmarshal v0.2 data")
@@ -109,6 +111,8 @@ func TestConvertV02ToV1(t *testing.T) {
 }
 
 func equal(t *testing.T, want, got v1.ProvenancePredicate) {
+	t.Helper()
+
 	assert.Equal(t, want.BuildDefinition.BuildType, got.BuildDefinition.BuildType, "BuildType mismatch")
 	assert.Equal(t, want.RunDetails.Builder.ID, got.RunDetails.Builder.ID, "Builder ID mismatch")
 	assert.Equal(t, want.RunDetails.BuildMetadata.InvocationID, got.RunDetails.BuildMetadata.InvocationID, "BuildMetadata InvocationID mismatch")
