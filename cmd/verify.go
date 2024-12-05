@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/rancherlabs/slsactl/internal/verify"
+	"github.com/rancherlabs/slsactl/pkg/verify"
 )
 
 const verifyf = `usage:
