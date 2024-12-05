@@ -11,4 +11,4 @@ test:
 verify: verify-lint verify-dirty ## Run verification checks.
 
 verify-lint: $(GOLANGCI)
-	$(GOLANGCI) run --timeout 2m
+	$(GOLANGCI) run --timeout 10m
