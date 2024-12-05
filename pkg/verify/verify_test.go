@@ -7,6 +7,8 @@ import (
 )
 
 func TestCertificateIdentity(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		image   string
 		want    string
@@ -73,6 +75,8 @@ func TestCertificateIdentity(t *testing.T) {
 	for _, tc := range tests {
 		tc := tc
 		t.Run(tc.image, func(t *testing.T) {
+			t.Parallel()
+
 			got, err := certIdentity(tc.image)
 
 			assert.Equal(t, tc.want, got)

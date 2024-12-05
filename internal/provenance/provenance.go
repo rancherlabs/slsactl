@@ -65,9 +65,8 @@ func ConvertV02ToV1(v02Prov v02.ProvenancePredicate, override *v1.ProvenancePred
 			prov.RunDetails.Builder.ID = override.RunDetails.Builder.ID
 		}
 		if len(override.BuildDefinition.ResolvedDependencies) > 0 {
-			prov.BuildDefinition.ResolvedDependencies =
-				append(prov.BuildDefinition.ResolvedDependencies,
-					override.BuildDefinition.ResolvedDependencies...)
+			prov.BuildDefinition.ResolvedDependencies = append(prov.BuildDefinition.ResolvedDependencies,
+				override.BuildDefinition.ResolvedDependencies...)
 		}
 		if override.BuildDefinition.InternalParameters != nil {
 			v := override.BuildDefinition.InternalParameters.(InternalParameters)

@@ -1,0 +1,42 @@
+# This GitHub action verifies whether a given image has been signed using
+# the cosign signature specification.
+#
+# This is meant to be used for Rancher Prime, or CNCF images that are part
+# of the Rancher ecosystem.
+#
+# Reference usage:
+#    steps:
+#      ...
+#      - uses: rancherlabs/slsactl/actions/verify@main
+#        with:
+#          image: <registry>/<image>:<tag>
+
+name: verify
+
+inputs:
+  image:
+    description: |
+      The image name component in a fully qualified image. For reference:
+      <registry>/<repo>/<image>:<tag>.
+    required: true
+    type: string
+
+runs:
+  using: composite
+
+  steps:
+  - uses: actions/setup-go@v5
+    with:
+      go-version: 'stable'
+
+  - name: Install slsactl
+    shell:
+    run: |
+      go install github.com/rancherlabs/slsactl@latest
+
+  - name: Verify image
+    shell: bash
+    run: |
+      slsactl verify ${{ env.IMAGE }}
+    env:
+      IMAGE: ${{ inputs.image }}
