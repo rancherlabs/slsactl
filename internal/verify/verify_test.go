@@ -56,6 +56,18 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rancher/rke2-runtime:v0.0.7",
 			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
+		{
+			image: "tocker.local/foo/bar:v0.0.7-amd64", // single tag may yield arch-specific images
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+		},
+		{
+			image: "tocker.local/foo/bar:v0.0.7-arm64", // single tag may yield arch-specific images
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+		},
+		{
+			image: "tocker.local/foo/bar:v0.0.7-build12345",
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7-build12345",
+		},
 	}
 
 	for _, tc := range tests {

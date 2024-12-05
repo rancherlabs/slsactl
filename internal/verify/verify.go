@@ -13,9 +13,12 @@ import (
 	"github.com/sigstore/cosign/v2/cmd/cosign/cli/verify"
 )
 
-const (
-	timeout = 45 * time.Second
-)
+const timeout = 45 * time.Second
+
+var archSuffixes = []string{
+	"-amd64",
+	"-arm64",
+}
 
 func Verify(imageName string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
@@ -72,6 +75,11 @@ func certIdentity(imageName string) (string, error) {
 	// generated from Git tags <VERSION>+rke2r1.
 	if strings.Contains(imageName, "rke2") {
 		ref = strings.Replace(d[1], "-rke2", "&#43;rke2", 1)
+	}
+	for _, suffix := range archSuffixes {
+		if strings.HasSuffix(ref, suffix) {
+			ref = strings.TrimSuffix(ref, suffix)
+		}
 	}
 
 	repo = overrideRepo(repo)
