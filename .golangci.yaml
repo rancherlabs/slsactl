@@ -27,3 +27,5 @@ linters:
   - revive
   - forcetypeassert
   - stylecheck
+  - tparallel
+  - paralleltest

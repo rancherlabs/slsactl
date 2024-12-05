@@ -1,15 +1,4 @@
-VERSION = $(shell git tag -l --contains HEAD | head -n 1)
-CHANGES = $(shell git status --porcelain --untracked-files=no)
-ifneq ($(CHANGES),)
-	DIRTY = -dirty
-endif
-
-ifeq ($(VERSION),)
-	VERSION = v0.0.0-$(shell git rev-parse --short HEAD)$(DIRTY)
-endif
-
-GO_TAGS = -tags "netgo,osusergo"
-LDFLAGS = -ldflags "-extldflags -s -w -X github.com/rancherlabs/slsactl/cmd.version=$(VERSION)"
+include hack/base.mk
 
 .PHONY: build
 build:
@@ -18,3 +7,8 @@ build:
 .PHONY: test
 test:
 	go test -race ./...
+
+verify: verify-lint verify-dirty ## Run verification checks.
+
+verify-lint: $(GOLANGCI)
+	$(GOLANGCI) run --timeout 2m
