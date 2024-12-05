@@ -89,7 +89,7 @@ func print(w io.Writer, v interface{}) error {
 func cosignCertData(img string) (*v1.ProvenancePredicate, error) {
 	ref, err := name.ParseReference(img, name.StrictValidation)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed strict validation (image name should be fully qualified): %w", err)
 	}
 
 	payloads, err := cosign.FetchSignaturesForReference(context.Background(), ref)
