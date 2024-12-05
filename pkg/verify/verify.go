@@ -20,6 +20,11 @@ var archSuffixes = []string{
 	"-arm64",
 }
 
+// Verify checks whether a given Rancher Prime image is signed based on the Cosign Signature spec.
+// The same extents to CNCF images within the Rancher ecosystem.
+//
+// Upstream documentation:
+// https://github.com/sigstore/cosign/blob/main/specs/SIGNATURE_SPEC.md
 func Verify(imageName string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
