@@ -29,10 +29,7 @@ runs:
     with:
       go-version: 'stable'
 
-  - name: Install slsactl
-    shell:
-    run: |
-      go install github.com/rancherlabs/slsactl@latest
+  - uses: ./actions/install-slsactl
 
   - name: Verify image
     shell: bash

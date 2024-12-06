@@ -1,0 +1,32 @@
+# This GitHub action install the slsactl CLI, making it available for
+# other steps within an GitHub workflow to refer to it.
+#
+# Reference usage:
+#    steps:
+#      ...
+#      - uses: rancherlabs/slsactl/actions/install-slsactl@main
+#        with:
+#          version: latest
+
+name: install-slsactl
+
+inputs:
+  version:
+    description: |
+      The slsactl version to be installed.
+    required: false
+    default: latest
+    type: string
+
+runs:
+  using: composite
+
+  steps:
+  - uses: actions/setup-go@v5
+    with:
+      go-version: 'stable'
+
+  - name: Install slsactl
+    shell:
+    run: |
+      go install github.com/rancherlabs/slsactl@${{ inputs.version }}
