@@ -67,6 +67,14 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
+			image: "tocker.local/foo/bar:v0.0.7-windows-amd64", // single tag may yield arch-specific images
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+		},
+		{
+			image: "tocker.local/foo/bar:v0.0.7-windows-arm64", // single tag may yield arch-specific images
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+		},
+		{
 			image: "tocker.local/foo/bar:v0.0.7-build12345",
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7-build12345",
 		},

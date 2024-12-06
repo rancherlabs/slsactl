@@ -16,6 +16,8 @@ import (
 const timeout = 45 * time.Second
 
 var archSuffixes = []string{
+	"-windows-amd64",
+	"-windows-arm64",
 	"-amd64",
 	"-arm64",
 }
