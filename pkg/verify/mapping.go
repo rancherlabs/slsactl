@@ -1,5 +1,10 @@
 package verify
 
+import (
+	"fmt"
+	"strings"
+)
+
 // imageRepo holds the mappings between container image and source code repositories.
 var imageRepo = map[string]string{
 	"rancher/rke2-runtime":                    "rancher/rke2",
@@ -19,4 +24,26 @@ var imageRepo = map[string]string{
 	"rancher/hardened-cni-plugins":            "rancher/image-build-cni-plugins",
 	"rancher/nginx-ingress-controller":        "rancher/ingress-nginx",
 	"rancher/rancher":                         "rancher/rancher-prime",
+}
+
+var obs = map[string]struct{}{
+	"rancher/elemental-operator":            {},
+	"rancher/seedimage-builder":             {},
+	"rancher/elemental-channel/sl-micro":    {},
+	"rancher/elemental-operator-crds-chart": {},
+	"rancher/elemental-operator-chart":      {},
+}
+
+func obsSigned(image string) bool {
+	bef, after, _ := strings.Cut(image, "/")
+	if strings.Contains(bef, ".") {
+		image = after
+	}
+
+	bef, _, _ = strings.Cut(image, ":")
+	image = bef
+	fmt.Println(image)
+
+	_, ok := obs[image]
+	return ok
 }
