@@ -20,3 +20,7 @@ var imageRepo = map[string]string{
 	"rancher/nginx-ingress-controller":        "rancher/ingress-nginx",
 	"rancher/rancher":                         "rancher/rancher-prime",
 }
+
+var upstreamImagesRepos = map[string]string{
+	"cluster-api": "rancher/clusterapi-forks",
+}

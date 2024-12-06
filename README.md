@@ -58,6 +58,14 @@ The cosign verification of Rancher Prime images can be done with:
 slsactl verify <prime_image>:<tag>
 ```
 
+Images built for upstream projects can be verified with(currently only Cluster API):
+
+```bash
+slsactl verify upstream --certIdentityWorkflow=<workflow_name> <prime_image>:<tag>
+```
+
+See Rancher Turtles docs for workflow names for respective projects.
+
 ## License
 Copyright (c) 2014-2024 [Rancher Labs, Inc.](http://rancher.com)
 

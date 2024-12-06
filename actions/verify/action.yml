@@ -10,6 +10,7 @@
 #      - uses: rancherlabs/slsactl/actions/verify@main
 #        with:
 #          image: <registry>/<image>:<tag>
+#          certIdentityWorkflow: <workflow-name>
 
 name: verify
 
@@ -20,6 +21,10 @@ inputs:
       <registry>/<repo>/<image>:<tag>.
     required: true
     type: string
+  certIdentityWorkflow:
+    description: |
+      The workflow name to run for cert identity verification(only for images built for upstream projects).
+    default: ""
 
 runs:
   using: composite
@@ -37,6 +42,11 @@ runs:
   - name: Verify image
     shell: bash
     run: |
-      slsactl verify ${{ env.IMAGE }}
+      if [[ -n "${{ env.CERT_IDENTITY_WORKFLOW }}" ]]; then
+        slsactl verify upstream --certIdentityWorkflow="${{ env.CERT_IDENTITY_WORKFLOW }}" ${{ env.IMAGE }}
+      else
+        slsactl verify ${{ env.IMAGE }}
+      fi
     env:
       IMAGE: ${{ inputs.image }}
+      CERT_IDENTITY_WORKFLOW: ${{ inputs.certIdentityWorkflow }}
