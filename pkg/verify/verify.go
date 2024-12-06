@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto"
 	"fmt"
+	"log/slog"
 	"os"
 	"strings"
 	"time"
@@ -13,7 +14,12 @@ import (
 	"github.com/sigstore/cosign/v2/cmd/cosign/cli/verify"
 )
 
-const timeout = 45 * time.Second
+const (
+	timeout    = 45 * time.Second
+	maxWorkers = 5
+	hashAlgo   = crypto.SHA256
+	obsKey     = "https://ftp.suse.com/pub/projects/security/keys/container-key.pem"
+)
 
 var archSuffixes = []string{
 	"-linux-amd64",
@@ -30,11 +36,38 @@ var archSuffixes = []string{
 //
 // Upstream documentation:
 // https://github.com/sigstore/cosign/blob/main/specs/SIGNATURE_SPEC.md
-func Verify(imageName string) error {
+func Verify(image string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
-	certIdentity, err := certIdentity(imageName)
+	if obsSigned(image) {
+		return verifyObs(ctx, image)
+	}
+
+	return verifyKeyless(ctx, image)
+}
+
+func verifyObs(ctx context.Context, image string) error {
+	slog.Debug("OBS verification")
+	v := &verify.VerifyCommand{
+		KeyRef:        obsKey,
+		RekorURL:      options.DefaultRekorURL,
+		CertRef:       obsKey,
+		CheckClaims:   true,
+		HashAlgorithm: hashAlgo,
+		MaxWorkers:    maxWorkers,
+	}
+
+	if strings.EqualFold(os.Getenv("DEBUG"), "true") {
+		logs.Debug.SetOutput(os.Stderr)
+	}
+
+	return v.Exec(ctx, []string{image})
+}
+
+func verifyKeyless(ctx context.Context, image string) error {
+	slog.Info("GHA keyless verification")
+	certIdentity, err := certIdentity(image)
 	if err != nil {
 		return err
 	}
@@ -47,15 +80,15 @@ func Verify(imageName string) error {
 			CertOidcIssuer: "https://token.actions.githubusercontent.com",
 		},
 		CheckClaims:   true,
-		HashAlgorithm: crypto.SHA256,
-		MaxWorkers:    5,
+		HashAlgorithm: hashAlgo,
+		MaxWorkers:    maxWorkers,
 	}
 
 	if strings.EqualFold(os.Getenv("DEBUG"), "true") {
 		logs.Debug.SetOutput(os.Stderr)
 	}
 
-	return v.Exec(ctx, []string{imageName})
+	return v.Exec(ctx, []string{image})
 }
 
 func certIdentity(imageName string) (string, error) {

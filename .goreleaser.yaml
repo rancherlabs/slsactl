@@ -40,12 +40,6 @@ source:
   enabled: true
   name_template: '{{ .ProjectName }}_{{ .Version }}_source'
 
-sboms:
-  - id: source
-    artifacts: source
-    documents:
-      - '{{ .ProjectName }}_{{ .Version }}_sbom.spdx.json'
-
 release:
   extra_files:
     - glob: ./**/*.bundle

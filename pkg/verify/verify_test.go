@@ -93,7 +93,6 @@ func TestCertificateIdentity(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		tc := tc
 		t.Run(tc.image, func(t *testing.T) {
 			t.Parallel()
 
@@ -107,5 +106,28 @@ func TestCertificateIdentity(t *testing.T) {
 				assert.ErrorContains(t, err, tc.wantErr)
 			}
 		})
+	}
+}
+
+func TestObsSigned(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		image string
+		want  bool
+	}{
+		{image: "rancher/elemental-operator", want: true},
+		{image: "rancher/seedimage-builder", want: true},
+		{image: "rancher/elemental-channel/sl-micro", want: true},
+		{image: "rancher/elemental-operator-crds-chart", want: true},
+		{image: "rancher/elemental-operator-chart", want: true},
+		{image: "rancher/rancher"},
+		{image: "ghcr.io/kubewarden/policy-server"},
+		{image: "fuzz/bar"},
+	}
+
+	for _, tc := range tests {
+		got := obsSigned(tc.image)
+		assert.Equal(t, tc.want, got)
 	}
 }
