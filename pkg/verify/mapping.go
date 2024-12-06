@@ -18,4 +18,5 @@ var imageRepo = map[string]string{
 	"rancher/hardened-coredns":                "rancher/image-build-coredns",
 	"rancher/hardened-cni-plugins":            "rancher/image-build-cni-plugins",
 	"rancher/nginx-ingress-controller":        "rancher/ingress-nginx",
+	"rancher/rancher":                         "rancher/rancher-prime",
 }
