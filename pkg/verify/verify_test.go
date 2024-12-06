@@ -47,11 +47,11 @@ func TestCertificateIdentity(t *testing.T) {
 			wantErr: "unsupported image name",
 		},
 		{
-			image: "tocker.local/foo/bar:v0.0.7",
+			image: "rocker.local/foo/bar:v0.0.7",
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
-			image: "tocker.local/bar/foo/bar:v3.14",
+			image: "rocker.local/bar/foo/bar:v3.14",
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v3.14",
 		},
 		{
@@ -59,23 +59,35 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
-			image: "tocker.local/foo/bar:v0.0.7-amd64", // single tag may yield arch-specific images
+			image: "rocker.local/foo/bar:v0.0.7-amd64", // single tag may yield arch-specific images
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
-			image: "tocker.local/foo/bar:v0.0.7-arm64", // single tag may yield arch-specific images
+			image: "rocker.local/foo/bar:v0.0.7-arm64", // single tag may yield arch-specific images
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
-			image: "tocker.local/foo/bar:v0.0.7-windows-amd64", // single tag may yield arch-specific images
+			image: "rocker.local/foo/bar:v0.0.7-s390x", // single tag may yield arch-specific images
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
-			image: "tocker.local/foo/bar:v0.0.7-windows-arm64", // single tag may yield arch-specific images
+			image: "rocker.local/foo/bar:v0.0.7-windows-amd64", // single tag may yield arch-specific images
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
-			image: "tocker.local/foo/bar:v0.0.7-build12345",
+			image: "rocker.local/foo/bar:v0.0.7-windows-arm64", // single tag may yield arch-specific images
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+		},
+		{
+			image: "rocker.local/foo/bar:v0.0.7-linux-amd64", // single tag may yield arch-specific images
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+		},
+		{
+			image: "rocker.local/foo/bar:v0.0.7-linux-arm64", // single tag may yield arch-specific images
+			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+		},
+		{
+			image: "rocker.local/foo/bar:v0.0.7-build12345",
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7-build12345",
 		},
 	}

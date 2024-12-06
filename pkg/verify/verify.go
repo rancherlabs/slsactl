@@ -16,10 +16,13 @@ import (
 const timeout = 45 * time.Second
 
 var archSuffixes = []string{
+	"-linux-amd64",
+	"-linux-arm64",
 	"-windows-amd64",
 	"-windows-arm64",
 	"-amd64",
 	"-arm64",
+	"-s390x",
 }
 
 // Verify checks whether a given Rancher Prime image is signed based on the Cosign Signature spec.
