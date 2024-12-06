@@ -10,9 +10,11 @@ func TestCertificateIdentity(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		image   string
-		want    string
-		wantErr string
+		image             string
+		upstreamImageType string
+		workflowName      string
+		want              string
+		wantErr           string
 	}{
 		{
 			image: "foo/bar:v0.0.7",
@@ -90,6 +92,12 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rocker.local/foo/bar:v0.0.7-build12345",
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7-build12345",
 		},
+		{
+			image:             "foo/bar:v0.0.7",
+			upstreamImageType: "cluster-api",
+			workflowName:      "bar",
+			want:              "https://github.com/rancher/clusterapi-forks/.github/workflows/bar.yaml@refs/heads/main",
+		},
 	}
 
 	for _, tc := range tests {
@@ -97,7 +105,7 @@ func TestCertificateIdentity(t *testing.T) {
 		t.Run(tc.image, func(t *testing.T) {
 			t.Parallel()
 
-			got, err := certIdentity(tc.image)
+			got, err := certIdentity(tc.image, tc.upstreamImageType, tc.workflowName)
 
 			assert.Equal(t, tc.want, got)
 

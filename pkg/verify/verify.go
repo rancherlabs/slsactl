@@ -30,11 +30,11 @@ var archSuffixes = []string{
 //
 // Upstream documentation:
 // https://github.com/sigstore/cosign/blob/main/specs/SIGNATURE_SPEC.md
-func Verify(imageName string) error {
+func Verify(imageName, upstreamImageType, workflowName string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
-	certIdentity, err := certIdentity(imageName)
+	certIdentity, err := certIdentity(imageName, upstreamImageType, workflowName)
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func Verify(imageName string) error {
 	return v.Exec(ctx, []string{imageName})
 }
 
-func certIdentity(imageName string) (string, error) {
+func certIdentity(imageName, upstreamImageType, workflowName string) (string, error) {
 	if len(imageName) < 5 {
 		return "", fmt.Errorf("invalid image name: %q", imageName)
 	}
@@ -92,12 +92,17 @@ func certIdentity(imageName string) (string, error) {
 		}
 	}
 
-	repo = overrideRepo(repo)
+	identity := ""
 
-	indentity := fmt.Sprintf(
-		"https://github.com/%s/.github/workflows/release.yml@refs/tags/%s", repo, ref)
+	if upstreamImageRepo, ok := upstreamImagesRepos[upstreamImageType]; ok {
+		identity = fmt.Sprintf(
+			"https://github.com/%s/.github/workflows/%s.yaml@refs/heads/main", upstreamImageRepo, workflowName)
+	} else {
+		identity = fmt.Sprintf(
+			"https://github.com/%s/.github/workflows/release.yml@refs/tags/%s", overrideRepo(repo), ref)
+	}
 
-	return indentity, nil
+	return identity, nil
 }
 
 func overrideRepo(repo string) string {
