@@ -8,6 +8,9 @@ build:
 test:
 	go test -race ./...
 
+e2e:
+	./hack/e2e.sh
+
 verify: verify-lint verify-dirty ## Run verification checks.
 
 verify-lint: $(GOLANGCI)
