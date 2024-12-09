@@ -15,7 +15,7 @@ inputs:
     description: |
       The slsactl version to be installed.
     required: false
-    default: latest
+    default: v0.0.4
     type: string
 
 runs:
@@ -23,10 +23,59 @@ runs:
 
   steps:
   - uses: actions/setup-go@v5
+    if: runner.os == 'Windows'
     with:
       go-version: 'stable'
 
-  - name: Install slsactl
-    shell:
+  - name: Install slsactl with go install
+    if: runner.os == 'Windows'
+    shell: pwsh
     run: |
       go install github.com/rancherlabs/slsactl@${{ inputs.version }}
+
+  - name: Install Cosign
+    uses: sigstore/cosign-installer@v3.5.0
+    if: runner.os == 'Linux'
+
+  - name: Install slsactl from gh release
+    if: runner.os == 'Linux'
+    shell: bash
+    run: |
+      echo "Downloading checksum file and signatures for release ${VERSION}"
+      curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.pem"
+      curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.sig"
+      curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt"
+
+      cosign verify-blob \
+          --certificate-identity "https://${REPO}/.github/workflows/release.yml@refs/tags/${VERSION}" \
+          --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+          --certificate "slsactl_${VERSION#v}_checksums.txt.pem" \
+          --signature "slsactl_${VERSION#v}_checksums.txt.sig" "slsactl_${VERSION#v}_checksums.txt"
+
+      OS="linux"
+      if [[ ${RUNNER_OS} != "Linux" ]]; then
+          echo "Unsupported OS: ${RUNNER_OS}"
+          exit 1
+      fi
+
+      ARCH=""
+      if [[ $(uname -m) == "x86_64" ]]; then
+          ARCH=amd64
+      fi
+      if [[ $(uname -m) == "aarch64" ]]; then
+          ARCH=arm64
+      fi
+
+      echo "Installing slsactl_${VERSION#v}_${OS}_${ARCH}"
+      curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_${OS}_${ARCH}"
+      chmod +x "slsactl_${VERSION#v}_${OS}_${ARCH}"
+      sudo mv "slsactl_${VERSION#v}_${OS}_${ARCH}" /usr/local/bin/slsactl
+    env:
+      VERSION: ${{ inputs.version }}
+      REPO: github.com/rancherlabs/slsactl
+
+  - name: Print version
+    shell: bash
+    run: |
+      echo "slsactl installed:"
+      slsactl version
