@@ -7,8 +7,9 @@ builds:
     flags:
     - -trimpath
     ldflags:
+      - -extldflags
       - -s -w
-      - -X github.com/slsactl/cmd/cmd.version={{.Version}}
+      - -X github.com/rancherlabs/slsactl/cmd.version={{ .Version }}
     goos:
       - linux
       - windows
