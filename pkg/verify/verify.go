@@ -127,10 +127,12 @@ func certIdentity(imageName string) (string, error) {
 
 	repo = overrideRepo(repo)
 
-	indentity := fmt.Sprintf(
-		"https://github.com/%s/.github/workflows/release.yml@refs/tags/%s", repo, ref)
+	// Check if the image is an upstream image and has a different cert identity.
+	if identity, isUpstreamRepo := upstreamImageRepo[repo]; isUpstreamRepo {
+		return identity, nil
+	}
 
-	return indentity, nil
+	return fmt.Sprintf("https://github.com/%s/.github/workflows/release.yml@refs/tags/%s", repo, ref), nil
 }
 
 func overrideRepo(repo string) string {
