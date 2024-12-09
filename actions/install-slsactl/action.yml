@@ -73,10 +73,14 @@ runs:
           ARCH=arm64
       fi
 
-      echo "Installing slsactl_${VERSION#v}_${OS}_${ARCH}"
-      curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_${OS}_${ARCH}"
-      chmod +x "slsactl_${VERSION#v}_${OS}_${ARCH}"
-      sudo mv "slsactl_${VERSION#v}_${OS}_${ARCH}" /usr/local/bin/slsactl
+      FILE="slsactl_${VERSION#v}_${OS}_${ARCH}"
+
+      echo "Installing ${FILE}"
+      curl -LO "https://${REPO}/releases/download/${VERSION}/${FILE}"
+      grep "${FILE}" "slsactl_${VERSION#v}_checksums.txt" | sha256sum -c
+
+      chmod +x "${FILE}"
+      sudo mv "${FILE}" /usr/local/bin/slsactl
     env:
       VERSION: ${{ inputs.version }}
       REPO: github.com/rancherlabs/slsactl
