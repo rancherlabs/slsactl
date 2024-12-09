@@ -15,7 +15,7 @@ inputs:
     description: |
       The slsactl version to be installed.
     required: false
-    default: v0.0.4
+    default: latest
     type: string
 
 runs:
@@ -41,6 +41,13 @@ runs:
     if: runner.os == 'Linux'
     shell: bash
     run: |
+      if [[ "${VERSION}" == "latest" ]]; then
+        echo 'Checking what the latest version is'
+        VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name')
+        
+        echo "Using last tag ${VERSION} as version"
+      fi
+
       echo "Downloading checksum file and signatures for release ${VERSION}"
       curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.pem"
       curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.sig"
