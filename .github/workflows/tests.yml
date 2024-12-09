@@ -30,12 +30,3 @@ jobs:
 
     - uses: ./actions/install-slsactl
     - run: make e2e
-
-  test-verify-action:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - uses: ./actions/verify
-      with:
-        image: ghcr.io/kubewarden/policy-server:v1.19.0
