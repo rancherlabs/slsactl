@@ -1,0 +1,38 @@
+name: Test Actions
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  test-install-action:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - uses: ./actions/install-slsactl
+    - run: slsactl version
+      shell: bash
+
+  test-verify-action:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - uses: ./actions/verify
+      with:
+        image: ghcr.io/kubewarden/policy-server:v1.19.0
