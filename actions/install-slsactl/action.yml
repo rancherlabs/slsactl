@@ -41,6 +41,7 @@ runs:
     if: runner.os == 'Linux'
     shell: bash
     run: |
+      set -x
       if [[ "${VERSION}" == "latest" ]]; then
         echo 'Checking what the latest version is'
         VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name')
@@ -80,7 +81,11 @@ runs:
       grep "${FILE}" "slsactl_${VERSION#v}_checksums.txt" | sha256sum -c
 
       chmod +x "${FILE}"
-      sudo mv "${FILE}" /usr/local/bin/slsactl
+      if sudo -l &> /dev/null; then
+        sudo mv "${FILE}" /usr/local/bin/slsactl
+      else
+        mv "${FILE}" /usr/local/bin/slsactl
+      fi
     env:
       VERSION: ${{ inputs.version }}
       REPO: github.com/rancherlabs/slsactl
