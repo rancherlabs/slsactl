@@ -41,6 +41,7 @@ runs:
     if: runner.os == 'Linux'
     shell: bash
     run: |
+      set -x
       if [[ "${VERSION}" == "latest" ]]; then
         echo 'Checking what the latest version is'
         VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name')
@@ -48,39 +49,50 @@ runs:
         echo "Using last tag ${VERSION} as version"
       fi
 
-      echo "Downloading checksum file and signatures for release ${VERSION}"
-      curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.pem"
-      curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.sig"
-      curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt"
+      if [[ "${VERSION}" =~ ^v ]]; then
+        echo "Downloading checksum file and signatures for release ${VERSION}"
+        curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.pem"
+        curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.sig"
+        curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt"
 
-      cosign verify-blob \
-          --certificate-identity "https://${REPO}/.github/workflows/release.yml@refs/tags/${VERSION}" \
-          --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
-          --certificate "slsactl_${VERSION#v}_checksums.txt.pem" \
-          --signature "slsactl_${VERSION#v}_checksums.txt.sig" "slsactl_${VERSION#v}_checksums.txt"
+        cosign verify-blob \
+            --certificate-identity "https://${REPO}/.github/workflows/release.yml@refs/tags/${VERSION}" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+            --certificate "slsactl_${VERSION#v}_checksums.txt.pem" \
+            --signature "slsactl_${VERSION#v}_checksums.txt.sig" "slsactl_${VERSION#v}_checksums.txt"
 
-      OS="linux"
-      if [[ ${RUNNER_OS} != "Linux" ]]; then
-          echo "Unsupported OS: ${RUNNER_OS}"
-          exit 1
+        OS="linux"
+        if [[ ${RUNNER_OS} != "Linux" ]]; then
+            echo "Unsupported OS: ${RUNNER_OS}"
+            exit 1
+        fi
+
+        ARCH=""
+        if [[ $(uname -m) == "x86_64" ]]; then
+            ARCH=amd64
+        fi
+        if [[ $(uname -m) == "aarch64" ]]; then
+            ARCH=arm64
+        fi
+
+        FILE="slsactl_${VERSION#v}_${OS}_${ARCH}"
+
+        echo "Installing ${FILE}"
+        curl -LO "https://${REPO}/releases/download/${VERSION}/${FILE}"
+        grep "${FILE}" "slsactl_${VERSION#v}_checksums.txt" | sha256sum -c
+      
+        chmod +x "${FILE}"
+      else
+        echo 'Version is not "latest" nor starts with "v". Fallback to go install with commit ID.'
+        go install "github.com/rancherlabs/slsactl@${VERSION}"
+        FILE="$(go env GOPATH)/bin/slsactl"
       fi
 
-      ARCH=""
-      if [[ $(uname -m) == "x86_64" ]]; then
-          ARCH=amd64
+      if sudo -l &> /dev/null; then
+        sudo mv "${FILE}" /usr/local/bin/slsactl
+      else
+        mv "${FILE}" /usr/local/bin/slsactl
       fi
-      if [[ $(uname -m) == "aarch64" ]]; then
-          ARCH=arm64
-      fi
-
-      FILE="slsactl_${VERSION#v}_${OS}_${ARCH}"
-
-      echo "Installing ${FILE}"
-      curl -LO "https://${REPO}/releases/download/${VERSION}/${FILE}"
-      grep "${FILE}" "slsactl_${VERSION#v}_checksums.txt" | sha256sum -c
-
-      chmod +x "${FILE}"
-      sudo mv "${FILE}" /usr/local/bin/slsactl
     env:
       VERSION: ${{ inputs.version }}
       REPO: github.com/rancherlabs/slsactl

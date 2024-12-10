@@ -2,6 +2,13 @@ name: Test Actions
 
 on:
   push:
+    tags-ignore:
+      # Ignore release tags, as the install-slsactl will probably
+      # be executed before the release takes place, causing it to
+      # fail as it will try to download the binaries of the current
+      # release, which may or may not be available.      
+      - 'v*'
+
   pull_request:
   workflow_dispatch:
 
