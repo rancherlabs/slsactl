@@ -90,8 +90,10 @@ runs:
 
       if sudo -l &> /dev/null; then
         sudo mv "${FILE}" /usr/local/bin/slsactl
+        sudo rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.pem" "slsactl_${VERSION#v}_checksums.txt.sig"
       else
         mv "${FILE}" /usr/local/bin/slsactl
+        rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.pem" "slsactl_${VERSION#v}_checksums.txt.sig"
       fi
     env:
       VERSION: ${{ inputs.version }}
