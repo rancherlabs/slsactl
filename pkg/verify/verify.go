@@ -119,6 +119,12 @@ func certIdentity(imageName string) (string, error) {
 	if strings.Contains(imageName, "rke2") {
 		ref = strings.Replace(d[1], "-rke2", "&#43;rke2", 1)
 	}
+
+	// neuvector images don't have "v" prefix like its Git tags
+	if strings.Contains(imageName, "neuvector") {
+		ref = "v" + ref
+	}
+
 	for _, suffix := range archSuffixes {
 		if strings.HasSuffix(ref, suffix) {
 			ref = strings.TrimSuffix(ref, suffix)
