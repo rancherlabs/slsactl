@@ -24,6 +24,14 @@ var imageRepo = map[string]string{
 	"rancher/hardened-cni-plugins":            "rancher/image-build-cni-plugins",
 	"rancher/nginx-ingress-controller":        "rancher/ingress-nginx",
 	"rancher/rancher":                         "rancher/rancher-prime",
+	"rancher/neuvector-manager":               "neuvector/manager",
+	"rancher/neuvector-controller":            "neuvector/neuvector",
+	"rancher/neuvector-enforcer":              "neuvector/neuvector",
+	"rancher/neuvector-scanner":               "neuvector/scanner",
+	"rancher/neuvector-prometheus-exporter":   "neuvector/prometheus-exporter",
+	"rancher/neuvector-registry-adapter":      "neuvector/registry-adapter",
+	"rancher/neuvector-updater":               "neuvector/updater",
+	"rancher/neuvector-compliance-config":     "neuvector/compliance-config",
 }
 
 var obs = map[string]struct{}{
