@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/google/go-containerregistry/pkg/logs"
+	cosign "github.com/rancherlabs/slsactl/internal/cosign"
 	"github.com/sigstore/cosign/v2/cmd/cosign/cli/options"
 	"github.com/sigstore/cosign/v2/cmd/cosign/cli/verify"
 )
@@ -67,9 +68,24 @@ func verifyObs(ctx context.Context, image string) error {
 
 func verifyKeyless(ctx context.Context, image string) error {
 	slog.Info("GHA keyless verification")
-	certIdentity, err := certIdentity(image)
+	var certIdentity string
+	var err error
+
+	repo, ref, err := getImageRepoRef(image)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to parse image name: %w", err)
+	}
+
+	if mutable, ok := mutableRepo[repo+":"+ref]; ok && mutable {
+		certIdentity, err = getMutableCertIdentity(ctx, image)
+		if err != nil {
+			return err
+		}
+	} else {
+		certIdentity, err = getCertIdentity(image)
+		if err != nil {
+			return err
+		}
 	}
 
 	fmt.Println("identity:", certIdentity)
@@ -91,9 +107,9 @@ func verifyKeyless(ctx context.Context, image string) error {
 	return v.Exec(ctx, []string{image})
 }
 
-func certIdentity(imageName string) (string, error) {
+func getImageRepoRef(imageName string) (string, string, error) {
 	if len(imageName) < 5 {
-		return "", fmt.Errorf("invalid image name: %q", imageName)
+		return "", "", fmt.Errorf("invalid image name: %q", imageName)
 	}
 
 	if strings.Contains(imageName, "@") {
@@ -103,21 +119,59 @@ func certIdentity(imageName string) (string, error) {
 
 	d := strings.Split(imageName, ":")
 	if len(d) < 2 || len(d[1]) == 0 {
-		return "", fmt.Errorf("missing image tag: %q", imageName)
+		return "", "", fmt.Errorf("missing image tag: %q", imageName)
 	}
 
 	names := strings.Split(d[0], "/")
 	if len(names) < 2 {
-		return "", fmt.Errorf("unsupported image name: %q", imageName)
+		return "", "", fmt.Errorf("unsupported image name: %q", imageName)
 	}
-
 	repo := strings.Join(names[len(names)-2:], "/")
 	ref := d[1]
+
+	return repo, ref, nil
+}
+
+func getMutableCertIdentity(ctx context.Context, imageName string) (string, error) {
+	var ref string
+	var realref interface{}
+	var ok bool
+
+	repo, _, err := getImageRepoRef(imageName)
+	if err != nil {
+		return "", fmt.Errorf("failed to parse image name: %w", err)
+	}
+
+	data, err := cosign.GetCosignCertData(ctx, imageName)
+	if err != nil {
+		return "", err
+	}
+	if len(data.BuildDefinition.ResolvedDependencies) == 0 {
+		return "", fmt.Errorf("no resolved dependencies field in cert data: %q", imageName)
+	}
+	if realref, ok = data.BuildDefinition.ResolvedDependencies[0].Annotations["ref"]; !ok {
+		return "", fmt.Errorf("no ref field in cert data: %q", imageName)
+	}
+	if ref, ok = realref.(string); !ok {
+		return "", fmt.Errorf("ref field is invalid in cert data: %q", imageName)
+	}
+
+	// Override repo
+	repo = overrideRepo(repo)
+
+	return fmt.Sprintf("https://github.com/%s/.github/workflows/release.yml@%s", repo, ref), nil
+}
+
+func getCertIdentity(imageName string) (string, error) {
+	repo, ref, err := getImageRepoRef(imageName)
+	if err != nil {
+		return "", fmt.Errorf("failed to parse image name: %w", err)
+	}
 
 	// RKE2 images have container image tags <VERSION>-rke2r1 which are
 	// generated from Git tags <VERSION>+rke2r1.
 	if strings.Contains(imageName, "rke2") {
-		ref = strings.Replace(d[1], "-rke2", "&#43;rke2", 1)
+		ref = strings.Replace(ref, "-rke2", "&#43;rke2", 1)
 	}
 
 	// neuvector images don't have "v" prefix like its Git tags
