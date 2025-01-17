@@ -34,6 +34,10 @@ var imageRepo = map[string]string{
 	"rancher/neuvector-compliance-config":     "neuvector/compliance-config",
 }
 
+var mutableRepo = map[string]bool{
+	"rancher/neuvector-scanner:6": true,
+}
+
 var obs = map[string]struct{}{
 	"rancher/elemental-operator":            {},
 	"rancher/seedimage-builder":             {},

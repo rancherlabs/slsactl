@@ -4,27 +4,18 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"os"
 	"strings"
 
-	"github.com/google/go-containerregistry/pkg/name"
-	"github.com/in-toto/in-toto-golang/in_toto/slsa_provenance/common"
 	v02 "github.com/in-toto/in-toto-golang/in_toto/slsa_provenance/v0.2"
-	v1 "github.com/in-toto/in-toto-golang/in_toto/slsa_provenance/v1"
+	cosign "github.com/rancherlabs/slsactl/internal/cosign"
 	"github.com/rancherlabs/slsactl/internal/provenance"
-	"github.com/sigstore/cosign/v2/pkg/cosign"
-	certificate "github.com/sigstore/sigstore-go/pkg/fulcio/certificate"
 )
 
-var (
-	// builderID defines the builder ID when the provenance has been modified.
-	builderID = "https://github.com/rancherlabs/slsactl/tree/main/buildtypes/buildkit-gha/v1"
-	// buildKitV1 holds the buildType supported for provenance enrichment.
-	buildKitV1 = "https://mobyproject.org/buildkit@v1"
-)
+// buildKitV1 holds the buildType supported for provenance enrichment.
+var buildKitV1 = "https://mobyproject.org/buildkit@v1"
 
 func provenanceCmd(img, format, platform string) error {
 	var data bytes.Buffer
@@ -62,7 +53,7 @@ func provenanceCmd(img, format, platform string) error {
 			return fmt.Errorf("image builtType not supported: %q", predicate.BuildType)
 		}
 
-		override, err := cosignCertData(img)
+		override, err := cosign.GetCosignCertData(context.Background(), img)
 		if err != nil {
 			return err
 		}
@@ -85,58 +76,4 @@ func printOutput(w io.Writer, v interface{}) error {
 
 	_, err = fmt.Fprintln(w, string(outData))
 	return err
-}
-
-func cosignCertData(img string) (*v1.ProvenancePredicate, error) {
-	ref, err := name.ParseReference(img, name.StrictValidation)
-	if err != nil {
-		return nil, fmt.Errorf("failed strict validation (image name should be fully qualified): %w", err)
-	}
-
-	payloads, err := cosign.FetchSignaturesForReference(context.Background(), ref)
-	if err != nil {
-		return nil, fmt.Errorf("failed to fetch image signatures: %w", err)
-	}
-
-	if len(payloads) == 0 {
-		return nil, errors.New("no payloads found for image")
-	}
-
-	var inparams provenance.InternalParameters
-	var commitID, commitRef, repoURL string
-
-	for _, ext := range payloads[0].Cert.Extensions {
-		switch {
-		case ext.Id.Equal(certificate.OIDSourceRepositoryDigest):
-			certificate.ParseDERString(ext.Value, &commitID)
-		case ext.Id.Equal(certificate.OIDSourceRepositoryURI):
-			certificate.ParseDERString(ext.Value, &repoURL)
-		case ext.Id.Equal(certificate.OIDSourceRepositoryRef):
-			certificate.ParseDERString(ext.Value, &commitRef)
-		case ext.Id.Equal(certificate.OIDBuildTrigger):
-			certificate.ParseDERString(ext.Value, &inparams.Trigger)
-		case ext.Id.Equal(certificate.OIDRunInvocationURI):
-			certificate.ParseDERString(ext.Value, &inparams.InvocationUri)
-		}
-	}
-
-	override := &v1.ProvenancePredicate{}
-	override.BuildDefinition.InternalParameters = inparams
-	deps := []v1.ResourceDescriptor{
-		{
-			URI:    repoURL,
-			Digest: common.DigestSet{"gitCommit": commitID},
-		},
-	}
-
-	if commitRef != "" {
-		deps[0].Annotations = map[string]interface{}{
-			"ref": commitRef,
-		}
-	}
-
-	override.BuildDefinition.ResolvedDependencies = deps
-	override.RunDetails.Builder.ID = builderID
-
-	return override, nil
 }
