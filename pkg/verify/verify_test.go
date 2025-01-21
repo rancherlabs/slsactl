@@ -90,13 +90,21 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rocker.local/foo/bar:v0.0.7-build12345",
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7-build12345",
 		},
+		{
+			image: "rancher/neuvector-controller:5.4.2",
+			want:  "https://github.com/neuvector/neuvector/.github/workflows/release.yml@refs/tags/v5.4.2",
+		},
+		{
+			image: "rancher/neuvector-scanner:3.685",
+			want:  "https://github.com/neuvector/scanner/.github/workflows/release.yml@refs/tags/v3.685",
+		},
 	}
 
 	for _, tc := range tests {
 		t.Run(tc.image, func(t *testing.T) {
 			t.Parallel()
 
-			got, err := certIdentity(tc.image)
+			got, err := getCertIdentity(tc.image)
 
 			assert.Equal(t, tc.want, got)
 
