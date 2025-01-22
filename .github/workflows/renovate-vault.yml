@@ -16,6 +16,10 @@ on:
   schedule:
     - cron: '30 4,6 * * *'
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   call-workflow:
     uses: rancher/renovate-config/.github/workflows/renovate.yml@release
