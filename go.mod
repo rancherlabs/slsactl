@@ -7,7 +7,7 @@ toolchain go1.23.5
 require (
 	github.com/anchore/syft v1.17.0
 	github.com/docker/buildx v0.19.1
-	github.com/docker/cli v27.4.0-rc.2+incompatible
+	github.com/docker/cli v27.5.1+incompatible
 	github.com/google/go-containerregistry v0.20.2
 	github.com/in-toto/in-toto-golang v0.9.0
 	github.com/sigstore/cosign/v2 v2.4.1
