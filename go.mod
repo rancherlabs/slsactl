@@ -2,7 +2,7 @@ module github.com/rancherlabs/slsactl
 
 go 1.23
 
-toolchain go1.23.2
+toolchain go1.23.5
 
 require (
 	github.com/anchore/syft v1.17.0
@@ -11,7 +11,7 @@ require (
 	github.com/google/go-containerregistry v0.20.2
 	github.com/in-toto/in-toto-golang v0.9.0
 	github.com/sigstore/cosign/v2 v2.4.1
-	github.com/sigstore/sigstore-go v0.6.2
+	github.com/sigstore/fulcio v1.6.3
 	github.com/stretchr/testify v1.10.0
 )
 
@@ -292,10 +292,10 @@ require (
 	github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 // indirect
 	github.com/shibumi/go-pathspec v1.3.0 // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
-	github.com/sigstore/fulcio v1.6.3 // indirect
 	github.com/sigstore/protobuf-specs v0.3.2 // indirect
 	github.com/sigstore/rekor v1.3.6 // indirect
 	github.com/sigstore/sigstore v1.8.10 // indirect
+	github.com/sigstore/sigstore-go v0.6.2 // indirect
 	github.com/sigstore/timestamp-authority v1.2.2 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/skeema/knownhosts v1.3.0 // indirect
