@@ -7,6 +7,7 @@ import (
 
 // imageRepo holds the mappings between container image and source code repositories.
 var imageRepo = map[string]string{
+	"rancher/fleet-agent":                     "rancher/fleet",
 	"rancher/rke2-runtime":                    "rancher/rke2",
 	"rancher/rke2-cloud-provider":             "rancher/image-build-rke2-cloud-provider",
 	"rancher/hardened-addon-resizer":          "rancher/image-build-addon-resizer",
