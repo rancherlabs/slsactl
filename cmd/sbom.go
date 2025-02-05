@@ -39,6 +39,8 @@ func sbomCmd(img, outformat, platform string) error {
 		spdx = data.LinuxAmd64.SPDX
 	} else if strings.EqualFold(platform, "linux/arm64") && data.LinuxArm64 != nil {
 		spdx = data.LinuxArm64.SPDX
+	} else if strings.EqualFold(platform, "windows/amd64") && data.WindowsAmd64 != nil {
+		spdx = data.WindowsAmd64.SPDX
 	} else if data.SPDX != nil {
 		spdx = *data.SPDX
 	} else {
