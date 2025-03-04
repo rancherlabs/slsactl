@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/anchore/syft v1.20.0
-	github.com/docker/buildx v0.21.1
+	github.com/docker/buildx v0.21.2
 	github.com/docker/cli v28.0.1+incompatible
 	github.com/google/go-containerregistry v0.20.3
 	github.com/in-toto/in-toto-golang v0.9.0
