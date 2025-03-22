@@ -170,7 +170,7 @@ func getCertIdentity(imageName string) (string, error) {
 
 	// RKE2 images have container image tags <VERSION>-rke2r1 which are
 	// generated from Git tags <VERSION>+rke2r1.
-	if strings.Contains(imageName, "rke2") {
+	if strings.HasPrefix(repo, "rancher/rke2") {
 		ref = strings.Replace(ref, "-rke2", "&#43;rke2", 1)
 	}
 
