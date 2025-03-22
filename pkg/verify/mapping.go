@@ -71,3 +71,10 @@ var upstreamImageRepo = map[string]string{
 	"rancher/cluster-api-metal3-controller":      "https://github.com/rancher/clusterapi-forks/.github/workflows/metal3.yaml@refs/heads/main",
 	"rancher/cluster-api-metal3-ipam-controller": "https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main",
 }
+
+// imageSuffixes holds a mapping between image name and the ref suffixes
+// they may have which will need to be trimmed before defining the expected
+// subject identity.
+var imageSuffixes = map[string][]string{
+	"rancher/hardened-multus-cni": {"-arch"},
+}

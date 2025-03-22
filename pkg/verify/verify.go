@@ -179,10 +179,13 @@ func getCertIdentity(imageName string) (string, error) {
 		ref = "v" + ref
 	}
 
-	for _, suffix := range archSuffixes {
-		if strings.HasSuffix(ref, suffix) {
-			ref = strings.TrimSuffix(ref, suffix)
-		}
+	suffixes := archSuffixes
+	if s, ok := imageSuffixes[repo]; ok {
+		suffixes = append(suffixes, s...)
+	}
+
+	for _, suffix := range suffixes {
+		ref = strings.TrimSuffix(ref, suffix)
 	}
 
 	repo = overrideRepo(repo)
