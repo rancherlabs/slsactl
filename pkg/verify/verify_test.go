@@ -15,12 +15,16 @@ func TestCertificateIdentity(t *testing.T) {
 		wantErr string
 	}{
 		{
-			image: "foo/bar:v0.0.7",
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			image: "rancher/rke2:v0.0.7",
+			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7",
 		},
 		{
-			image: "foo/bar:v0.0.7-rke2foo2",
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7&#43;rke2foo2",
+			image: "rancher/rke2:v0.0.7-rke2foo2",
+			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7&#43;rke2foo2",
+		},
+		{
+			image: "rancher/hardened-kubernetes:v1.32.3-rke2r1-build20250312",
+			want:  "https://github.com/rancher/image-build-kubernetes/.github/workflows/release.yml@refs/tags/v1.32.3-rke2r1-build20250312",
 		},
 		{
 			image:   "",
