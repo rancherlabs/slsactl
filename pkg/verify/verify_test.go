@@ -23,6 +23,10 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7&#43;rke2foo2",
 		},
 		{
+			image: "rancher/hardened-multus-cni:v1.32.3-arch",
+			want:  "https://github.com/rancher/image-build-multus/.github/workflows/release.yml@refs/tags/v1.32.3",
+		},
+		{
 			image:   "",
 			wantErr: "invalid image name",
 		},
