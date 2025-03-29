@@ -92,8 +92,8 @@ func verifyKeyless(ctx context.Context, image string) error {
 
 	v := &verify.VerifyCommand{
 		CertVerifyOptions: options.CertVerifyOptions{
-			CertIdentity:   certIdentity,
-			CertOidcIssuer: "https://token.actions.githubusercontent.com",
+			CertIdentityRegexp: certIdentity,
+			CertOidcIssuer:     "https://token.actions.githubusercontent.com",
 		},
 		CheckClaims:   true,
 		HashAlgorithm: hashAlgo,
@@ -195,7 +195,7 @@ func getCertIdentity(imageName string) (string, error) {
 		return identity, nil
 	}
 
-	return fmt.Sprintf("https://github.com/%s/.github/workflows/release.yml@refs/tags/%s", repo, ref), nil
+	return fmt.Sprintf("^https://github.com/%s/.github/workflows/release.(yml|yaml)@refs/tags/%s$", repo, ref), nil
 }
 
 func overrideRepo(repo string) string {

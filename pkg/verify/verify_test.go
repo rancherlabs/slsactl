@@ -16,19 +16,19 @@ func TestCertificateIdentity(t *testing.T) {
 	}{
 		{
 			image: "rancher/rke2:v0.0.7",
-			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rancher/rke2:v0.0.7-rke2foo2",
-			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7&#43;rke2foo2",
+			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7&#43;rke2foo2$",
 		},
 		{
 			image: "rancher/hardened-kubernetes:v1.32.3-rke2r1-build20250312",
-			want:  "https://github.com/rancher/image-build-kubernetes/.github/workflows/release.yml@refs/tags/v1.32.3-rke2r1-build20250312",
+			want:  "^https://github.com/rancher/image-build-kubernetes/.github/workflows/release.(yml|yaml)@refs/tags/v1.32.3-rke2r1-build20250312$",
 		},
 		{
 			image: "rancher/hardened-multus-cni:v1.32.3-arch",
-			want:  "https://github.com/rancher/image-build-multus/.github/workflows/release.yml@refs/tags/v1.32.3",
+			want:  "^https://github.com/rancher/image-build-multus/.github/workflows/release.(yml|yaml)@refs/tags/v1.32.3$",
 		},
 		{
 			image:   "",
@@ -48,7 +48,7 @@ func TestCertificateIdentity(t *testing.T) {
 		},
 		{
 			image: "bar/foo:v3.14@sha256:a32d91ba265e6fcb1963c28bb688d0b799a1966f30f6ea17d8eca1d436bbc267",
-			want:  "https://github.com/bar/foo/.github/workflows/release.yml@refs/tags/v3.14",
+			want:  "^https://github.com/bar/foo/.github/workflows/release.(yml|yaml)@refs/tags/v3.14$",
 		},
 		{
 			image:   "foo:bar",
@@ -56,55 +56,55 @@ func TestCertificateIdentity(t *testing.T) {
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7",
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/bar/foo/bar:v3.14",
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v3.14",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v3.14$",
 		},
 		{
 			image: "rancher/rke2-runtime:v0.0.7",
-			want:  "https://github.com/rancher/rke2/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7-amd64", // single tag may yield arch-specific images
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7-arm64", // single tag may yield arch-specific images
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7-s390x", // single tag may yield arch-specific images
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7-windows-amd64", // single tag may yield arch-specific images
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7-windows-arm64", // single tag may yield arch-specific images
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7-linux-amd64", // single tag may yield arch-specific images
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7-linux-arm64", // single tag may yield arch-specific images
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
 			image: "rocker.local/foo/bar:v0.0.7-build12345",
-			want:  "https://github.com/foo/bar/.github/workflows/release.yml@refs/tags/v0.0.7-build12345",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7-build12345$",
 		},
 		{
 			image: "rancher/neuvector-controller:5.4.2",
-			want:  "https://github.com/neuvector/neuvector/.github/workflows/release.yml@refs/tags/v5.4.2",
+			want:  "^https://github.com/neuvector/neuvector/.github/workflows/release.(yml|yaml)@refs/tags/v5.4.2$",
 		},
 		{
 			image: "rancher/neuvector-scanner:3.685",
-			want:  "https://github.com/neuvector/scanner/.github/workflows/release.yml@refs/tags/v3.685",
+			want:  "^https://github.com/neuvector/scanner/.github/workflows/release.(yml|yaml)@refs/tags/v3.685$",
 		},
 	}
 
