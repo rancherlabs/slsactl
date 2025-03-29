@@ -57,13 +57,12 @@ func Generate(img, outformat string, writer io.Writer) error {
 	}
 
 	var enc sbom.FormatEncoder
-	if outformat == "cyclonedxjson" {
+	switch outformat {
+	case "cyclonedxjson":
 		enc, _ = cyclonedxjson.NewFormatEncoderWithConfig(cyclonedxjson.DefaultEncoderConfig())
-	} else if outformat == "spdxjson" {
+	case "spdxjson":
 		enc, _ = spdxjson.NewFormatEncoderWithConfig(spdxjson.DefaultEncoderConfig())
-	}
-
-	if enc == nil {
+	default:
 		return fmt.Errorf("invalid format %s: failed to create encoder", outformat)
 	}
 
