@@ -1,31 +1,42 @@
+version: "2"
 linters:
-  enable-all: true
+  default: all
   disable:
-  - exportloopref
-  - depguard
-  - wsl
-  - forbidigo
-  - gci
-  - wrapcheck
-  - varnamelen
-  - tagliatelle
-  - mnd
-  - gochecknoglobals
-  - nlreturn
-  - testpackage
-  - exhaustruct
-  - funlen
-  - testifylint
-  - cyclop
-  - copyloopvar
-  - err113
-  - gosimple
-  - lll
-  - gocritic
-  - nestif
-  - errcheck
-  - revive
-  - forcetypeassert
-  - stylecheck
-  - tparallel
-  - paralleltest
+    - copyloopvar
+    - cyclop
+    - depguard
+    - err113
+    - errcheck
+    - exhaustruct
+    - forbidigo
+    - forcetypeassert
+    - funlen
+    - gochecknoglobals
+    - gocritic
+    - lll
+    - mnd
+    - nestif
+    - nlreturn
+    - paralleltest
+    - revive
+    - tagliatelle
+    - testifylint
+    - testpackage
+    - tparallel
+    - varnamelen
+    - wrapcheck
+    - wsl
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
