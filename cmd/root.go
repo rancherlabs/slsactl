@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/rancherlabs/slsactl/internal/landlock"
 )
 
 type command func(args []string) error
@@ -26,6 +28,8 @@ Available commands:
 )
 
 func Exec(args []string) {
+	landlock.EnforceOrDie()
+
 	if len(args) < 2 {
 		showUsage()
 	}
