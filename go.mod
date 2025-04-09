@@ -8,6 +8,7 @@ require (
 	github.com/docker/cli v28.0.4+incompatible
 	github.com/google/go-containerregistry v0.20.3
 	github.com/in-toto/in-toto-golang v0.9.0
+	github.com/landlock-lsm/go-landlock v0.0.0-20250303204525-1544bccde3a3
 	github.com/sigstore/cosign/v2 v2.5.0
 	github.com/sigstore/fulcio v1.6.6
 	github.com/stretchr/testify v1.10.0
@@ -402,6 +403,7 @@ require (
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20240228011516-70dd3763d340 // indirect
 	k8s.io/utils v0.0.0-20241210054802-24370beab758 // indirect
+	kernel.org/pub/linux/libs/security/libcap/psx v1.2.73 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/release-utils v0.11.1 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
