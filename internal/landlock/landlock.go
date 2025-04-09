@@ -10,7 +10,7 @@ import (
 	"github.com/landlock-lsm/go-landlock/landlock"
 )
 
-// EnforceOrDie checks where or not to enforce the landlock policy, and if so,
+// EnforceOrDie checks whether or not to enforce the landlock policy, and if so,
 // apply it. Any error will result in os.Exit.
 func EnforceOrDie() {
 	val, ok := os.LookupEnv("LANDLOCK_MODE")
