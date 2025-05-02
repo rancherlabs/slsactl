@@ -3,9 +3,9 @@ module github.com/rancherlabs/slsactl
 go 1.24.1
 
 require (
-	github.com/anchore/syft v1.22.0
+	github.com/anchore/syft v1.23.1
 	github.com/docker/buildx v0.23.0
-	github.com/docker/cli v28.0.4+incompatible
+	github.com/docker/cli v28.1.1+incompatible
 	github.com/google/go-containerregistry v0.20.3
 	github.com/in-toto/in-toto-golang v0.9.0
 	github.com/landlock-lsm/go-landlock v0.0.0-20250303204525-1544bccde3a3
@@ -73,7 +73,7 @@ require (
 	github.com/anchore/go-sync v0.0.0-20250326131806-4eda43a485b6 // indirect
 	github.com/anchore/go-version v1.2.2-0.20200701162849-18adb9c92b9b // indirect
 	github.com/anchore/packageurl-go v0.1.1-0.20250220190351-d62adb6e1115 // indirect
-	github.com/anchore/stereoscope v0.1.2 // indirect
+	github.com/anchore/stereoscope v0.1.4 // indirect
 	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/aquasecurity/go-pep440-version v0.0.1 // indirect
@@ -118,7 +118,7 @@ require (
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/chrismellard/docker-credential-acr-env v0.0.0-20230304212654-82a0ddb27589 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
-	github.com/cloudflare/circl v1.6.0 // indirect
+	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/cockroachdb/apd/v3 v3.2.1 // indirect
 	github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be // indirect
 	github.com/containerd/cgroups/v3 v3.0.5 // indirect
@@ -145,12 +145,11 @@ require (
 	github.com/dimchansky/utfbom v1.1.1 // indirect
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/distribution v2.8.3+incompatible // indirect
-	github.com/docker/docker v28.0.4+incompatible // indirect
+	github.com/docker/docker v28.1.1+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.9.3 // indirect
 	github.com/docker/go v1.5.1-1 // indirect
 	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-events v0.0.0-20241017185736-969db071c880 // indirect
-	github.com/docker/go-metrics v0.0.1 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/dsnet/compress v0.0.2-0.20230904184137-39efe44ab707 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
@@ -164,12 +163,12 @@ require (
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/fvbommel/sortorder v1.1.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
 	github.com/github/go-spdx/v2 v2.3.2 // indirect
 	github.com/go-chi/chi v4.1.2+incompatible // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
 	github.com/go-git/go-billy/v5 v5.6.2 // indirect
-	github.com/go-git/go-git/v5 v5.14.0 // indirect
+	github.com/go-git/go-git/v5 v5.16.0 // indirect
 	github.com/go-ini/ini v1.67.0 // indirect
 	github.com/go-jose/go-jose/v3 v3.0.4 // indirect
 	github.com/go-jose/go-jose/v4 v4.0.5 // indirect
@@ -240,8 +239,9 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
-	github.com/mholt/archives v0.1.0 // indirect
+	github.com/mholt/archives v0.1.1 // indirect
 	github.com/miekg/pkcs11 v1.1.1 // indirect
+	github.com/minio/minlz v1.0.0 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
@@ -252,6 +252,7 @@ require (
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/locker v1.0.1 // indirect
 	github.com/moby/patternmatcher v0.6.0 // indirect
+	github.com/moby/sys/atomicwriter v0.1.0 // indirect
 	github.com/moby/sys/mountinfo v0.7.2 // indirect
 	github.com/moby/sys/sequential v0.6.0 // indirect
 	github.com/moby/sys/signal v0.7.1 // indirect
@@ -266,7 +267,7 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/nozzle/throttler v0.0.0-20180817012639-2ea982251481 // indirect
 	github.com/nwaples/rardecode v1.1.3 // indirect
-	github.com/nwaples/rardecode/v2 v2.0.0-beta.4.0.20241112120701-034e449c6e78 // indirect
+	github.com/nwaples/rardecode/v2 v2.1.0 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/oleiade/reflections v1.1.0 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
