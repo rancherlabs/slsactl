@@ -1,4 +1,4 @@
-GOLANGCI_VERSION ?= v2.0.2
+GOLANGCI_VERSION ?= v2.1.5
 TOOLS_BIN := $(shell mkdir -p build/tools && realpath build/tools)
 
 VERSION = $(shell git tag -l --contains HEAD | head -n 1)
