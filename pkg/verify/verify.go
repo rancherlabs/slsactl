@@ -169,9 +169,10 @@ func getCertIdentity(imageName string) (string, error) {
 	}
 
 	// RKE2 images have container image tags <VERSION>-rke2r1 which are
-	// generated from Git tags <VERSION>+rke2r1.
+	// generated from Git tags <VERSION>+rke2r1. Around version v1.33.0,
+	// the &#43; was replaced with +.
 	if strings.HasPrefix(repo, "rancher/rke2") {
-		ref = strings.Replace(ref, "-rke2", "&#43;rke2", 1)
+		ref = strings.Replace(ref, "-rke2", "(\\+|&#43;)rke2", 1)
 	}
 
 	// neuvector images don't have "v" prefix like its Git tags
