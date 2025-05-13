@@ -20,7 +20,7 @@ func TestCertificateIdentity(t *testing.T) {
 		},
 		{
 			image: "rancher/rke2:v0.0.7-rke2foo2",
-			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7&#43;rke2foo2$",
+			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7(\\+|&#43;)rke2foo2$",
 		},
 		{
 			image: "rancher/hardened-kubernetes:v1.32.3-rke2r1-build20250312",
