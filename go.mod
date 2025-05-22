@@ -6,7 +6,7 @@ require (
 	github.com/anchore/syft v1.24.0
 	github.com/docker/buildx v0.24.0
 	github.com/docker/cli v28.1.1+incompatible
-	github.com/google/go-containerregistry v0.20.4-0.20250225234217-098045d5e61f
+	github.com/google/go-containerregistry v0.20.4
 	github.com/in-toto/in-toto-golang v0.9.0
 	github.com/landlock-lsm/go-landlock v0.0.0-20250303204525-1544bccde3a3
 	github.com/sigstore/cosign/v2 v2.5.0
@@ -379,13 +379,13 @@ require (
 	golang.org/x/exp v0.0.0-20250408133849-7e4ce0ab07d0 // indirect
 	golang.org/x/mod v0.24.0 // indirect
 	golang.org/x/net v0.40.0 // indirect
-	golang.org/x/oauth2 v0.29.0 // indirect
+	golang.org/x/oauth2 v0.30.0 // indirect
 	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/term v0.32.0 // indirect
 	golang.org/x/text v0.25.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
-	golang.org/x/tools v0.32.0 // indirect
+	golang.org/x/tools v0.33.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	google.golang.org/api v0.230.0 // indirect
 	google.golang.org/genproto v0.0.0-20250303144028-a0af3efb3deb // indirect
