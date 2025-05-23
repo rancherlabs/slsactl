@@ -3,7 +3,7 @@ module github.com/rancherlabs/slsactl
 go 1.24.1
 
 require (
-	github.com/anchore/syft v1.26.0
+	github.com/anchore/syft v1.26.1
 	github.com/docker/buildx v0.24.0
 	github.com/docker/cli v28.1.1+incompatible
 	github.com/google/go-containerregistry v0.20.5
