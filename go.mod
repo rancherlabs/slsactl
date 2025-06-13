@@ -3,7 +3,7 @@ module github.com/rancherlabs/slsactl
 go 1.24.1
 
 require (
-	github.com/anchore/syft v1.27.0
+	github.com/anchore/syft v1.27.1
 	github.com/docker/buildx v0.24.0
 	github.com/docker/cli v28.2.2+incompatible
 	github.com/google/go-containerregistry v0.20.5
@@ -73,7 +73,7 @@ require (
 	github.com/anchore/go-sync v0.0.0-20250326131806-4eda43a485b6 // indirect
 	github.com/anchore/go-version v1.2.2-0.20200701162849-18adb9c92b9b // indirect
 	github.com/anchore/packageurl-go v0.1.1-0.20250220190351-d62adb6e1115 // indirect
-	github.com/anchore/stereoscope v0.1.5-0.20250604132324-344e29f37f05 // indirect
+	github.com/anchore/stereoscope v0.1.5 // indirect
 	github.com/andybalholm/brotli v1.1.2-0.20250424173009-453214e765f3 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/aquasecurity/go-pep440-version v0.0.1 // indirect
