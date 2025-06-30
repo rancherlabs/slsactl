@@ -70,7 +70,9 @@ func writeContent(img, format string, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	if err := cmd.Initialize(&flags.ClientOptions{}); err != nil {
+
+	err = cmd.Initialize(&flags.ClientOptions{})
+	if err != nil {
 		return err
 	}
 
