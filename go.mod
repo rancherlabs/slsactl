@@ -5,7 +5,7 @@ go 1.24.1
 require (
 	github.com/anchore/syft v1.28.0
 	github.com/docker/buildx v0.25.0
-	github.com/docker/cli v28.3.1+incompatible
+	github.com/docker/cli v28.3.2+incompatible
 	github.com/google/go-containerregistry v0.20.6
 	github.com/in-toto/in-toto-golang v0.9.0
 	github.com/landlock-lsm/go-landlock v0.0.0-20250303204525-1544bccde3a3
