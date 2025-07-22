@@ -49,7 +49,7 @@ func Verify(image string) error {
 }
 
 func verifyObs(ctx context.Context, image string) error {
-	slog.Debug("OBS verification")
+	slog.DebugContext(ctx, "OBS verification")
 	v := &verify.VerifyCommand{
 		KeyRef:        obsKey,
 		RekorURL:      options.DefaultRekorURL,
@@ -67,7 +67,7 @@ func verifyObs(ctx context.Context, image string) error {
 }
 
 func verifyKeyless(ctx context.Context, image string) error {
-	slog.Info("GHA keyless verification")
+	slog.InfoContext(ctx, "GHA keyless verification")
 	var certIdentity string
 	var err error
 
