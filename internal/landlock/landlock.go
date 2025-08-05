@@ -22,12 +22,12 @@ func EnforceOrDie() {
 
 	switch {
 	case strings.EqualFold(val, "on"):
-		slog.Debug("landlock enabled") //nolint: noctx
+		slog.Debug("landlock enabled")
 	case strings.EqualFold(val, "besteffort"):
 		cfg = cfg.BestEffort()
-		slog.Debug("landlock set to best effort") //nolint: noctx
+		slog.Debug("landlock set to best effort")
 	default:
-		slog.Debug("landlock disabled") //nolint: noctx
+		slog.Debug("landlock disabled")
 		return
 	}
 
