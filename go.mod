@@ -13,7 +13,7 @@ require (
 	github.com/landlock-lsm/go-landlock v0.0.0-20250303204525-1544bccde3a3
 	github.com/sigstore/cosign/v2 v2.5.3
 	github.com/sigstore/fulcio v1.7.1
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.0
 )
 
 require (
