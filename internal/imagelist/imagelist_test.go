@@ -61,6 +61,24 @@ func TestProcess(t *testing.T) {
 			},
 		},
 		{
+			name: "ignore commented lines",
+			url:  "https://.../image.txt",
+			setup: func(m *DepsMock) {
+				m.On("Fetch", "https://.../image.txt").Return(
+					io.NopCloser(bytes.NewReader(
+						[]byte("\n# some:image\nimage:v1\n"),
+					)), nil)
+
+				m.On("Process", "image:v1").Return(Entry{
+					Image: "image:v1"})
+			},
+			want: &Result{
+				Entries: []Entry{
+					{Image: "image:v1"},
+				},
+			},
+		},
+		{
 			name: "no images found",
 			url:  "https://.../image.txt",
 			setup: func(m *DepsMock) {

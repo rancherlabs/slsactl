@@ -57,7 +57,7 @@ func (p *Processor) Process(url string) (*Result, error) {
 	for scanner.Scan() {
 		image := strings.TrimSpace(scanner.Text())
 
-		if len(image) == 0 {
+		if len(image) == 0 || strings.HasPrefix(image, "#") {
 			continue
 		}
 
