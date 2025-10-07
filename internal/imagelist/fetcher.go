@@ -7,14 +7,13 @@ import (
 )
 
 type Fetcher interface {
-	Fetch(string) (io.ReadCloser, error)
+	Fetch(url string) (io.ReadCloser, error)
 }
 
-type HttpFetcher struct {
-}
+type HttpFetcher struct{}
 
 func (h *HttpFetcher) Fetch(url string) (io.ReadCloser, error) {
-	resp, err := http.Get(url)
+	resp, err := http.Get(url) //nolint
 	if err != nil {
 		return nil, err
 	}

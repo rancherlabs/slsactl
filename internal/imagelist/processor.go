@@ -5,7 +5,7 @@ import (
 )
 
 type ImageProcessor interface {
-	Process(string) Entry
+	Process(img string) Entry
 }
 
 type imageVerifier struct {

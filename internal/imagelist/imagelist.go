@@ -17,6 +17,11 @@ var (
 
 const maxProcessingSizeInBytes = 5 * (1 << 20) // 5MB
 
+type Processor struct {
+	ip      ImageProcessor
+	fetcher Fetcher
+}
+
 func NewProcessor(registry string) *Processor {
 	if !strings.HasSuffix(registry, "/") {
 		registry = registry + "/"
@@ -26,11 +31,6 @@ func NewProcessor(registry string) *Processor {
 		ip:      &imageVerifier{registry: registry},
 		fetcher: new(HttpFetcher),
 	}
-}
-
-type Processor struct {
-	ip      ImageProcessor
-	fetcher Fetcher
 }
 
 func (p *Processor) Process(url string) (*Result, error) {
@@ -68,7 +68,8 @@ func (p *Processor) Process(url string) (*Result, error) {
 		result.Entries = append(result.Entries, entry)
 	}
 
-	if err := scanner.Err(); err != nil {
+	err = scanner.Err()
+	if err != nil {
 		return nil, fmt.Errorf("error found scanning image list: %w", err)
 	}
 

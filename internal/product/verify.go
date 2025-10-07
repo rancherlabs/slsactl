@@ -13,13 +13,6 @@ import (
 	"github.com/rancherlabs/slsactl/internal/imagelist"
 )
 
-const maxDownloadSize = 5 * (1 << 20) // 5MB
-
-var (
-	versionRegex      = regexp.MustCompile(`^v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]d*)$`)
-	ErrInvalidVersion = errors.New("invalid version")
-)
-
 type productInfo struct {
 	description      string
 	imagesUrl        string
@@ -27,16 +20,23 @@ type productInfo struct {
 }
 
 var (
+	ErrInvalidVersion = errors.New("invalid version")
+
+	versionRegex = regexp.MustCompile(`^v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]d*)$`)
+
 	productMapping = map[string]productInfo{
 		"rancher-prime": {
+			description:      "SUSE Rancher Prime",
 			imagesUrl:        "https://github.com/rancher/rancher/releases/download/%s/rancher-images.txt",
 			windowsImagesUrl: "https://github.com/rancher/rancher/releases/download/%s/rancher-windows-images.txt",
 		},
 		"storage": {
-			imagesUrl: "https://github.com/longhorn/longhorn/releases/download/%s/longhorn-images.txt",
+			description: "SUSE Storage",
+			imagesUrl:   "https://github.com/longhorn/longhorn/releases/download/%s/longhorn-images.txt",
 		},
 		"virtualization": {
-			imagesUrl: "https://github.com/harvester/harvester/releases/download/%s/harvester-images-list-amd64.txt",
+			description: "SUSE Virtualization",
+			imagesUrl:   "https://github.com/harvester/harvester/releases/download/%s/harvester-images-list-amd64.txt",
 		},
 	}
 )
@@ -135,7 +135,7 @@ func saveOutput(result *imagelist.Result) error {
 	}
 
 	fn := fmt.Sprintf("%s_%s", result.Product, result.Version)
-	err = os.WriteFile(fn, data, 0o644)
+	err = os.WriteFile(fn, data, 0o600)
 	if err != nil {
 		return fmt.Errorf("failed to write file: %w", err)
 	}
