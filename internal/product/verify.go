@@ -2,9 +2,11 @@ package product
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
+	"regexp"
 	"strings"
 	"text/tabwriter"
 
@@ -12,6 +14,11 @@ import (
 )
 
 const maxDownloadSize = 5 * (1 << 20) // 5MB
+
+var (
+	versionRegex      = regexp.MustCompile(`^v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]d*)$`)
+	ErrInvalidVersion = errors.New("invalid version")
+)
 
 type productInfo struct {
 	description      string
@@ -35,6 +42,10 @@ var (
 )
 
 func Verify(registry, name, version string, summary bool, outputFile bool) error {
+	if !versionRegex.MatchString(version) {
+		return fmt.Errorf("%w: %s", ErrInvalidVersion, version)
+	}
+
 	info, found := productMapping[name]
 	if !found {
 		var names []string
