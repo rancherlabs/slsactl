@@ -46,6 +46,20 @@ var obs = map[string]struct{}{
 	"rancher/elemental-channel/sl-micro":    {},
 	"rancher/elemental-operator-crds-chart": {},
 	"rancher/elemental-operator-chart":      {},
+	"bci/bci-base":                          {},
+	"suse/sles/15.7/cdi-cloner":             {},
+	"suse/sles/15.7/cdi-controller":         {},
+	"suse/sles/15.7/cdi-importer":           {},
+	"suse/sles/15.7/cdi-operator":           {},
+	"suse/sles/15.7/cdi-uploadproxy":        {},
+	"suse/sles/15.7/cdi-uploadserver":       {},
+	"suse/sles/15.7/libguestfs-tools":       {},
+	"suse/sles/15.7/virt-api":               {},
+	"suse/sles/15.7/virt-controller":        {},
+	"suse/sles/15.7/virt-handler":           {},
+	"suse/sles/15.7/virt-launcher":          {},
+	"suse/sles/15.7/virt-operator":          {},
+	"suse/vmdp/vmdp":                        {},
 }
 
 func obsSigned(image string) bool {
