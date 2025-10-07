@@ -125,6 +125,24 @@ func TestProcess(t *testing.T) {
 			},
 			wantErr: ErrCannotFetchURL,
 		},
+		{
+			name: "drop docker.io prefix",
+			url:  "https://.../image.txt",
+			setup: func(m *DepsMock) {
+				m.On("Fetch", "https://.../image.txt").Return(
+					io.NopCloser(bytes.NewReader(
+						[]byte("docker.io/image:v1\n"),
+					)), nil)
+
+				m.On("Process", "image:v1").Return(Entry{
+					Image: "image:v1"})
+			},
+			want: &Result{
+				Entries: []Entry{
+					{Image: "image:v1"},
+				},
+			},
+		},
 	}
 
 	for _, tc := range tests {

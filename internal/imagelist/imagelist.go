@@ -61,6 +61,8 @@ func (p *Processor) Process(url string) (*Result, error) {
 			continue
 		}
 
+		image = strings.TrimPrefix(image, "docker.io/")
+
 		fmt.Println("processing", image)
 		entry := p.ip.Process(image)
 		result.Entries = append(result.Entries, entry)
