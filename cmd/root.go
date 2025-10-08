@@ -15,6 +15,7 @@ var (
 		"download": downloadCmd,
 		"version":  versionCmd,
 		"verify":   verifyCmd,
+		"product":  productCmd,
 	}
 
 	usagef = `usage: %[1]s <command>
@@ -23,6 +24,7 @@ Available commands:
   download:   Download artefacts from container image
   verify:     Verifies the container image's signature
   version:    Shows %[1]s version and build information
+  product:    Handle product level requests
 
 `
 )
