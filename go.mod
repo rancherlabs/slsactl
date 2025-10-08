@@ -2,7 +2,7 @@ module github.com/rancherlabs/slsactl
 
 go 1.24.6
 
-toolchain go1.25.1
+toolchain go1.25.2
 
 require (
 	github.com/anchore/syft v1.33.0
