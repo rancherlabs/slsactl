@@ -30,15 +30,15 @@ func TestProcess(t *testing.T) {
 						[]byte("image:v1\nimage2:v2\n"),
 					)), nil)
 
-				m.On("Process", "image:v1").
-					Return(Entry{Image: "image:v1"})
-				m.On("Process", "image2:v2").
-					Return(Entry{Image: "image2:v2"})
+				m.On("Process", "some.registry/image:v1").
+					Return(Entry{Image: "some.registry/image:v1"})
+				m.On("Process", "some.registry/image2:v2").
+					Return(Entry{Image: "some.registry/image2:v2"})
 			},
 			want: &Result{
 				Entries: []Entry{
-					{Image: "image:v1"},
-					{Image: "image2:v2"},
+					{Image: "some.registry/image:v1"},
+					{Image: "some.registry/image2:v2"},
 				},
 			},
 		},
@@ -51,12 +51,12 @@ func TestProcess(t *testing.T) {
 						[]byte("\n\nimage:v1\n"),
 					)), nil)
 
-				m.On("Process", "image:v1").
-					Return(Entry{Image: "image:v1"})
+				m.On("Process", "some.registry/image:v1").
+					Return(Entry{Image: "some.registry/image:v1"})
 			},
 			want: &Result{
 				Entries: []Entry{
-					{Image: "image:v1"},
+					{Image: "some.registry/image:v1"},
 				},
 			},
 		},
@@ -69,12 +69,12 @@ func TestProcess(t *testing.T) {
 						[]byte("\n# some:image\nimage:v1\n"),
 					)), nil)
 
-				m.On("Process", "image:v1").
-					Return(Entry{Image: "image:v1"})
+				m.On("Process", "some.registry/image:v1").
+					Return(Entry{Image: "some.registry/image:v1"})
 			},
 			want: &Result{
 				Entries: []Entry{
-					{Image: "image:v1"},
+					{Image: "some.registry/image:v1"},
 				},
 			},
 		},
@@ -98,18 +98,18 @@ func TestProcess(t *testing.T) {
 						[]byte("image:v1\nimage2:v2\n"),
 					)), nil)
 
-				m.On("Process", "image:v1").
+				m.On("Process", "some.registry/image:v1").
 					Return(Entry{
-						Image: "image:v1",
+						Image: "some.registry/image:v1",
 						Error: errors.New("image not found"),
 					})
-				m.On("Process", "image2:v2").
-					Return(Entry{Image: "image2:v2"})
+				m.On("Process", "some.registry/image2:v2").
+					Return(Entry{Image: "some.registry/image2:v2"})
 			},
 			want: &Result{
 				Entries: []Entry{
-					{Image: "image:v1", Error: errors.New("image not found")},
-					{Image: "image2:v2"},
+					{Image: "some.registry/image:v1", Error: errors.New("image not found")},
+					{Image: "some.registry/image2:v2"},
 				},
 			},
 		},
@@ -138,11 +138,27 @@ func TestProcess(t *testing.T) {
 						[]byte("docker.io/image:v1\n"),
 					)), nil)
 
-				m.On("Process", "image:v1").
-					Return(Entry{Image: "image:v1"})
+				m.On("Process", "some.registry/image:v1").
+					Return(Entry{Image: "some.registry/image:v1"})
 			},
 			want: &Result{
-				Entries: []Entry{{Image: "image:v1"}},
+				Entries: []Entry{{Image: "some.registry/image:v1"}},
+			},
+		},
+		{
+			name: "accept fully-qualified image names",
+			url:  "https://.../image.txt",
+			setup: func(m *DepsMock) {
+				m.On("Fetch", "https://.../image.txt").Return(
+					io.NopCloser(bytes.NewReader(
+						[]byte("registry.com/image:v1\n"),
+					)), nil)
+
+				m.On("Process", "registry.com/image:v1").
+					Return(Entry{Image: "registry.com/image:v1"})
+			},
+			want: &Result{
+				Entries: []Entry{{Image: "registry.com/image:v1"}},
 			},
 		},
 	}
