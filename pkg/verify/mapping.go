@@ -5,6 +5,22 @@ import (
 	"strings"
 )
 
+type identityIssuer struct {
+	identity string
+	issuer   string
+}
+
+var nonGitHub = map[string]identityIssuer{
+	"sig-storage/snapshot-controller": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
+	"sig-storage/snapshot-validation-webhook": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
+}
+
 // imageRepo holds the mappings between container image and source code repositories.
 var imageRepo = map[string]string{
 	"rancher/rancher-csp-adapter":             "rancher/csp-adapter",
