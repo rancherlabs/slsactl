@@ -41,11 +41,36 @@ func Verify(image string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
+	repo, _, err := getImageRepoRef(image)
+	if err != nil {
+		return fmt.Errorf("failed to parse image name: %w", err)
+	}
+
+	if outsideGitHub(repo) {
+		return verifyOutsideGitHub(ctx, repo, image)
+	}
+
 	if obsSigned(image) {
 		return verifyObs(ctx, image)
 	}
 
 	return verifyKeyless(ctx, image)
+}
+
+func outsideGitHub(repo string) bool {
+	_, ok := nonGitHub[repo]
+	return ok
+}
+
+func verifyOutsideGitHub(ctx context.Context, repo, image string) error {
+	slog.InfoContext(ctx, "Non-GHA keyless verification")
+
+	data, ok := nonGitHub[repo]
+	if !ok {
+		return fmt.Errorf("unknown non-GHA image %q", image)
+	}
+
+	return genericVerify(ctx, image, data.identity, data.issuer)
 }
 
 func verifyObs(ctx context.Context, image string) error {
@@ -88,12 +113,16 @@ func verifyKeyless(ctx context.Context, image string) error {
 		}
 	}
 
+	return genericVerify(ctx, image, certIdentity, "https://token.actions.githubusercontent.com")
+}
+
+func genericVerify(ctx context.Context, image, certIdentity, issuer string) error {
 	fmt.Println("identity:", certIdentity)
 
 	v := &verify.VerifyCommand{
 		CertVerifyOptions: options.CertVerifyOptions{
 			CertIdentityRegexp: certIdentity,
-			CertOidcIssuer:     "https://token.actions.githubusercontent.com",
+			CertOidcIssuer:     issuer,
 		},
 		CheckClaims:   true,
 		HashAlgorithm: hashAlgo,
