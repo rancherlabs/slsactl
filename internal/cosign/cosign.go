@@ -9,7 +9,7 @@ import (
 	"github.com/in-toto/in-toto-golang/in_toto/slsa_provenance/common"
 	v1 "github.com/in-toto/in-toto-golang/in_toto/slsa_provenance/v1"
 	"github.com/rancherlabs/slsactl/internal/provenance"
-	"github.com/sigstore/cosign/v2/pkg/cosign"
+	"github.com/sigstore/cosign/v3/pkg/cosign"
 	"github.com/sigstore/fulcio/pkg/certificate"
 )
 

@@ -11,8 +11,8 @@ import (
 
 	"github.com/google/go-containerregistry/pkg/logs"
 	cosign "github.com/rancherlabs/slsactl/internal/cosign"
-	"github.com/sigstore/cosign/v2/cmd/cosign/cli/options"
-	"github.com/sigstore/cosign/v2/cmd/cosign/cli/verify"
+	"github.com/sigstore/cosign/v3/cmd/cosign/cli/options"
+	"github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
 )
 
 const (
