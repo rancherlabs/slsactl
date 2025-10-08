@@ -7,6 +7,8 @@ import (
 	"io"
 	"log/slog"
 	"strings"
+
+	"github.com/google/go-containerregistry/pkg/name"
 )
 
 var (
@@ -18,8 +20,9 @@ var (
 const maxProcessingSizeInBytes = 5 * (1 << 20) // 5MB
 
 type Processor struct {
-	ip      ImageProcessor
-	fetcher Fetcher
+	ip       ImageProcessor
+	fetcher  Fetcher
+	registry string
 }
 
 func NewProcessor(registry string) *Processor {
@@ -28,8 +31,9 @@ func NewProcessor(registry string) *Processor {
 	}
 
 	return &Processor{
-		ip:      &imageVerifier{registry: registry},
-		fetcher: new(HttpFetcher),
+		registry: registry,
+		ip:       new(imageVerifier),
+		fetcher:  new(HttpFetcher),
 	}
 }
 
@@ -62,6 +66,15 @@ func (p *Processor) Process(url string) (*Result, error) {
 		}
 
 		image = strings.TrimPrefix(image, "docker.io/")
+
+		ref, err := name.ParseReference(image, name.WeakValidation)
+		if err != nil {
+			return nil, fmt.Errorf("failed to parse image name: %w", err)
+		}
+
+		if ref.Context().Registry.Name() == "" || ref.Context().Registry.Name() == "index.docker.io" {
+			image = p.registry + image
+		}
 
 		fmt.Println("processing", image)
 		entry := p.ip.Process(image)
