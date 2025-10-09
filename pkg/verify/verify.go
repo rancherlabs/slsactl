@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/google/go-containerregistry/pkg/logs"
+	"github.com/google/go-containerregistry/pkg/name"
 	cosign "github.com/rancherlabs/slsactl/internal/cosign"
 	"github.com/sigstore/cosign/v3/cmd/cosign/cli/options"
 	"github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
@@ -41,7 +42,7 @@ func Verify(image string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
-	repo, _, err := getImageRepoRef(image)
+	repo, ref, err := getImageRepoRef(image)
 	if err != nil {
 		return fmt.Errorf("failed to parse image name: %w", err)
 	}
@@ -54,7 +55,7 @@ func Verify(image string) error {
 		return verifyObs(ctx, image)
 	}
 
-	return verifyKeyless(ctx, image)
+	return verifyKeyless(ctx, repo, ref, image)
 }
 
 func outsideGitHub(repo string) bool {
@@ -91,15 +92,10 @@ func verifyObs(ctx context.Context, image string) error {
 	return v.Exec(ctx, []string{image})
 }
 
-func verifyKeyless(ctx context.Context, image string) error {
+func verifyKeyless(ctx context.Context, repo, ref, image string) error {
 	slog.InfoContext(ctx, "GHA keyless verification")
 	var certIdentity string
 	var err error
-
-	repo, ref, err := getImageRepoRef(image)
-	if err != nil {
-		return fmt.Errorf("failed to parse image name: %w", err)
-	}
 
 	if mutable, ok := mutableRepo[repo+":"+ref]; ok && mutable {
 		certIdentity, err = getMutableCertIdentity(ctx, image)
@@ -155,10 +151,20 @@ func getImageRepoRef(imageName string) (string, string, error) {
 	if len(names) < 2 {
 		return "", "", fmt.Errorf("unsupported image name: %q", imageName)
 	}
-	repo := strings.Join(names[len(names)-2:], "/")
-	ref := d[1]
 
-	return repo, ref, nil
+	ref, err := name.ParseReference(imageName, name.WeakValidation)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to parse image name: %w", err)
+	}
+	repo := ref.Context().RepositoryStr()
+
+	// For multi-leveled, assumes the last two components represents org/repo.
+	r := strings.Split(repo, "/")
+	if len(r) > 2 {
+		repo = strings.Join(r[len(r)-2:], "/")
+	}
+
+	return repo, ref.Identifier(), nil
 }
 
 func getMutableCertIdentity(ctx context.Context, imageName string) (string, error) {

@@ -19,6 +19,34 @@ var nonGitHub = map[string]identityIssuer{
 		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
 		issuer:   "https://accounts.google.com",
 	},
+	"rancher/mirrored-sig-storage-csi-node-driver-registrar": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
+	"rancher/mirrored-sig-storage-csi-attacher": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
+	"rancher/mirrored-sig-storage-csi-provisioner": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
+	"rancher/mirrored-sig-storage-csi-resizer": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
+	"rancher/mirrored-sig-storage-csi-snapshotter": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
+	"rancher/mirrored-sig-storage-livenessprobe": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
+	"rancher/mirrored-sig-storage-snapshot-controller": {
+		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+		issuer:   "https://accounts.google.com",
+	},
 }
 
 // imageRepo holds the mappings between container image and source code repositories.
