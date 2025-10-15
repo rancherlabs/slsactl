@@ -69,10 +69,11 @@ const (
 )
 
 var obsPrefix = map[string]string{
-	"bci/":                 obsKey,
-	"suse/":                obsKey,
-	"rancher/appco-":       appCoKey,
-	"rancher/mirrored-bci": obsKey,
+	"bci/":                       obsKey,
+	"suse/":                      obsKey,
+	"rancher/appco-":             appCoKey,
+	"rancher/mirrored-bci":       obsKey,
+	"rancher/mirrored-elemental": obsKey,
 }
 
 var obs = map[string]string{
