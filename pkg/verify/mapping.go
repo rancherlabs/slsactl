@@ -26,6 +26,7 @@ var nonGitHub = map[string]identityIssuer{
 	"rancher/mirrored-sig-storage-livenessprobe":             krelTrustGCP,
 	"rancher/mirrored-sig-storage-snapshot-controller":       krelTrustGCP,
 	"rancher/mirrored-kube-state-metrics-kube-state-metrics": krelTrustGCP,
+	"rancher/mirrored-cluster-api-controller":                krelTrustGCP,
 }
 
 // imageRepo holds the mappings between container image and source code repositories.
