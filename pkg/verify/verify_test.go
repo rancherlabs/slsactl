@@ -110,6 +110,10 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rancher/neuvector-scanner:3.685",
 			want:  "^https://github.com/neuvector/scanner/.github/workflows/release.(yml|yaml)@refs/tags/v3.685$",
 		},
+		{
+			image: "rancher/mirrored-cilium-cilium:v1.17.0",
+			want:  "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+		},
 	}
 
 	for _, tc := range tests {
