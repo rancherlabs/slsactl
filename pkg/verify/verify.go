@@ -50,7 +50,7 @@ func Verify(image string) error {
 		return verifyOutsideGitHub(ctx, repo, image)
 	}
 
-	if key, ok := obsSigned(image); ok {
+	if key, ok := obsSigned(repo); ok {
 		return verifyObs(ctx, image, key)
 	}
 
@@ -146,16 +146,16 @@ func getImageRepoRef(imageName string) (string, string, error) {
 		return "", "", fmt.Errorf("missing image tag: %q", imageName)
 	}
 
-	names := strings.Split(d[0], "/")
-	if len(names) < 2 {
-		return "", "", fmt.Errorf("unsupported image name: %q", imageName)
-	}
-
 	ref, err := name.ParseReference(imageName, name.WeakValidation)
 	if err != nil {
 		return "", "", fmt.Errorf("failed to parse image name: %w", err)
 	}
 	repo := ref.Context().RepositoryStr()
+
+	names := strings.Split(strings.TrimPrefix(repo, "library/"), "/")
+	if len(names) < 2 {
+		return "", "", fmt.Errorf("unsupported image name: %q", imageName)
+	}
 
 	// For multi-leveled, assumes the last two components represents org/repo.
 	r := strings.Split(repo, "/")

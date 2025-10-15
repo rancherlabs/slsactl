@@ -55,6 +55,10 @@ func TestCertificateIdentity(t *testing.T) {
 			wantErr: "unsupported image name",
 		},
 		{
+			image: "localhost:5000/foo/bar:v0.0.7",
+			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
+		},
+		{
 			image: "rocker.local/foo/bar:v0.0.7",
 			want:  "^https://github.com/foo/bar/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
