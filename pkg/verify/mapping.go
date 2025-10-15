@@ -137,6 +137,7 @@ var upstreamImageRepo = map[string]string{
 	"rancher/mirrored-cilium-cilium":                "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
 	"rancher/mirrored-cilium-envoy":                 "^https://github.com/cilium/proxy/.github/workflows/build-envoy-images-release.yaml@refs/heads/v",
 	"rancher/mirrored-cilium-clustermesh-apiserver": "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+	"rancher/mirrored-cilium-hubble-relay":          "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
 }
 
 // imageSuffixes holds a mapping between image name and the ref suffixes
