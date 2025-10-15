@@ -84,30 +84,27 @@ var mutableRepo = map[string]bool{
 	"rancher/neuvector-scanner:6": true,
 }
 
-var obs = map[string]struct{}{
-	"rancher/elemental-operator":            {},
-	"rancher/seedimage-builder":             {},
-	"rancher/elemental-channel/sl-micro":    {},
-	"rancher/elemental-operator-crds-chart": {},
-	"rancher/elemental-operator-chart":      {},
-	"bci/bci-base":                          {},
-	"bci/bci-busybox":                       {},
-	"suse/sles/15.7/cdi-cloner":             {},
-	"suse/sles/15.7/cdi-controller":         {},
-	"suse/sles/15.7/cdi-importer":           {},
-	"suse/sles/15.7/cdi-operator":           {},
-	"suse/sles/15.7/cdi-uploadproxy":        {},
-	"suse/sles/15.7/cdi-uploadserver":       {},
-	"suse/sles/15.7/libguestfs-tools":       {},
-	"suse/sles/15.7/virt-api":               {},
-	"suse/sles/15.7/virt-controller":        {},
-	"suse/sles/15.7/virt-handler":           {},
-	"suse/sles/15.7/virt-launcher":          {},
-	"suse/sles/15.7/virt-operator":          {},
-	"suse/vmdp/vmdp":                        {},
+const (
+	obsKey   = "https://ftp.suse.com/pub/projects/security/keys/container-key.pem"
+	appCoKey = "https://apps.rancher.io/ap-pubkey.pem"
+)
+
+var obsPrefix = map[string]string{
+	"bci/":                 obsKey,
+	"suse/":                obsKey,
+	"rancher/appco-":       appCoKey,
+	"rancher/mirrored-bci": obsKey,
 }
 
-func obsSigned(image string) bool {
+var obs = map[string]string{
+	"rancher/elemental-operator":            obsKey,
+	"rancher/seedimage-builder":             obsKey,
+	"rancher/elemental-channel/sl-micro":    obsKey,
+	"rancher/elemental-operator-crds-chart": obsKey,
+	"rancher/elemental-operator-chart":      obsKey,
+}
+
+func obsSigned(image string) (string, bool) {
 	bef, after, _ := strings.Cut(image, "/")
 	if strings.Contains(bef, ".") {
 		image = after
@@ -117,8 +114,16 @@ func obsSigned(image string) bool {
 	image = bef
 	fmt.Println(image)
 
-	_, ok := obs[image]
-	return ok
+	if key, ok := obs[image]; ok {
+		return key, ok
+	}
+
+	for prefix, key := range obsPrefix {
+		if strings.HasPrefix(image, prefix) {
+			return key, true
+		}
+	}
+	return "", false
 }
 
 var upstreamImageRepo = map[string]string{
