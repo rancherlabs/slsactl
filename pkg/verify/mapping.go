@@ -142,6 +142,7 @@ var upstreamImageRepo = map[string]string{
 	"rancher/mirrored-cilium-operator-azure":                          "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
 	"rancher/mirrored-cilium-operator-generic":                        "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
 	"rancher/mirrored-prometheus-operator-prometheus-config-reloader": "^https://github.com/prometheus-operator/prometheus-operator/.github/workflows/publish.yaml@refs/tags/v",
+	"rancher/mirrored-kube-logging-logging-operator":                  "^https://github.com/kube-logging/logging-operator/.github/workflows/artifacts.yaml@refs/tags/",
 }
 
 // imageSuffixes holds a mapping between image name and the ref suffixes
