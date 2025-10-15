@@ -10,43 +10,22 @@ type identityIssuer struct {
 	issuer   string
 }
 
+var krelTrustGCP = identityIssuer{
+	identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+	issuer:   "https://accounts.google.com",
+}
+
 var nonGitHub = map[string]identityIssuer{
-	"sig-storage/snapshot-controller": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"sig-storage/snapshot-validation-webhook": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-node-driver-registrar": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-attacher": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-provisioner": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-resizer": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-snapshotter": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-livenessprobe": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-snapshot-controller": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
+	"sig-storage/snapshot-controller":                        krelTrustGCP,
+	"sig-storage/snapshot-validation-webhook":                krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-node-driver-registrar": krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-attacher":              krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-provisioner":           krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-resizer":               krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-snapshotter":           krelTrustGCP,
+	"rancher/mirrored-sig-storage-livenessprobe":             krelTrustGCP,
+	"rancher/mirrored-sig-storage-snapshot-controller":       krelTrustGCP,
+	"rancher/mirrored-kube-state-metrics-kube-state-metrics": krelTrustGCP,
 }
 
 // imageRepo holds the mappings between container image and source code repositories.
@@ -90,10 +69,11 @@ const (
 )
 
 var obsPrefix = map[string]string{
-	"bci/":                 obsKey,
-	"suse/":                obsKey,
-	"rancher/appco-":       appCoKey,
-	"rancher/mirrored-bci": obsKey,
+	"bci/":                       obsKey,
+	"suse/":                      obsKey,
+	"rancher/appco-":             appCoKey,
+	"rancher/mirrored-bci":       obsKey,
+	"rancher/mirrored-elemental": obsKey,
 }
 
 var obs = map[string]string{
@@ -127,20 +107,22 @@ func obsSigned(image string) (string, bool) {
 }
 
 var upstreamImageRepo = map[string]string{
-	"rancher/cluster-api-controller":                "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
-	"rancher/cluster-api-aws-controller":            "^https://github.com/rancher/clusterapi-forks/.github/workflows/aws.yaml@refs/heads/main$",
-	"rancher/cluster-api-azure-controller":          "^https://github.com/rancher/clusterapi-forks/.github/workflows/azure.yaml@refs/heads/main$",
-	"rancher/cluster-api-gcp-controller":            "^https://github.com/rancher/clusterapi-forks/.github/workflows/gcp.yaml@refs/heads/main$",
-	"rancher/cluster-api-vsphere-controller":        "^https://github.com/rancher/clusterapi-forks/.github/workflows/vsphere.yaml@refs/heads/main$",
-	"rancher/cluster-api-metal3-controller":         "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3.yaml@refs/heads/main$",
-	"rancher/cluster-api-metal3-ipam-controller":    "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main$",
-	"rancher/mirrored-cilium-cilium":                "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
-	"rancher/mirrored-cilium-envoy":                 "^https://github.com/cilium/proxy/.github/workflows/build-envoy-images-release.yaml@refs/heads/v",
-	"rancher/mirrored-cilium-clustermesh-apiserver": "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
-	"rancher/mirrored-cilium-hubble-relay":          "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
-	"rancher/mirrored-cilium-operator-aws":          "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
-	"rancher/mirrored-cilium-operator-azure":        "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
-	"rancher/mirrored-cilium-operator-generic":      "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+	"rancher/cluster-api-controller":                                  "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
+	"rancher/cluster-api-aws-controller":                              "^https://github.com/rancher/clusterapi-forks/.github/workflows/aws.yaml@refs/heads/main$",
+	"rancher/cluster-api-azure-controller":                            "^https://github.com/rancher/clusterapi-forks/.github/workflows/azure.yaml@refs/heads/main$",
+	"rancher/cluster-api-gcp-controller":                              "^https://github.com/rancher/clusterapi-forks/.github/workflows/gcp.yaml@refs/heads/main$",
+	"rancher/cluster-api-vsphere-controller":                          "^https://github.com/rancher/clusterapi-forks/.github/workflows/vsphere.yaml@refs/heads/main$",
+	"rancher/cluster-api-metal3-controller":                           "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3.yaml@refs/heads/main$",
+	"rancher/cluster-api-metal3-ipam-controller":                      "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main$",
+	"rancher/mirrored-cilium-cilium":                                  "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+	"rancher/mirrored-cilium-envoy":                                   "^https://github.com/cilium/proxy/.github/workflows/build-envoy-images-release.yaml@refs/heads/v",
+	"rancher/mirrored-cilium-clustermesh-apiserver":                   "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+	"rancher/mirrored-cilium-hubble-relay":                            "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+	"rancher/mirrored-cilium-operator-aws":                            "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+	"rancher/mirrored-cilium-operator-azure":                          "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+	"rancher/mirrored-cilium-operator-generic":                        "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
+	"rancher/mirrored-prometheus-operator-prometheus-config-reloader": "^https://github.com/prometheus-operator/prometheus-operator/.github/workflows/publish.yaml@refs/tags/v",
+	"rancher/mirrored-kube-logging-logging-operator":                  "^https://github.com/kube-logging/logging-operator/.github/workflows/artifacts.yaml@refs/tags/",
 }
 
 // imageSuffixes holds a mapping between image name and the ref suffixes
