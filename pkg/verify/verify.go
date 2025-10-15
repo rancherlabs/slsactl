@@ -20,7 +20,6 @@ const (
 	timeout    = 45 * time.Second
 	maxWorkers = 5
 	hashAlgo   = crypto.SHA256
-	obsKey     = "https://ftp.suse.com/pub/projects/security/keys/container-key.pem"
 )
 
 var archSuffixes = []string{
@@ -51,8 +50,8 @@ func Verify(image string) error {
 		return verifyOutsideGitHub(ctx, repo, image)
 	}
 
-	if obsSigned(image) {
-		return verifyObs(ctx, image)
+	if key, ok := obsSigned(repo); ok {
+		return verifyObs(ctx, image, key)
 	}
 
 	return verifyKeyless(ctx, repo, ref, image)
@@ -74,12 +73,12 @@ func verifyOutsideGitHub(ctx context.Context, repo, image string) error {
 	return genericVerify(ctx, image, data.identity, data.issuer)
 }
 
-func verifyObs(ctx context.Context, image string) error {
+func verifyObs(ctx context.Context, image, key string) error {
 	slog.DebugContext(ctx, "OBS verification")
 	v := &verify.VerifyCommand{
-		KeyRef:        obsKey,
+		KeyRef:        key,
 		RekorURL:      options.DefaultRekorURL,
-		CertRef:       obsKey,
+		CertRef:       key,
 		CheckClaims:   true,
 		HashAlgorithm: hashAlgo,
 		MaxWorkers:    maxWorkers,
@@ -147,16 +146,16 @@ func getImageRepoRef(imageName string) (string, string, error) {
 		return "", "", fmt.Errorf("missing image tag: %q", imageName)
 	}
 
-	names := strings.Split(d[0], "/")
-	if len(names) < 2 {
-		return "", "", fmt.Errorf("unsupported image name: %q", imageName)
-	}
-
 	ref, err := name.ParseReference(imageName, name.WeakValidation)
 	if err != nil {
 		return "", "", fmt.Errorf("failed to parse image name: %w", err)
 	}
 	repo := ref.Context().RepositoryStr()
+
+	names := strings.Split(strings.TrimPrefix(repo, "library/"), "/")
+	if len(names) < 2 {
+		return "", "", fmt.Errorf("unsupported image name: %q", imageName)
+	}
 
 	// For multi-leveled, assumes the last two components represents org/repo.
 	r := strings.Split(repo, "/")
