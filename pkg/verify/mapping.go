@@ -10,43 +10,22 @@ type identityIssuer struct {
 	issuer   string
 }
 
+var krelTrustGCP = identityIssuer{
+	identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
+	issuer:   "https://accounts.google.com",
+}
+
 var nonGitHub = map[string]identityIssuer{
-	"sig-storage/snapshot-controller": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"sig-storage/snapshot-validation-webhook": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-node-driver-registrar": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-attacher": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-provisioner": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-resizer": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-csi-snapshotter": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-livenessprobe": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
-	"rancher/mirrored-sig-storage-snapshot-controller": {
-		identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-		issuer:   "https://accounts.google.com",
-	},
+	"sig-storage/snapshot-controller":                        krelTrustGCP,
+	"sig-storage/snapshot-validation-webhook":                krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-node-driver-registrar": krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-attacher":              krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-provisioner":           krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-resizer":               krelTrustGCP,
+	"rancher/mirrored-sig-storage-csi-snapshotter":           krelTrustGCP,
+	"rancher/mirrored-sig-storage-livenessprobe":             krelTrustGCP,
+	"rancher/mirrored-sig-storage-snapshot-controller":       krelTrustGCP,
+	"rancher/mirrored-kube-state-metrics-kube-state-metrics": krelTrustGCP,
 }
 
 // imageRepo holds the mappings between container image and source code repositories.
