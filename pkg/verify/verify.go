@@ -11,9 +11,32 @@ import (
 
 	"github.com/google/go-containerregistry/pkg/logs"
 	"github.com/google/go-containerregistry/pkg/name"
-	cosign "github.com/rancherlabs/slsactl/internal/cosign"
+	"github.com/rancherlabs/slsactl/internal/cosign"
+	"github.com/rancherlabs/slsactl/pkg/internal"
+	"github.com/rancherlabs/slsactl/pkg/internal/appco"
+	"github.com/rancherlabs/slsactl/pkg/internal/gcp"
+	"github.com/rancherlabs/slsactl/pkg/internal/obs"
 	"github.com/sigstore/cosign/v3/cmd/cosign/cli/options"
 	"github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
+)
+
+var (
+	cosignVerifier = &cosignImplementation{}
+
+	verifiers = []internal.Verifier{
+		&obs.Verifier{
+			HashAlgorithm:    hashAlgo,
+			UpstreamVerifier: cosignVerifier,
+		},
+		&appco.Verifier{
+			HashAlgorithm:    hashAlgo,
+			UpstreamVerifier: cosignVerifier,
+		},
+		&gcp.Verifier{
+			HashAlgorithm:    hashAlgo,
+			UpstreamVerifier: cosignVerifier,
+		},
+	}
 )
 
 const (
@@ -21,6 +44,13 @@ const (
 	maxWorkers = 5
 	hashAlgo   = crypto.SHA256
 )
+
+type cosignImplementation struct {
+}
+
+func (*cosignImplementation) Verify(ctx context.Context, vc verify.VerifyCommand, image string) error {
+	return vc.Exec(ctx, []string{image})
+}
 
 var archSuffixes = []string{
 	"-linux-amd64",
@@ -41,54 +71,22 @@ func Verify(image string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
+	if strings.EqualFold(os.Getenv("DEBUG"), "true") {
+		logs.Debug.SetOutput(os.Stderr)
+	}
+
+	for _, v := range verifiers {
+		if v.Matches(image) {
+			return v.Verify(ctx, image)
+		}
+	}
+
 	repo, ref, err := getImageRepoRef(image)
 	if err != nil {
 		return fmt.Errorf("failed to parse image name: %w", err)
 	}
 
-	if outsideGitHub(repo) {
-		return verifyOutsideGitHub(ctx, repo, image)
-	}
-
-	if key, ok := obsSigned(repo); ok {
-		return verifyObs(ctx, image, key)
-	}
-
 	return verifyKeyless(ctx, repo, ref, image)
-}
-
-func outsideGitHub(repo string) bool {
-	_, ok := nonGitHub[repo]
-	return ok
-}
-
-func verifyOutsideGitHub(ctx context.Context, repo, image string) error {
-	slog.InfoContext(ctx, "Non-GHA keyless verification")
-
-	data, ok := nonGitHub[repo]
-	if !ok {
-		return fmt.Errorf("unknown non-GHA image %q", image)
-	}
-
-	return genericVerify(ctx, image, data.identity, data.issuer)
-}
-
-func verifyObs(ctx context.Context, image, key string) error {
-	slog.DebugContext(ctx, "OBS verification")
-	v := &verify.VerifyCommand{
-		KeyRef:        key,
-		RekorURL:      options.DefaultRekorURL,
-		CertRef:       key,
-		CheckClaims:   true,
-		HashAlgorithm: hashAlgo,
-		MaxWorkers:    maxWorkers,
-	}
-
-	if strings.EqualFold(os.Getenv("DEBUG"), "true") {
-		logs.Debug.SetOutput(os.Stderr)
-	}
-
-	return v.Exec(ctx, []string{image})
 }
 
 func verifyKeyless(ctx context.Context, repo, ref, image string) error {
@@ -122,10 +120,6 @@ func genericVerify(ctx context.Context, image, certIdentity, issuer string) erro
 		CheckClaims:   true,
 		HashAlgorithm: hashAlgo,
 		MaxWorkers:    maxWorkers,
-	}
-
-	if strings.EqualFold(os.Getenv("DEBUG"), "true") {
-		logs.Debug.SetOutput(os.Stderr)
 	}
 
 	return v.Exec(ctx, []string{image})

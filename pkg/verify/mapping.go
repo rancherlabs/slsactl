@@ -1,34 +1,5 @@
 package verify
 
-import (
-	"fmt"
-	"strings"
-)
-
-type identityIssuer struct {
-	identity string
-	issuer   string
-}
-
-var krelTrustGCP = identityIssuer{
-	identity: "krel-trust@k8s-releng-prod.iam.gserviceaccount.com",
-	issuer:   "https://accounts.google.com",
-}
-
-var nonGitHub = map[string]identityIssuer{
-	"sig-storage/snapshot-controller":                        krelTrustGCP,
-	"sig-storage/snapshot-validation-webhook":                krelTrustGCP,
-	"rancher/mirrored-sig-storage-csi-node-driver-registrar": krelTrustGCP,
-	"rancher/mirrored-sig-storage-csi-attacher":              krelTrustGCP,
-	"rancher/mirrored-sig-storage-csi-provisioner":           krelTrustGCP,
-	"rancher/mirrored-sig-storage-csi-resizer":               krelTrustGCP,
-	"rancher/mirrored-sig-storage-csi-snapshotter":           krelTrustGCP,
-	"rancher/mirrored-sig-storage-livenessprobe":             krelTrustGCP,
-	"rancher/mirrored-sig-storage-snapshot-controller":       krelTrustGCP,
-	"rancher/mirrored-kube-state-metrics-kube-state-metrics": krelTrustGCP,
-	"rancher/mirrored-cluster-api-controller":                krelTrustGCP,
-}
-
 // imageRepo holds the mappings between container image and source code repositories.
 var imageRepo = map[string]string{
 	"rancher/rancher-csp-adapter":             "rancher/csp-adapter",
@@ -62,49 +33,6 @@ var imageRepo = map[string]string{
 
 var mutableRepo = map[string]bool{
 	"rancher/neuvector-scanner:6": true,
-}
-
-const (
-	obsKey   = "https://ftp.suse.com/pub/projects/security/keys/container-key.pem"
-	appCoKey = "https://apps.rancher.io/ap-pubkey.pem"
-)
-
-var obsPrefix = map[string]string{
-	"bci/":                       obsKey,
-	"suse/":                      obsKey,
-	"rancher/appco-":             appCoKey,
-	"rancher/mirrored-bci":       obsKey,
-	"rancher/mirrored-elemental": obsKey,
-}
-
-var obs = map[string]string{
-	"rancher/elemental-operator":            obsKey,
-	"rancher/seedimage-builder":             obsKey,
-	"rancher/elemental-channel/sl-micro":    obsKey,
-	"rancher/elemental-operator-crds-chart": obsKey,
-	"rancher/elemental-operator-chart":      obsKey,
-}
-
-func obsSigned(image string) (string, bool) {
-	bef, after, _ := strings.Cut(image, "/")
-	if strings.Contains(bef, ".") {
-		image = after
-	}
-
-	bef, _, _ = strings.Cut(image, ":")
-	image = bef
-	fmt.Println(image)
-
-	if key, ok := obs[image]; ok {
-		return key, ok
-	}
-
-	for prefix, key := range obsPrefix {
-		if strings.HasPrefix(image, prefix) {
-			return key, true
-		}
-	}
-	return "", false
 }
 
 var upstreamImageRepo = map[string]string{

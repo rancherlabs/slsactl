@@ -132,35 +132,3 @@ func TestCertificateIdentity(t *testing.T) {
 		})
 	}
 }
-
-func TestObsSigned(t *testing.T) {
-	t.Parallel()
-
-	tests := []struct {
-		image   string
-		want    bool
-		wantKey string
-	}{
-		{image: "rancher/elemental-operator", want: true, wantKey: obsKey},
-		{image: "rancher/seedimage-builder", want: true, wantKey: obsKey},
-		{image: "rancher/elemental-channel/sl-micro", want: true, wantKey: obsKey},
-		{image: "rancher/elemental-operator-crds-chart", want: true, wantKey: obsKey},
-		{image: "rancher/elemental-operator-chart", want: true, wantKey: obsKey},
-		{image: "suse/sles/15.7/foo", want: true, wantKey: obsKey},
-		{image: "bci/foo-bar", want: true, wantKey: obsKey},
-		{image: "rancher/mirrored-bci-busybox", want: true, wantKey: obsKey},
-		{image: "rancher/appco-something", want: true, wantKey: appCoKey},
-		{image: "rancher/rancher"},
-		{image: "ghcr.io/kubewarden/policy-server"},
-		{image: "fuzz/bar"},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.image, func(t *testing.T) {
-			t.Parallel()
-			gotKey, got := obsSigned(tc.image)
-			assert.Equal(t, tc.want, got)
-			assert.Equal(t, tc.wantKey, gotKey)
-		})
-	}
-}
