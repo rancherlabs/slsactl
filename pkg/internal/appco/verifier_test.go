@@ -3,7 +3,7 @@ package appco_test
 import (
 	"context"
 	"crypto"
-	"fmt"
+	"errors"
 	"testing"
 
 	"github.com/rancherlabs/slsactl/pkg/internal"
@@ -11,7 +11,6 @@ import (
 
 	"github.com/sigstore/cosign/v3/cmd/cosign/cli/options"
 	"github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
-	cosign "github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -62,7 +61,7 @@ func TestVerify(t *testing.T) {
 
 	tests := []struct {
 		name    string
-		context context.Context
+		context context.Context //nolint
 		image   string
 		setup   func(*upstreamMock)
 		wantErr error
@@ -101,9 +100,9 @@ func TestVerify(t *testing.T) {
 					HashAlgorithm: crypto.SHA256,
 				}
 				m.On("Verify", context.TODO(), vc, "rancher/appco-foo").Return(
-					fmt.Errorf(`upstream failure`))
+					errors.New(`upstream failure`))
 			},
-			wantErr: fmt.Errorf(`upstream failure`),
+			wantErr: errors.New(`upstream failure`),
 		},
 	}
 
@@ -135,7 +134,7 @@ type upstreamMock struct {
 	mock.Mock
 }
 
-func (m *upstreamMock) Verify(ctx context.Context, vc cosign.VerifyCommand, image string) error {
+func (m *upstreamMock) Verify(ctx context.Context, vc verify.VerifyCommand, image string) error {
 	args := m.Called(ctx, vc, image)
 
 	return args.Error(0)

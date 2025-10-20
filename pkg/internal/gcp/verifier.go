@@ -33,8 +33,9 @@ var (
 )
 
 type Verifier struct {
-	HashAlgorithm crypto.Hash
 	internal.UpstreamVerifier
+
+	HashAlgorithm crypto.Hash
 }
 
 func (v *Verifier) Matches(image string) bool {

@@ -7,9 +7,7 @@ import (
 	cosign "github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
 )
 
-var (
-	ErrInvalidImage = errors.New("invalid image")
-)
+var ErrInvalidImage = errors.New("invalid image")
 
 type Verifier interface {
 	Matches(image string) bool
