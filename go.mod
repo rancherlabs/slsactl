@@ -5,7 +5,7 @@ go 1.24.6
 toolchain go1.25.3
 
 require (
-	github.com/anchore/syft v1.34.2
+	github.com/anchore/syft v1.36.0
 	github.com/docker/buildx v0.29.1
 	github.com/docker/cli v28.5.1+incompatible
 	github.com/google/go-containerregistry v0.20.6
@@ -77,7 +77,7 @@ require (
 	github.com/anchore/archiver/v3 v3.5.3-0.20241210171143-5b1d8d1c7c51 // indirect
 	github.com/anchore/clio v0.0.0-20250319180342-2cfe4b0cb716 // indirect
 	github.com/anchore/fangs v0.0.0-20250319222917-446a1e748ec2 // indirect
-	github.com/anchore/go-collections v0.0.0-20240216214351-5baf374cca6f // indirect
+	github.com/anchore/go-collections v0.0.0-20251016125210-a3c352120e8c // indirect
 	github.com/anchore/go-homedir v0.0.0-20250319154043-c29668562e4d // indirect
 	github.com/anchore/go-logger v0.0.0-20250318195838-07ae343dd722 // indirect
 	github.com/anchore/go-lzo v0.1.0 // indirect
@@ -190,7 +190,7 @@ require (
 	github.com/fvbommel/sortorder v1.1.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.9.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
-	github.com/github/go-spdx/v2 v2.3.3 // indirect
+	github.com/github/go-spdx/v2 v2.3.4 // indirect
 	github.com/go-chi/chi/v5 v5.2.3 // indirect
 	github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376 // indirect
 	github.com/go-git/go-billy/v5 v5.6.2 // indirect
