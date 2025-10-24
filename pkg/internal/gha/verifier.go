@@ -31,7 +31,7 @@ func (v *Verifier) Verify(ctx context.Context, image string) error {
 		return fmt.Errorf("%w %q", internal.ErrInvalidImage, image)
 	}
 
-	slog.InfoContext(ctx, "GHA keyless verification")
+	slog.DebugContext(ctx, "GHA keyless verification")
 	var certIdentity string
 	var err error
 

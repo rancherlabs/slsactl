@@ -14,8 +14,8 @@ import (
 // apply it. Any error will result in os.Exit.
 func EnforceOrDie() {
 	val, ok := os.LookupEnv("LANDLOCK_MODE")
-	if !ok {
-		return
+	if !ok || val == "" {
+		val = "besteffort"
 	}
 
 	cfg := landlock.V5
@@ -37,9 +37,18 @@ func EnforceOrDie() {
 		os.Exit(1)
 	}
 
+	rwDirs := []string{
+		filepath.Join(home, ".sigstore"), // Sigstore TUF DB.
+	}
+
+	cwd, err := os.Getwd()
+	if err == nil {
+		rwDirs = append(rwDirs, cwd) // Needs write access to CWD for "product verify" subcommand
+	}
+
 	// We can't really restrict the network access at present
 	err = cfg.RestrictPaths(
-		landlock.RWDirs(filepath.Join(home, ".sigstore")), // Sigstore TUF DB.
+		landlock.RWDirs(rwDirs...),
 		landlock.RODirs(
 			"/proc/self",
 		),

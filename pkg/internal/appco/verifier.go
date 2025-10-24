@@ -58,7 +58,7 @@ func (v *Verifier) Verify(ctx context.Context, image string) error {
 		return fmt.Errorf("%w %q", internal.ErrInvalidImage, image)
 	}
 
-	slog.DebugContext(ctx, "OBS verification")
+	slog.DebugContext(ctx, "AppCo verification")
 	vc := verify.VerifyCommand{
 		KeyRef:        appCoKey,
 		CertRef:       appCoKey,

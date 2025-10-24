@@ -1,0 +1,104 @@
+{
+  "product": "storage",
+  "version": "v1.10.0",
+  "entries": [
+    {
+      "image": "registry.rancher.com/longhornio/backing-image-manager:v1.10.0",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/backing-image-manager/manifests/v1.10.0: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/backing-image-manager Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/longhorn-engine:v1.10.0",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/longhorn-engine/manifests/v1.10.0: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/longhorn-engine Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/longhorn-instance-manager:v1.10.0",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/longhorn-instance-manager/manifests/v1.10.0: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/longhorn-instance-manager Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/longhorn-manager:v1.10.0",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/longhorn-manager/manifests/v1.10.0: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/longhorn-manager Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/longhorn-share-manager:v1.10.0",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/longhorn-share-manager/manifests/v1.10.0: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/longhorn-share-manager Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/longhorn-ui:v1.10.0",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/longhorn-ui/manifests/v1.10.0: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/longhorn-ui Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/longhorn-cli:v1.10.0",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/longhorn-cli/manifests/v1.10.0: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/longhorn-cli Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/csi-attacher:v4.9.0-20250826",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/csi-attacher/manifests/v4.9.0-20250826: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/csi-attacher Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/csi-provisioner:v5.3.0-20250826",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/csi-provisioner/manifests/v5.3.0-20250826: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/csi-provisioner Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/csi-resizer:v1.14.0-20250826",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/csi-resizer/manifests/v1.14.0-20250826: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/csi-resizer Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/csi-snapshotter:v8.3.0-20250826",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/csi-snapshotter/manifests/v8.3.0-20250826: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/csi-snapshotter Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/csi-node-driver-registrar:v2.14.0-20250826",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/csi-node-driver-registrar/manifests/v2.14.0-20250826: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/csi-node-driver-registrar Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/livenessprobe:v2.16.0-20250826",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/livenessprobe/manifests/v2.16.0-20250826: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/livenessprobe Type:repository]]",
+        "Code": 1
+      }
+    },
+    {
+      "image": "registry.rancher.com/longhornio/support-bundle-kit:v0.0.69",
+      "error": {
+        "Message": "GET https://registry.rancher.com/v2/longhornio/support-bundle-kit/manifests/v0.0.69: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:longhornio/support-bundle-kit Type:repository]]",
+        "Code": 1
+      }
+    }
+  ]
+}
