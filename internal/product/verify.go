@@ -103,7 +103,6 @@ func printSummary(result *imagelist.Result) error {
 	s := map[string]*summary{}
 	for _, entry := range result.Entries {
 		imgType := "rancher"
-		// TODO: Improve logic to distinguish third party images
 		if strings.Contains(entry.Image, "rancher/mirrored") {
 			imgType = "third-party"
 		}
@@ -121,7 +120,7 @@ func printSummary(result *imagelist.Result) error {
 		}
 	}
 
-	fmt.Println("\n\n ✨ VERIFICATION SUMMARY ✨ \n")
+	fmt.Print("\n\n ✨ VERIFICATION SUMMARY ✨ \n")
 	fmt.Fprintln(w, "Image Type\tSigned images")
 	fmt.Fprintln(w, "-----------\t--------------")
 
