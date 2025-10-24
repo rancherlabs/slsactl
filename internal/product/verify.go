@@ -100,8 +100,9 @@ func printSummary(result *imagelist.Result) error {
 
 	s := map[string]*summary{}
 	for _, entry := range result.Entries {
-		imgType := "official"
-		if strings.HasPrefix(entry.Image, "rancher/mirrored") {
+		imgType := "rancher"
+		// TODO: Improve logic to distinguish third party images
+		if strings.Contains(entry.Image, "rancher/mirrored") {
 			imgType = "third-party"
 		}
 
@@ -118,11 +119,11 @@ func printSummary(result *imagelist.Result) error {
 		}
 	}
 
-	fmt.Fprintln(w, "Image Type\tCount\tSigned\tErrors")
-	fmt.Fprintln(w, "-----------\t-----\t------\t------")
+	fmt.Fprintln(w, "Image Type\tSigned images")
+	fmt.Fprintln(w, "-----------\t--------------")
 
 	for name, data := range s {
-		fmt.Fprintf(w, "%s\t%d\t%d\t%d\n", name, data.count, data.signed, data.errors)
+		fmt.Fprintf(w, "%s\t%d (%d)\n", name, data.signed, data.count)
 	}
 
 	return w.Flush()
@@ -138,6 +139,8 @@ func saveOutput(result *imagelist.Result) error {
 	err = os.WriteFile(fn, data, 0o600)
 	if err != nil {
 		return fmt.Errorf("failed to write file: %w", err)
+	} else {
+		fmt.Printf("\nreport saved as %q\n", fn)
 	}
 
 	return nil
