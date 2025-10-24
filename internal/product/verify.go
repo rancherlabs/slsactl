@@ -56,6 +56,8 @@ func Verify(registry, name, version string, summary bool, outputFile bool) error
 		return fmt.Errorf("product %q not found: options are %s", name, products)
 	}
 
+	fmt.Printf("Verifying container images for %s %s:\n\n", info.description, version)
+
 	p := imagelist.NewProcessor(registry)
 	result, err := p.Process(fmt.Sprintf(info.imagesUrl, version))
 	if err != nil {
@@ -119,6 +121,7 @@ func printSummary(result *imagelist.Result) error {
 		}
 	}
 
+	fmt.Println("\n\n ✨ VERIFICATION SUMMARY ✨ \n")
 	fmt.Fprintln(w, "Image Type\tSigned images")
 	fmt.Fprintln(w, "-----------\t--------------")
 
