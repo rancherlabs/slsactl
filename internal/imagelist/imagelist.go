@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
-	"os"
 	"strings"
 
 	"github.com/google/go-containerregistry/pkg/name"
@@ -89,14 +88,7 @@ func (p *Processor) Process(url string) (*Result, error) {
 
 		s.UpdateStatus(image)
 
-		// Reset stdout/stderr to avoid verbose output from cosign.
-		stdout := os.Stdout
-		stderr := os.Stderr
-		os.Stdout = nil
-		os.Stderr = nil
 		entry := p.ip.Process(image)
-		os.Stdout = stdout
-		os.Stderr = stderr
 
 		result.Entries = append(result.Entries, entry)
 	}
