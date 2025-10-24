@@ -6,9 +6,11 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"os"
 	"strings"
 
 	"github.com/google/go-containerregistry/pkg/name"
+	"github.com/rancherlabs/slsactl/internal/spinner"
 )
 
 var (
@@ -43,7 +45,12 @@ func (p *Processor) Process(url string) (*Result, error) {
 		return nil, ErrURLCannotBeEmpty
 	}
 
+	s := spinner.New("Fetch product manifest")
+	s.Start()
+	s.UpdateStatus(url)
+
 	r, err := p.fetcher.Fetch(url)
+	s.Stop(err == nil)
 	if err != nil {
 		return nil, fmt.Errorf("%w %q: %w", ErrCannotFetchURL, url, err)
 	}
@@ -58,6 +65,10 @@ func (p *Processor) Process(url string) (*Result, error) {
 	result := Result{}
 
 	scanner := bufio.NewScanner(io.LimitReader(r, maxProcessingSizeInBytes))
+
+	s = spinner.New("Verify images")
+	s.Start()
+
 	for scanner.Scan() {
 		image := strings.TrimSpace(scanner.Text())
 
@@ -76,12 +87,22 @@ func (p *Processor) Process(url string) (*Result, error) {
 			image = p.registry + image
 		}
 
-		fmt.Println("processing", image)
+		s.UpdateStatus(image)
+
+		// Reset stdout/stderr to avoid verbose output from cosign.
+		stdout := os.Stdout
+		stderr := os.Stderr
+		os.Stdout = nil
+		os.Stderr = nil
 		entry := p.ip.Process(image)
+		os.Stdout = stdout
+		os.Stderr = stderr
+
 		result.Entries = append(result.Entries, entry)
 	}
 
 	err = scanner.Err()
+	s.Stop(err == nil && len(result.Entries) > 0)
 	if err != nil {
 		return nil, fmt.Errorf("error found scanning image list: %w", err)
 	}
