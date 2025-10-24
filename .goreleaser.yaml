@@ -21,8 +21,7 @@ builds:
       - CGO_ENABLED=0
 
 archives:
-  - id: default
-    format: binary
+  - formats: [ 'binary', 'tar.gz' ]
 
 signs:
   - cmd: cosign
