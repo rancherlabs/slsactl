@@ -73,6 +73,15 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "^https://github.com/rancher/image-build-multus/.github/workflows/release.(yml|yaml)@refs/tags/v1.32.3$",
 		},
 		{
+			image: "rancher/hardened-etcd:v3.5.16-k3s1-build20241106",
+			want:  "^https://github.com/rancher/image-build-etcd/.github/workflows/(image-push|release).yml@refs/tags/v",
+		},
+		{
+			image: "rancher/hardened-multus-dynamic-networks-controller:v0.3.7-build20250711",
+			want:  "^https://github.com/rancher/image-build-multus-dynamic-networks-controller/.github/workflows/release.(yml|yaml)@refs/tags/v0.3.7-build20250711$",
+		},
+
+		{
 			image:   "",
 			wantErr: "invalid image name",
 		},
