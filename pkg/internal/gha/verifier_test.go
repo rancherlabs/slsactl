@@ -201,9 +201,10 @@ func TestVerify(t *testing.T) {
 						CertIdentityRegexp: "^https://github.com/rancher/foo/.github/workflows/release.(yml|yaml)@refs/tags/v2.7.1$",
 						CertOidcIssuer:     "https://token.actions.githubusercontent.com",
 					},
-					RekorURL:      options.DefaultRekorURL,
-					CheckClaims:   true,
-					HashAlgorithm: crypto.SHA256,
+					RekorURL:        options.DefaultRekorURL,
+					CheckClaims:     true,
+					HashAlgorithm:   crypto.SHA256,
+					NewBundleFormat: true,
 				}
 				m.On("Verify", context.TODO(), vc, "rancher/foo:v2.7.1").Return(nil)
 			},
@@ -218,9 +219,10 @@ func TestVerify(t *testing.T) {
 						CertIdentityRegexp: "^https://github.com/rancher/foo/.github/workflows/release.(yml|yaml)@refs/tags/v2.7.1$",
 						CertOidcIssuer:     "https://token.actions.githubusercontent.com",
 					},
-					RekorURL:      options.DefaultRekorURL,
-					CheckClaims:   true,
-					HashAlgorithm: crypto.SHA256,
+					RekorURL:        options.DefaultRekorURL,
+					CheckClaims:     true,
+					HashAlgorithm:   crypto.SHA256,
+					NewBundleFormat: true,
 				}
 				m.On("Verify", context.TODO(), vc, "rancher/foo:v2.7.1").Return(
 					errors.New(`upstream failure`))
