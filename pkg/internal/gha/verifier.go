@@ -160,8 +160,8 @@ func getCertIdentity(imageName string) (string, error) {
 
 	repo = overrideRepo(repo)
 
-	// Check if the image is an upstream image and has a different cert identity.
-	if identity, isUpstreamRepo := upstreamImageRepo[repo]; isUpstreamRepo {
+	// Check whether there is an identity override for the specific repo.
+	if identity, found := identityOverride[repo]; found {
 		return identity, nil
 	}
 
