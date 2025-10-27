@@ -60,6 +60,8 @@ func EnforceOrDie() {
 	)
 	if err != nil {
 		fmt.Printf("failed to enforce landlock policies (requires Linux 5.13+): %v", err)
-		os.Exit(2)
+		if val == "on" {
+			os.Exit(2)
+		}
 	}
 }
