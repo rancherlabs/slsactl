@@ -57,9 +57,10 @@ func (v *Verifier) Verify(ctx context.Context, image string) error {
 			CertIdentityRegexp: certIdentity,
 			CertOidcIssuer:     "https://token.actions.githubusercontent.com",
 		},
-		RekorURL:      options.DefaultRekorURL,
-		CheckClaims:   true,
-		HashAlgorithm: v.HashAlgorithm,
+		RekorURL:        options.DefaultRekorURL,
+		CheckClaims:     true,
+		HashAlgorithm:   v.HashAlgorithm,
+		NewBundleFormat: true,
 	}
 
 	return v.UpstreamVerifier.Verify(ctx, vc, image)
