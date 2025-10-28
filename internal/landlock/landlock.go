@@ -38,7 +38,8 @@ func EnforceOrDie() {
 	}
 
 	rwDirs := []string{
-		filepath.Join(home, ".sigstore"), // Sigstore TUF DB.
+		filepath.Join(home, ".sigstore"),         // Sigstore TUF DB.
+		filepath.Join(home, ".docker", "buildx"), // Image artefacts handling.
 	}
 
 	cwd, err := os.Getwd()
