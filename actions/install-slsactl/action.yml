@@ -74,25 +74,25 @@ runs:
             ARCH=arm64
         fi
 
-        FILE="slsactl_${VERSION#v}_${OS}_${ARCH}"
+        FILE="slsactl_${VERSION#v}_${OS}_${ARCH}.tar.gz"
 
         echo "Installing ${FILE}"
         curl -LO "https://${REPO}/releases/download/${VERSION}/${FILE}"
         grep "${FILE}" "slsactl_${VERSION#v}_checksums.txt" | sha256sum -c
+        tar -xf "${FILE}"
       
         chmod +x "${FILE}"
       else
         echo 'Version is not "latest" nor starts with "v". Fallback to go install with commit ID.'
-        go install "github.com/rancherlabs/slsactl@${VERSION}"
-        FILE="$(go env GOPATH)/bin/slsactl"
+        GOBIN=$(pwd) go install "github.com/rancherlabs/slsactl@${VERSION}"
       fi
 
       if sudo -l &> /dev/null; then
-        sudo mv "${FILE}" /usr/local/bin/slsactl
-        sudo rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.pem" "slsactl_${VERSION#v}_checksums.txt.sig"
+        sudo install -m 755 slsactl /usr/local/bin/slsactl
+        sudo rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.sigstore.json" "${FILE}"
       else
-        mv "${FILE}" /usr/local/bin/slsactl
-        rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.pem" "slsactl_${VERSION#v}_checksums.txt.sig"
+        install -m 755 slsactl /usr/local/bin/slsactl
+        rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.sigstore.json" "${FILE}"
       fi
     env:
       VERSION: ${{ inputs.version }}
