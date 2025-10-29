@@ -79,7 +79,7 @@ runs:
         echo "Installing ${FILE}"
         curl -LO "https://${REPO}/releases/download/${VERSION}/${FILE}"
         grep "${FILE}" "slsactl_${VERSION#v}_checksums.txt" | sha256sum -c
-        tar -xf "${FILE}"
+        tar -xf "${FILE}" slsactl
       else
         echo 'Version is not "latest" nor starts with "v". Fallback to go install with commit ID.'
         GOBIN=$(pwd) go install "github.com/rancherlabs/slsactl@${VERSION}"
