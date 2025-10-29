@@ -10,6 +10,8 @@ import (
 	"github.com/landlock-lsm/go-landlock/landlock"
 )
 
+const dirMode = 0o700
+
 // EnforceOrDie checks whether or not to enforce the landlock policy, and if so,
 // apply it. Any error will result in os.Exit.
 func EnforceOrDie() {
@@ -41,6 +43,7 @@ func EnforceOrDie() {
 		filepath.Join(home, ".sigstore"),         // Sigstore TUF DB.
 		filepath.Join(home, ".docker", "buildx"), // Image artefacts handling.
 	}
+	ensureDirs(rwDirs)
 
 	cwd, err := os.Getwd()
 	if err == nil {
@@ -52,17 +55,26 @@ func EnforceOrDie() {
 		landlock.RWDirs(rwDirs...),
 		landlock.RODirs(
 			"/proc/self",
+			"/etc/ssl",                     // Root CA bundles to establish TLS.
+			filepath.Join(home, ".docker"), // Docker config to access OCI/registries.
 		),
 		landlock.ROFiles(
-			"/etc/resolv.conf",                         // DNS resolution.
-			"/etc/ssl/ca-bundle.pem",                   // Root CA bundles to establish TLS.
-			filepath.Join(home, ".docker/config.json"), // Docker config to access OCI/registries.
+			"/etc/resolv.conf", // DNS resolution.
 		),
 	)
 	if err != nil {
-		fmt.Printf("failed to enforce landlock policies (requires Linux 5.13+): %v", err)
+		fmt.Printf("failed to enforce landlock policies (requires Linux 5.13+): %v\n", err)
 		if val == "on" {
 			os.Exit(2)
+		}
+	}
+}
+
+func ensureDirs(dirs []string) {
+	for _, dir := range dirs {
+		err := os.MkdirAll(dir, dirMode)
+		if err != nil {
+			slog.Error("failed to ensure dir", "path", dir, "error", err)
 		}
 	}
 }
