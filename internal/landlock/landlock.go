@@ -56,6 +56,7 @@ func EnforceOrDie() {
 		landlock.RODirs(
 			"/proc/self",
 			"/etc/ssl",                     // Root CA bundles to establish TLS.
+			"/var/lib/ca-certificates",     // Root CA bundles to establish TLS.
 			filepath.Join(home, ".docker"), // Docker config to access OCI/registries.
 		),
 		landlock.ROFiles(
