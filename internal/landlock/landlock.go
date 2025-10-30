@@ -64,7 +64,7 @@ func EnforceOrDie() {
 		),
 	)
 	if err != nil {
-		fmt.Printf("failed to enforce landlock policies (requires Linux 5.13+): %v\n", err)
+		fmt.Fprintf(os.Stderr, "failed to enforce landlock policies (requires Linux 5.13+): %v\n", err)
 		if val == "on" {
 			os.Exit(2)
 		}
