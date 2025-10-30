@@ -103,7 +103,7 @@ func getImageRepoRef(imageName string) (string, string, error) {
 
 func getMutableCertIdentity(ctx context.Context, imageName string) (string, error) {
 	var ref string
-	var realref interface{}
+	var realref any
 	var ok bool
 
 	repo, _, err := getImageRepoRef(imageName)

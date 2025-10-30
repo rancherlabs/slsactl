@@ -68,7 +68,7 @@ func provenanceCmd(img, format, platform string) error {
 	return err
 }
 
-func printOutput(w io.Writer, v interface{}) error {
+func printOutput(w io.Writer, v any) error {
 	outData, err := json.MarshalIndent(v, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal v1 provenance: %w", err)

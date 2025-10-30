@@ -31,7 +31,7 @@ func TestConvertV02ToV1(t *testing.T) {
 	expectedV1Prov := v1.ProvenancePredicate{
 		BuildDefinition: v1.ProvenanceBuildDefinition{
 			BuildType: "https://mobyproject.org/buildkit@v1",
-			ExternalParameters: map[string]interface{}{
+			ExternalParameters: map[string]any{
 				"args": map[string]string{
 					"build-arg:KUBECTL_SUM_amd64":    "aff42d3167685e4d8e86fda0ad9c6ce6ec6c047bc24d608041d54717a18192ba",
 					"build-arg:KUBECTL_SUM_arm64":    "13d547495bdea49b223fe06bffb6d2bef96436634847f759107655aa80fc990e",
@@ -50,7 +50,7 @@ func TestConvertV02ToV1(t *testing.T) {
 					{name: "dockerfile"},
 				},
 			},
-			InternalParameters: map[string]interface{}{
+			InternalParameters: map[string]any{
 				"platform": "linux/amd64",
 			},
 			ResolvedDependencies: []v1.ResourceDescriptor{

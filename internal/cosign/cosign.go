@@ -61,7 +61,7 @@ func GetCosignCertData(ctx context.Context, img string) (*v1.ProvenancePredicate
 	}
 
 	if commitRef != "" {
-		deps[0].Annotations = map[string]interface{}{
+		deps[0].Annotations = map[string]any{
 			"ref": commitRef,
 		}
 	}
