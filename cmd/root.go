@@ -36,7 +36,7 @@ func Exec(args []string) {
 		showUsage()
 	}
 
-	name := os.Args[1]
+	name := args[1]
 	cmd, ok := cmds[name]
 	if !ok {
 		showUsage()

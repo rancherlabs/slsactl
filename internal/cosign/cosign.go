@@ -2,8 +2,10 @@ package cosign
 
 import (
 	"context"
+	"crypto/x509/pkix"
 	"errors"
 	"fmt"
+	"log/slog"
 
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/in-toto/in-toto-golang/in_toto/slsa_provenance/common"
@@ -24,19 +26,44 @@ func GetCosignCertData(ctx context.Context, img string) (*v1.ProvenancePredicate
 		return nil, fmt.Errorf("failed strict validation (image name should be fully qualified): %w", err)
 	}
 
-	payloads, err := cosign.FetchSignaturesForReference(ctx, ref)
-	if err != nil {
-		return nil, fmt.Errorf("failed to fetch image signatures: %w", err)
+	var extensions []pkix.Extension
+
+	co := &cosign.CheckOpts{
+		NewBundleFormat: true,
 	}
 
-	if len(payloads) == 0 {
-		return nil, errors.New("no payloads found for image")
+	newBundles, _, err := cosign.GetBundles(ctx, ref, co)
+	if err != nil {
+		slog.Debug("error fetching bundles", "error", err)
+	}
+	if len(newBundles) > 0 {
+		v, err := newBundles[0].VerificationContent()
+		if err == nil {
+			cert := v.Certificate()
+			if cert != nil {
+				extensions = cert.Extensions
+			}
+		}
+	}
+
+	if len(extensions) == 0 {
+		payloads, err := cosign.FetchSignaturesForReference(ctx, ref)
+		if err != nil {
+			return nil, fmt.Errorf("failed to fetch image signatures: %w", err)
+		}
+		if len(payloads) > 0 && payloads[0].Cert != nil {
+			extensions = payloads[0].Cert.Extensions
+		}
+	}
+
+	if len(extensions) == 0 {
+		return nil, errors.New("no signature or bundle found for image")
 	}
 
 	var inparams provenance.InternalParameters
 	var commitID, commitRef, repoURL string
 
-	for _, ext := range payloads[0].Cert.Extensions {
+	for _, ext := range extensions {
 		switch {
 		case ext.Id.Equal(certificate.OIDSourceRepositoryDigest):
 			certificate.ParseDERString(ext.Value, &commitID)
