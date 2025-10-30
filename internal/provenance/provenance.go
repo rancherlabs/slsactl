@@ -18,7 +18,7 @@ type BuildKitProvenance02 struct {
 }
 
 type ArchProvenance struct {
-	SLSA v02.ProvenancePredicate `json:"SLSA,omitempty"`
+	SLSA v02.ProvenancePredicate `json:"SLSA"`
 }
 
 type SLSAV1Provenance struct {
@@ -27,7 +27,7 @@ type SLSAV1Provenance struct {
 }
 
 type ArchProvenanceV1 struct {
-	SLSA v1.ProvenancePredicate `json:"SLSA,omitempty"`
+	SLSA v1.ProvenancePredicate `json:"SLSA"`
 }
 
 func ConvertV02ToV1(v02Prov v02.ProvenancePredicate, override *v1.ProvenancePredicate) v1.ProvenancePredicate {
