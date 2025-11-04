@@ -13,7 +13,7 @@ import (
 func TestVerify(t *testing.T) {
 	t.Parallel()
 
-	empty := func(t *testing.T) {}
+	empty := func(t *testing.T) { t.Helper() }
 	tests := []struct {
 		name      string
 		image     string
@@ -37,6 +37,7 @@ func TestVerify(t *testing.T) {
 				m1.On("Matches", "suse/sles").Return(false)
 
 				return []internal.Verifier{m1}, func(t *testing.T) {
+					t.Helper()
 					m1.AssertExpectations(t)
 				}
 			},
@@ -52,6 +53,7 @@ func TestVerify(t *testing.T) {
 				m1.On("Verify", mock.Anything, "suse/sles").Return(nil)
 
 				return []internal.Verifier{m1}, func(t *testing.T) {
+					t.Helper()
 					m1.AssertExpectations(t)
 				}
 			},

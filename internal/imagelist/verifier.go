@@ -8,14 +8,14 @@ import (
 )
 
 type ImageProcessor interface {
-	Process(img string) Entry
+	Verify(img string) Entry
 }
 
 type imageVerifier struct {
 	m sync.Mutex
 }
 
-func (i *imageVerifier) Process(img string) Entry {
+func (i *imageVerifier) Verify(img string) Entry {
 	entry := Entry{
 		Image: img,
 	}
