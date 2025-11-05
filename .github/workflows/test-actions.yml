@@ -29,6 +29,13 @@ jobs:
     - uses: ./actions/install-slsactl
     - run: slsactl version
       shell: bash
+    - name: Check for dirty worktree
+      if: runner.os == 'Linux'
+      run: |
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "ERROR: The install-slsactl action left the worktree dirty"
+          exit 1
+        fi
 
   test-verify-action:
     strategy:
