@@ -87,11 +87,11 @@ runs:
 
       if sudo -l &> /dev/null; then
         sudo install -m 755 slsactl /usr/local/bin/slsactl
-        sudo rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.sigstore.json" "${FILE}"
       else
         install -m 755 slsactl /usr/local/bin/slsactl
-        rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.sigstore.json" "${FILE}"
       fi
+      
+      rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.sigstore.json" "${FILE}" slsactl
     env:
       VERSION: ${{ inputs.version }}
       REPO: github.com/rancherlabs/slsactl
