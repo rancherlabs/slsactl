@@ -92,7 +92,7 @@ func savePrintOutput(result *imagelist.Result) error {
 		return fmt.Errorf("fail to marshal JSON: %w", err)
 	}
 
-	fn := fmt.Sprintf("%s_%s", result.Product, result.Version)
+	fn := fmt.Sprintf("%s_%s.json", result.Product, result.Version)
 	err = os.WriteFile(fn, data, 0o600)
 	if err != nil {
 		return fmt.Errorf("failed to write file: %w", err)
