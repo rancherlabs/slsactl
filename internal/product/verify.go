@@ -2,64 +2,25 @@ package product
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log/slog"
 	"os"
-	"regexp"
 	"strings"
 	"text/tabwriter"
 
 	"github.com/rancherlabs/slsactl/internal/imagelist"
 )
 
-type productInfo struct {
-	description      string
-	imagesUrl        string
-	windowsImagesUrl string
-}
-
-var (
-	ErrInvalidVersion = errors.New("invalid version")
-
-	versionRegex = regexp.MustCompile(`^v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]d*)(\-(?:alpha|beta|rc)\d+)?$`)
-
-	productMapping = map[string]productInfo{
-		"rancher-prime": {
-			description:      "SUSE Rancher Prime",
-			imagesUrl:        "https://github.com/rancher/rancher/releases/download/%s/rancher-images.txt",
-			windowsImagesUrl: "https://github.com/rancher/rancher/releases/download/%s/rancher-windows-images.txt",
-		},
-		"storage": {
-			description: "SUSE Storage",
-			imagesUrl:   "https://github.com/longhorn/longhorn/releases/download/%s/longhorn-images.txt",
-		},
-		"virtualization": {
-			description: "SUSE Virtualization",
-			imagesUrl:   "https://github.com/harvester/harvester/releases/download/%s/harvester-images-list-amd64.txt",
-		},
-	}
-)
-
 func Verify(registry, name, version string, summary bool, outputFile bool) error {
-	if !versionRegex.MatchString(version) {
-		return fmt.Errorf("%w: %s", ErrInvalidVersion, version)
-	}
-
-	info, found := productMapping[name]
-	if !found {
-		var names []string
-		for name := range productMapping {
-			names = append(names, name)
-		}
-		products := strings.Join(names, ", ")
-		return fmt.Errorf("product %q not found: options are %s", name, products)
+	info, err := product(name, version)
+	if err != nil {
+		return err
 	}
 
 	fmt.Printf("Verifying container images for %s %s:\n\n", info.description, version)
 
 	p := imagelist.NewProcessor(registry)
-	result, err := p.Process(fmt.Sprintf(info.imagesUrl, version))
+	result, err := p.Verify(fmt.Sprintf(info.imagesUrl, version))
 	if err != nil {
 		return err
 	}
@@ -68,7 +29,7 @@ func Verify(registry, name, version string, summary bool, outputFile bool) error
 	result.Version = version
 
 	if len(info.windowsImagesUrl) > 0 {
-		r2, err := p.Process(fmt.Sprintf(info.windowsImagesUrl, version))
+		r2, err := p.Verify(fmt.Sprintf(info.windowsImagesUrl, version))
 		if err == nil {
 			result.Entries = append(result.Entries, r2.Entries...)
 		} else {
@@ -77,26 +38,20 @@ func Verify(registry, name, version string, summary bool, outputFile bool) error
 	}
 
 	if summary {
-		err = printSummary(result)
+		err = printVerifySummary(result)
 		if err != nil {
 			return fmt.Errorf("failed to print summary: %w", err)
 		}
 	}
 
 	if outputFile {
-		return saveOutput(result)
+		return savePrintOutput(result)
 	}
 
 	return nil
 }
 
-type summary struct {
-	count  int
-	signed int
-	errors int
-}
-
-func printSummary(result *imagelist.Result) error {
+func printVerifySummary(result *imagelist.Result) error {
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 12, 12, 4, ' ', 0)
 
@@ -131,7 +86,7 @@ func printSummary(result *imagelist.Result) error {
 	return w.Flush()
 }
 
-func saveOutput(result *imagelist.Result) error {
+func savePrintOutput(result *imagelist.Result) error {
 	data, err := json.MarshalIndent(result, "", "  ")
 	if err != nil {
 		return fmt.Errorf("fail to marshal JSON: %w", err)

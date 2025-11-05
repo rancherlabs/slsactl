@@ -30,9 +30,9 @@ func TestProcess(t *testing.T) {
 						[]byte("image:v1\nimage2:v2\n"),
 					)), nil)
 
-				m.On("Process", "some.registry/image:v1").
+				m.On("Verify", "some.registry/image:v1").
 					Return(Entry{Image: "some.registry/image:v1"})
-				m.On("Process", "some.registry/image2:v2").
+				m.On("Verify", "some.registry/image2:v2").
 					Return(Entry{Image: "some.registry/image2:v2"})
 			},
 			want: &Result{
@@ -51,7 +51,7 @@ func TestProcess(t *testing.T) {
 						[]byte("\n\nimage:v1\n"),
 					)), nil)
 
-				m.On("Process", "some.registry/image:v1").
+				m.On("Verify", "some.registry/image:v1").
 					Return(Entry{Image: "some.registry/image:v1"})
 			},
 			want: &Result{
@@ -69,7 +69,7 @@ func TestProcess(t *testing.T) {
 						[]byte("\n# some:image\nimage:v1\n"),
 					)), nil)
 
-				m.On("Process", "some.registry/image:v1").
+				m.On("Verify", "some.registry/image:v1").
 					Return(Entry{Image: "some.registry/image:v1"})
 			},
 			want: &Result{
@@ -98,12 +98,12 @@ func TestProcess(t *testing.T) {
 						[]byte("image:v1\nimage2:v2\n"),
 					)), nil)
 
-				m.On("Process", "some.registry/image:v1").
+				m.On("Verify", "some.registry/image:v1").
 					Return(Entry{
 						Image: "some.registry/image:v1",
 						Error: errors.New("image not found"),
 					})
-				m.On("Process", "some.registry/image2:v2").
+				m.On("Verify", "some.registry/image2:v2").
 					Return(Entry{Image: "some.registry/image2:v2"})
 			},
 			want: &Result{
@@ -138,7 +138,7 @@ func TestProcess(t *testing.T) {
 						[]byte("docker.io/image:v1\n"),
 					)), nil)
 
-				m.On("Process", "some.registry/image:v1").
+				m.On("Verify", "some.registry/image:v1").
 					Return(Entry{Image: "some.registry/image:v1"})
 			},
 			want: &Result{
@@ -154,7 +154,7 @@ func TestProcess(t *testing.T) {
 						[]byte("registry.com/image:v1\n"),
 					)), nil)
 
-				m.On("Process", "registry.com/image:v1").
+				m.On("Verify", "registry.com/image:v1").
 					Return(Entry{Image: "registry.com/image:v1"})
 			},
 			want: &Result{
@@ -173,7 +173,7 @@ func TestProcess(t *testing.T) {
 			sut.fetcher = m
 			sut.ip = m
 
-			got, err := sut.Process(tc.url)
+			got, err := sut.Verify(tc.url)
 
 			if tc.wantErr == nil {
 				require.NoError(t, err)
@@ -192,7 +192,7 @@ type DepsMock struct {
 	mock.Mock
 }
 
-func (m *DepsMock) Process(img string) Entry {
+func (m *DepsMock) Verify(img string) Entry {
 	args := m.Called(img)
 	return args.Get(0).(Entry)
 }

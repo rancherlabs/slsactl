@@ -38,7 +38,7 @@ func NewProcessor(registry string) *Processor {
 	}
 }
 
-func (p *Processor) Process(url string) (*Result, error) {
+func (p *Processor) Verify(url string) (*Result, error) {
 	url = strings.TrimSpace(url)
 	if len(url) == 0 {
 		return nil, ErrURLCannotBeEmpty
@@ -88,7 +88,7 @@ func (p *Processor) Process(url string) (*Result, error) {
 
 		s.UpdateStatus(image)
 
-		entry := p.ip.Process(image)
+		entry := p.ip.Verify(image)
 
 		result.Entries = append(result.Entries, entry)
 	}

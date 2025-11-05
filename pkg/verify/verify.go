@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto"
 	"errors"
+	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -18,7 +19,7 @@ import (
 )
 
 var (
-	ErrNoVerifierFound = errors.New("no verifier found for this image")
+	ErrNoVerifierFound = errors.New("no verifier found for image")
 
 	cosignVerifier = &cosignImplementation{}
 
@@ -64,7 +65,7 @@ func Verify(image string) error {
 		}
 	}
 
-	return ErrNoVerifierFound
+	return fmt.Errorf("%w: %q", ErrNoVerifierFound, image)
 }
 
 type cosignImplementation struct{}
