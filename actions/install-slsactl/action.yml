@@ -44,15 +44,20 @@ runs:
       set -x
       if [[ "${VERSION}" == "latest" ]]; then
         echo 'Checking what the latest version is'
-        VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name' || echo 'latest')
+        VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name')
         
         echo "Using last tag ${VERSION} as version"
       fi
 
+      if [[ -z "${VERSION}" ]]; then
+        echo "WARN: version resolution failed, falling back to @latest"
+        VERSION='latest'
+      fi
+
       if [[ "${VERSION}" =~ ^v ]]; then
         echo "Downloading checksum file and signatures for release ${VERSION}"
-        curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.sigstore.json"
-        curl -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt"
+        curl --retry 3 --retry-connrefused -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt.sigstore.json"
+        curl --retry 3 --retry-connrefused -LO "https://${REPO}/releases/download/${VERSION}/slsactl_${VERSION#v}_checksums.txt"
 
         cosign verify-blob \
             --certificate-identity "https://${REPO}/.github/workflows/release.yml@refs/tags/${VERSION}" \
