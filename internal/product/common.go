@@ -10,7 +10,7 @@ import (
 var (
 	ErrInvalidVersion = errors.New("invalid version")
 
-	versionRegex = regexp.MustCompile(`^v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]d*)(\-(?:alpha|beta|rc)\d+)?$`)
+	versionRegex = regexp.MustCompile(`^v?(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(\-(?:alpha|beta|rc)\d+)?$`)
 
 	productMapping = map[string]productInfo{
 		"rancher-prime": {
