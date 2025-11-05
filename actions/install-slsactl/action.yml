@@ -44,7 +44,7 @@ runs:
       set -x
       if [[ "${VERSION}" == "latest" ]]; then
         echo 'Checking what the latest version is'
-        VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name')
+        VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name' || echo 'latest')
         
         echo "Using last tag ${VERSION} as version"
       fi
