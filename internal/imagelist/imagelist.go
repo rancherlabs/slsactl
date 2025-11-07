@@ -20,8 +20,29 @@ var (
 
 const maxProcessingSizeInBytes = 5 * (1 << 20) // 5MB
 
+type ImageVerifier interface {
+	Verify(img string) Entry
+}
+
+type ImageCopier interface {
+	Copy(img, targetRegistry string) Entry
+}
+
+type Result struct {
+	Product string  `json:"product,omitempty"`
+	Version string  `json:"version,omitempty"`
+	Entries []Entry `json:"entries,omitempty"`
+}
+
+type Entry struct {
+	Image  string `json:"image,omitempty"`
+	Error  error  `json:"error,omitempty"`
+	Signed bool   `json:"signed,omitempty"`
+}
+
 type Processor struct {
-	ip       ImageProcessor
+	ip       ImageVerifier
+	copier   ImageCopier
 	fetcher  Fetcher
 	registry string
 }
@@ -31,14 +52,31 @@ func NewProcessor(registry string) *Processor {
 		registry = registry + "/"
 	}
 
+	copier := &imageCopier{
+		mirroredOnly: true,
+	}
+
 	return &Processor{
 		registry: registry,
 		ip:       new(imageVerifier),
 		fetcher:  new(HttpFetcher),
+		copier:   copier,
 	}
 }
 
 func (p *Processor) Verify(url string) (*Result, error) {
+	return p.process(url, "Verify images", "", func(img, _ string) Entry {
+		return p.ip.Verify(img)
+	})
+}
+
+func (p *Processor) Copy(url, dstRegistry string) (*Result, error) {
+	return p.process(url, "Copy images", dstRegistry, func(img, dstRegistry string) Entry {
+		return p.copier.Copy(img, dstRegistry)
+	})
+}
+
+func (p *Processor) process(url, status, dstRegistry string, action func(string, string) Entry) (*Result, error) {
 	url = strings.TrimSpace(url)
 	if len(url) == 0 {
 		return nil, ErrURLCannotBeEmpty
@@ -65,7 +103,7 @@ func (p *Processor) Verify(url string) (*Result, error) {
 
 	scanner := bufio.NewScanner(io.LimitReader(r, maxProcessingSizeInBytes))
 
-	s = spinner.New("Verify images")
+	s = spinner.New(status)
 	s.Start()
 
 	for scanner.Scan() {
@@ -88,7 +126,7 @@ func (p *Processor) Verify(url string) (*Result, error) {
 
 		s.UpdateStatus(image)
 
-		entry := p.ip.Verify(image)
+		entry := action(image, dstRegistry)
 
 		result.Entries = append(result.Entries, entry)
 	}
@@ -104,16 +142,4 @@ func (p *Processor) Verify(url string) (*Result, error) {
 	}
 
 	return &result, nil
-}
-
-type Result struct {
-	Product string  `json:"product,omitempty"`
-	Version string  `json:"version,omitempty"`
-	Entries []Entry `json:"entries,omitempty"`
-}
-
-type Entry struct {
-	Image  string `json:"image,omitempty"`
-	Error  error  `json:"error,omitempty"`
-	Signed bool   `json:"signed,omitempty"`
 }

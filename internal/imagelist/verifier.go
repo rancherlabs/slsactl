@@ -7,10 +7,6 @@ import (
 	"github.com/rancherlabs/slsactl/pkg/verify"
 )
 
-type ImageProcessor interface {
-	Verify(img string) Entry
-}
-
 type imageVerifier struct {
 	m sync.Mutex
 }
