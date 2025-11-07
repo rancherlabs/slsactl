@@ -70,6 +70,7 @@ var (
 		"rancher/image-build-etcd":                                        "^https://github.com/rancher/image-build-etcd/.github/workflows/(image-push|release).yml@refs/tags/v",
 		"rancher/image-build-whereabouts":                                 "^https://github.com/rancher/image-build-whereabouts/.github/workflows/(image-push|release).yml@refs/tags/v",
 		"rancher/image-build-rke2-cloud-provider":                         "^https://github.com/rancher/image-build-rke2-cloud-provider/.github/workflows/(image-push|release).yml@refs/tags/v",
+		"rancher/image-build-cni-plugins":                                 "^https://github.com/rancher/image-build-cni-plugins/.github/workflows/(image-push|release).yml@refs/tags/v",
 		"rancher/supportability-review":                                   "https://github.com/rancher/supportability-review/.github/workflows/release.yaml@refs/tags/v",
 	}
 
