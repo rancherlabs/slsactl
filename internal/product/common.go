@@ -1,10 +1,14 @@
 package product
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"regexp"
 	"strings"
+
+	"github.com/rancherlabs/slsactl/internal/imagelist"
 )
 
 var (
@@ -57,4 +61,43 @@ func product(name, version string) (*productInfo, error) {
 	}
 
 	return &info, nil
+}
+
+func saveOutput(fn string, result *imagelist.Result) error {
+	data, err := json.MarshalIndent(result, "", "  ")
+	if err != nil {
+		return fmt.Errorf("fail to marshal JSON: %w", err)
+	}
+
+	err = os.WriteFile(fn, data, 0o600)
+	if err != nil {
+		return fmt.Errorf("failed to write file: %w", err)
+	} else {
+		fmt.Printf("\nreport saved as %q\n", fn)
+	}
+
+	return nil
+}
+
+func resultSummary(result *imagelist.Result) map[string]*summary {
+	s := map[string]*summary{}
+	for _, entry := range result.Entries {
+		imgType := "rancher"
+		if strings.Contains(entry.Image, "rancher/mirrored") {
+			imgType = "third-party"
+		}
+
+		if _, ok := s[imgType]; !ok {
+			s[imgType] = &summary{}
+		}
+
+		s[imgType].count++
+		if entry.Signed {
+			s[imgType].signed++
+		}
+		if entry.Error != nil {
+			s[imgType].errors++
+		}
+	}
+	return s
 }

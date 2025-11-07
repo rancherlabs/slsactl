@@ -10,8 +10,8 @@ import (
 )
 
 const productf = `usage:
-    %[1]s product verify rancher-prime:v2.12.2
-    %[1]s product artifacts rancher-prime:v2.12.2
+    %[1]s product verify --registry <src_registry> rancher-prime:v2.12.2
+    %[1]s product copy --registry <src_registry> rancher-prime:v2.12.2 <target_registry>
 `
 
 func productCmd(args []string) error {
@@ -33,7 +33,21 @@ func productCmd(args []string) error {
 		return fmt.Errorf("invalid name version %q: format expected <name>:<version>", arg)
 	}
 
-	return product.Verify(registry, nameVer[0], nameVer[1], true, true)
+	switch args[0] {
+	case "verify":
+		return product.Verify(registry, nameVer[0], nameVer[1], true, true)
+	case "copy":
+		if f.NArg() != 2 {
+			showProductUsage()
+		}
+
+		targetRegistry := f.Arg(1)
+		return product.Copy(registry, nameVer[0], nameVer[1], targetRegistry)
+	default:
+		showProductUsage()
+	}
+
+	return nil
 }
 
 func showProductUsage() {
