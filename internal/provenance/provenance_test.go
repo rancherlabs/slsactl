@@ -15,7 +15,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-//go:embed security-scan.v0.2
+//go:embed testdata/security-scan.v0.2
 var v02Data []byte
 
 func TestConvertV02ToV1(t *testing.T) {

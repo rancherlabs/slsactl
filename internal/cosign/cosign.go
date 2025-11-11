@@ -36,13 +36,17 @@ func GetCosignCertData(ctx context.Context, img string) (*v1.ProvenancePredicate
 	if err != nil {
 		slog.Debug("error fetching bundles", "error", err)
 	}
-	if len(newBundles) > 0 {
-		v, err := newBundles[0].VerificationContent()
-		if err == nil {
-			cert := v.Certificate()
-			if cert != nil {
-				extensions = cert.Extensions
-			}
+
+	for _, b := range newBundles {
+		v, err := b.VerificationContent()
+		if err != nil {
+			continue
+		}
+
+		cert := v.Certificate()
+		if cert != nil && len(cert.Extensions) > 0 {
+			extensions = cert.Extensions
+			break
 		}
 	}
 
@@ -51,13 +55,17 @@ func GetCosignCertData(ctx context.Context, img string) (*v1.ProvenancePredicate
 		if err != nil {
 			return nil, fmt.Errorf("failed to fetch image signatures: %w", err)
 		}
-		if len(payloads) > 0 && payloads[0].Cert != nil {
-			extensions = payloads[0].Cert.Extensions
+
+		for _, p := range payloads {
+			if p.Cert != nil && len(p.Cert.Extensions) > 0 {
+				extensions = p.Cert.Extensions
+				break
+			}
 		}
 	}
 
 	if len(extensions) == 0 {
-		return nil, errors.New("no signature or bundle found for image")
+		return nil, errors.New("no matching signature or bundle found for image")
 	}
 
 	var inparams provenance.InternalParameters
