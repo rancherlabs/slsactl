@@ -12,6 +12,7 @@ import (
 	v02 "github.com/in-toto/in-toto-golang/in_toto/slsa_provenance/v0.2"
 	cosign "github.com/rancherlabs/slsactl/internal/cosign"
 	"github.com/rancherlabs/slsactl/internal/provenance"
+	"github.com/rancherlabs/slsactl/pkg/verify"
 )
 
 // buildKitV1 holds the buildType supported for provenance enrichment.
@@ -51,6 +52,19 @@ func provenanceCmd(img, format, platform string) error {
 	case "slsav1":
 		if predicate.BuildType != buildKitV1 {
 			return fmt.Errorf("image builtType not supported: %q", predicate.BuildType)
+		}
+
+		// Avoid polluting the output in successful verifications.
+		sout := os.Stdout
+		serr := os.Stderr
+		os.Stdout = nil
+		os.Stderr = nil
+		err := verify.Verify(img)
+		os.Stdout = sout
+		os.Stderr = serr
+
+		if err != nil {
+			return fmt.Errorf("failed to verify %q: %w", img, err)
 		}
 
 		override, err := cosign.GetCosignCertData(context.Background(), img)
