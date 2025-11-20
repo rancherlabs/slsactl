@@ -71,8 +71,9 @@ var (
 		"rancher/image-build-whereabouts":                                 "^https://github.com/rancher/image-build-whereabouts/.github/workflows/(image-push|release).yml@refs/tags/v",
 		"rancher/image-build-rke2-cloud-provider":                         "^https://github.com/rancher/image-build-rke2-cloud-provider/.github/workflows/(image-push|release).yml@refs/tags/v",
 		"rancher/image-build-cni-plugins":                                 "^https://github.com/rancher/image-build-cni-plugins/.github/workflows/(image-push|release).yml@refs/tags/v",
-		"rancher/supportability-review":                                   "https://github.com/rancher/supportability-review/.github/workflows/release.yaml@refs/tags/v",
+		"rancher/supportability-review":                                   "^https://github.com/rancher/supportability-review/.github/workflows/release.yaml@refs/tags/v",
 		"rancher/rancher-prime":                                           "^https://github.com/rancher/rancher-prime/.github/workflows/(release|alpha-release|rc-release).yml@refs/tags/v",
+		"rancher/prometheus-federator":                                    "^https://github.com/rancher/prometheus-federator/.github/workflows/(release|publish).yaml@refs/tags/v",
 	}
 
 	// imageSuffixes holds a mapping between image name and the ref suffixes
