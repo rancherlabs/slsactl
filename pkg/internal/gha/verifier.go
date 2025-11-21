@@ -72,7 +72,6 @@ func getImageRepoRef(imageName string) (string, string, error) {
 	}
 
 	if strings.Contains(imageName, "@") {
-		fmt.Println("warn: image name with digest is not supported, use tags only.")
 		imageName = strings.Split(imageName, "@")[0]
 	}
 
