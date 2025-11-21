@@ -58,6 +58,22 @@ The cosign verification of Rancher Prime images can be done with:
 slsactl verify <prime_image>:<tag>
 ```
 
+### Troubleshooting
+
+#### permission denied failures
+
+This application runs with strict landlock rules, which limits its
+permissions in the host system. Supporting Kernels will enforce such
+rules which could result in permission denied failures.
+
+When users believe that the specific access is valid (e.g. use of `docker-credential-helpers`)
+they can disable the landlock enforcement by setting the environment
+variable `LANDLOCK_MODE` to `off`:
+
+```
+LANDLOCK_MODE=off slsactl verify ...
+```
+
 ## License
 Copyright (c) 2014-2024 [Rancher Labs, Inc.](http://rancher.com)
 
