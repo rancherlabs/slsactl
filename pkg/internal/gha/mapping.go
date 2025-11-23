@@ -33,6 +33,7 @@ var (
 		"rancher/hardened-coredns":                            "rancher/image-build-coredns",
 		"rancher/hardened-cni-plugins":                        "rancher/image-build-cni-plugins",
 		"rancher/nginx-ingress-controller":                    "rancher/ingress-nginx",
+		"rancher/nginx-ingress-controller-chroot":             "rancher/ingress-nginx",
 		"rancher/rancher":                                     "rancher/rancher-prime",
 		"rancher/neuvector-manager":                           "neuvector/manager",
 		"rancher/neuvector-controller":                        "neuvector/neuvector",
