@@ -61,6 +61,26 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
+			image: "rancher/rke2-upgrade:v1.31.14-rke2r1",
+			want:  "^https://github.com/rancher/rke2-upgrade/.github/workflows/release.(yml|yaml)@refs/tags/v1.31.14(\\+|&#43;)rke2r1$",
+		},
+		{
+			image: "rancher/system-agent-installer-k3s:v1.31.14-k3s1",
+			want:  "^https://github.com/rancher/system-agent-installer-k3s/.github/workflows/release.(yml|yaml)@refs/tags/v1.31.14(\\+|&#43;)k3s1$",
+		},
+		{
+			image: "rancher/system-agent-installer-k3s:v1.31.14-k3s1-linux-amd64",
+			want:  "^https://github.com/rancher/system-agent-installer-k3s/.github/workflows/release.(yml|yaml)@refs/tags/v1.31.14(\\+|&#43;)k3s1$",
+		},
+		{
+			image: "rancher/system-agent-installer-rke2:v1.31.14-rke2r1",
+			want:  "^https://github.com/rancher/system-agent-installer-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v1.31.14(\\+|&#43;)rke2r1$",
+		},
+		{
+			image: "rancher/system-agent-installer-rke2:v1.31.14-rke2r1-linux-amd64",
+			want:  "^https://github.com/rancher/system-agent-installer-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v1.31.14(\\+|&#43;)rke2r1$",
+		},
+		{
 			image: "rancher/rke2:v0.0.7-rke2foo2",
 			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7(\\+|&#43;)rke2foo2$",
 		},
