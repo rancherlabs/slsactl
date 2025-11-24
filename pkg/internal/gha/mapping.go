@@ -55,6 +55,7 @@ var (
 
 	identityOverride = map[string]string{
 		"rancher/cluster-api-addon-provider-fleet":                        "^https://github.com/rancher/clusterapi-forks/.github/workflows/caapf.yaml@refs/heads/main$",
+		"rancher/ip-address-manager":                                      "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main$",
 		"rancher/cluster-api-controller":                                  "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
 		"rancher/cluster-api-aws-controller":                              "^https://github.com/rancher/clusterapi-forks/.github/workflows/aws.yaml@refs/heads/main$",
 		"rancher/cluster-api-azure-controller":                            "^https://github.com/rancher/clusterapi-forks/.github/workflows/azure.yaml@refs/heads/main$",
