@@ -6,6 +6,8 @@ var (
 		"-linux-arm64",
 		"-windows-amd64",
 		"-windows-arm64",
+		"-windows-ltsc2022-amd64",
+		"-windows-ltsc2022-arm64",
 		"-amd64",
 		"-arm64",
 		"-s390x",

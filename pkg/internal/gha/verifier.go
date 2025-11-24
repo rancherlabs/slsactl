@@ -147,6 +147,10 @@ func getCertIdentity(imageName string) (string, error) {
 		ref = strings.Replace(ref, "-k3s", "\\+k3s", 1)
 	}
 
+	if strings.HasPrefix(repo, "rancher/system-agent-installer-rke2") {
+		ref = strings.Replace(ref, "-rke2", "\\+rke2", 1)
+	}
+
 	// neuvector images don't have "v" prefix like its Git tags
 	if strings.Contains(imageName, "neuvector") {
 		ref = "v" + ref
