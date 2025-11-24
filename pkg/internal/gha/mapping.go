@@ -8,6 +8,8 @@ var (
 		"-windows-arm64",
 		"-windows-ltsc2022-amd64",
 		"-windows-ltsc2022-arm64",
+		"-windows-1809-amd64",
+		"-windows-1809-arm64",
 		"-amd64",
 		"-arm64",
 		"-s390x",
