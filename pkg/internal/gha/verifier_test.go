@@ -165,6 +165,14 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rancher/mirrored-cilium-cilium:v1.17.0",
 			want:  "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
 		},
+		{
+			image: "rancher/system-agent-installer-k3s:v1.34.2-k3s1-linux-arm64",
+			want:  "^https://github.com/rancher/system-agent-installer-k3s/.github/workflows/release.(yml|yaml)@refs/tags/v1.34.2\\+k3s1$",
+		},
+		{
+			image: "rancher/system-agent-installer-rke2:v1.34.2-rke2r1-windows-ltsc2022-amd64",
+			want:  "^https://github.com/rancher/system-agent-installer-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v1.34.2\\+rke2r1$",
+		},
 	}
 
 	for _, tc := range tests {
