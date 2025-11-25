@@ -42,6 +42,7 @@ var externalImages = map[string]string{
 type imageCopier struct {
 	m            sync.Mutex
 	mirroredOnly bool
+	copyImages   bool
 }
 
 func (i *imageCopier) Copy(srcImg, dstRegistry string) Entry {
@@ -78,9 +79,7 @@ func (i *imageCopier) Copy(srcImg, dstRegistry string) Entry {
 	os.Stdout = nil
 	os.Stderr = nil
 
-	// We shouldn't copy signatures if the image isn't there, so copy images
-	// but don't override them if they are already present.
-	err = copySignature(ctx, srcImg, dst, true)
+	err = copySignature(ctx, srcImg, dst, i.copyImages)
 	if err != nil {
 		entry.Error = err
 	}
@@ -104,7 +103,6 @@ func signatureSource(srcRef name.Reference, tag string) string {
 }
 
 func copySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage bool) error {
-	fmt.Println(srcImgRef, dstImgRef)
 	if copyImage {
 		err := crane.Copy(srcImgRef, dstImgRef,
 			crane.WithContext(ctx),
