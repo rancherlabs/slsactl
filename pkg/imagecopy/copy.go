@@ -1,4 +1,4 @@
-package copy
+package imagecopy
 
 import (
 	"context"

@@ -131,11 +131,13 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 	sourceSigRef := signatureSource(sourceRef, signatureTag)
 
 	// check old format first (with .sig suffix)
-	if _, err := crane.Manifest(sourceSigRef, crane.WithContext(ctx)); err != nil {
+	_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
+	if err != nil {
 		// try one last time for the new format (no .sig suffix)
 		signatureTag = strings.TrimSuffix(signatureTag, ".sig")
 		sourceSigRef = strings.TrimSuffix(sourceSigRef, ".sig")
-		if _, err := crane.Manifest(sourceSigRef, crane.WithContext(ctx)); err != nil {
+		_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
+		if err != nil {
 			return fmt.Errorf("tried old/new formats, no manifest found for %s - %w", srcImgRef, err)
 		}
 	}
@@ -154,10 +156,11 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 
 	dstSigRef := fmt.Sprintf("%s:%s", targetRef.Context().Name(), signatureTag)
 
-	if err := crane.Copy(sourceSigRef, dstSigRef,
+	err = crane.Copy(sourceSigRef, dstSigRef,
 		crane.WithContext(ctx),
 		crane.WithNoClobber(true), // ensure existing signatures won't be overwritten.
-	); err != nil && !strings.Contains(err.Error(), "refusing to clobber existing tag") {
+	)
+	if err != nil && !strings.Contains(err.Error(), "refusing to clobber existing tag") {
 		return fmt.Errorf("failed to copy signature from %q to %q: %w", sourceSigRef, dstSigRef, err)
 	}
 
