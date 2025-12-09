@@ -79,7 +79,7 @@ func (i *imageCopier) Copy(srcImg, dstRegistry string) Entry {
 	os.Stdout = nil
 	os.Stderr = nil
 
-	err = copySignature(ctx, srcImg, dst, i.copyImages)
+	err = CopySignature(ctx, srcImg, dst, i.copyImages)
 	if err != nil {
 		entry.Error = err
 	}
@@ -102,7 +102,47 @@ func signatureSource(srcRef name.Reference, tag string) string {
 	return fmt.Sprintf("%s:%s", srcRef.Context().Name(), tag)
 }
 
-func copySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage bool) error {
+// CopySignature copies a container image with its cosign signature from source to target registry.
+// Supports both legacy (.sig suffix) and new OCI artifact signature formats. Source and target
+// tags must match since signatures are bound to content digests. Uses NoClobber to prevent
+// overwriting existing tags.
+func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage bool) error {
+	digest, err := crane.Digest(srcImgRef)
+	if err != nil {
+		return fmt.Errorf("failed to get signed image digest for %q: %w", srcImgRef, err)
+	}
+
+	sourceRef, err := name.ParseReference(srcImgRef)
+	if err != nil {
+		return fmt.Errorf("failed to parse source image reference: %w", err)
+	}
+
+	targetRef, err := name.ParseReference(dstImgRef)
+	if err != nil {
+		return fmt.Errorf("failed to parse target image reference: %w", err)
+	}
+
+	if sourceRef.Identifier() != targetRef.Identifier() {
+		return fmt.Errorf("source tag can't be different from target tag (signatures are bound to content, not tags); source tag: %s | target tag: %s", sourceRef.Identifier(), targetRef.Identifier())
+	}
+
+	hex := strings.TrimPrefix(digest, "sha256:")
+	signatureTag := fmt.Sprintf("sha256-%s.sig", hex)
+	sourceSigRef := signatureSource(sourceRef, signatureTag)
+
+	// check old format first (with .sig suffix)
+	_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
+	if err != nil {
+		// try one last time for the new format (no .sig suffix)
+		signatureTag = strings.TrimSuffix(signatureTag, ".sig")
+		sourceSigRef = strings.TrimSuffix(sourceSigRef, ".sig")
+		_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
+		if err != nil {
+			return fmt.Errorf("tried old/new formats, no manifest found for %s - %w", srcImgRef, err)
+		}
+	}
+
+	// copy image only after all safety checks
 	if copyImage {
 		err := crane.Copy(srcImgRef, dstImgRef,
 			crane.WithContext(ctx),
@@ -114,26 +154,8 @@ func copySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 		}
 	}
 
-	digest, err := crane.Digest(srcImgRef)
-	if err != nil {
-		return fmt.Errorf("failed to get signed image digest for %q: %w", srcImgRef, err)
-	}
-
-	sourceRef, err := name.ParseReference(srcImgRef)
-	if err != nil {
-		return fmt.Errorf("failed to parse source image reference: %w", err)
-	}
-
-	hex := strings.TrimPrefix(digest, "sha256:")
-	signatureTag := fmt.Sprintf("sha256-%s.sig", hex)
-	sourceSigRef := signatureSource(sourceRef, signatureTag)
-
-	targetRef, err := name.ParseReference(dstImgRef)
-	if err != nil {
-		return fmt.Errorf("failed to parse target image reference: %w", err)
-	}
-
 	dstSigRef := fmt.Sprintf("%s:%s", targetRef.Context().Name(), signatureTag)
+
 	err = crane.Copy(sourceSigRef, dstSigRef,
 		crane.WithContext(ctx),
 		crane.WithNoClobber(true), // ensure existing signatures won't be overwritten.
