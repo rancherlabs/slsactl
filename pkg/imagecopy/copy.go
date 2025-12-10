@@ -21,12 +21,5 @@ var ErrSignatureNotFound = imagelist.ErrSignatureNotFound
 //	    "localhost:5000/rancher/fleet-agent:v0.13.0",
 //	)
 func ImageAndSignature(sourceImage, targetImage string) error {
-	err := imagelist.CopySignature(context.Background(), sourceImage, targetImage, true)
-	if err != nil {
-		if errors.Is(err, imagelist.ErrSignatureNotFound) {
-			return ErrSignatureNotFound
-		}
-		return err
-	}
-	return nil
+	return imagelist.CopySignature(context.Background(), sourceImage, targetImage, true)
 }
