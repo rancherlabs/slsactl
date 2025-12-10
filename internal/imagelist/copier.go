@@ -12,7 +12,7 @@ import (
 	"github.com/google/go-containerregistry/pkg/name"
 )
 
-// ErrSignatureNotFound indicates no signature was found for the image
+// ErrNoSignaturesFound indicates no signature was found for the image
 var ErrNoSignaturesFound = errors.New("no signatures found")
 
 var externalImages = map[string]string{
