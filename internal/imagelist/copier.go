@@ -126,6 +126,14 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 		return fmt.Errorf("source tag can't be different from target tag (signatures are bound to content, not tags); source tag: %s | target tag: %s", sourceRef.Identifier(), targetRef.Identifier())
 	}
 
+	// copy image only after all safety checks but before checking signatures
+	if copyImage {
+		err := copy(ctx, srcImgRef, dstImgRef)
+		if err != nil {
+			return err
+		}
+	}
+
 	hex := strings.TrimPrefix(digest, "sha256:")
 	signatureTag := fmt.Sprintf("sha256-%s.sig", hex)
 	sourceSigRef := signatureSource(sourceRef, signatureTag)
@@ -137,31 +145,24 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 		signatureTag = strings.TrimSuffix(signatureTag, ".sig")
 		sourceSigRef = strings.TrimSuffix(sourceSigRef, ".sig")
 		_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
+
 		if err != nil {
 			return fmt.Errorf("tried old/new formats, no manifest found for %s - %w", srcImgRef, err)
 		}
 	}
 
-	// copy image only after all safety checks
-	if copyImage {
-		err := crane.Copy(srcImgRef, dstImgRef,
-			crane.WithContext(ctx),
-			crane.WithNoClobber(true)) // ensure tags won't be overwritten.
-
-		if err != nil && !strings.Contains(err.Error(), "refusing to clobber existing tag") {
-			return fmt.Errorf("failed to copy image from %q to %q: %w",
-				srcImgRef, dstImgRef, err)
-		}
-	}
-
 	dstSigRef := fmt.Sprintf("%s:%s", targetRef.Context().Name(), signatureTag)
+	return copy(ctx, sourceSigRef, dstSigRef)
+}
 
-	err = crane.Copy(sourceSigRef, dstSigRef,
+func copy(ctx context.Context, src, dst string) error {
+	err := crane.Copy(src, dst,
 		crane.WithContext(ctx),
-		crane.WithNoClobber(true), // ensure existing signatures won't be overwritten.
-	)
+		crane.WithNoClobber(true)) // ensures won't be overwritten.
+
 	if err != nil && !strings.Contains(err.Error(), "refusing to clobber existing tag") {
-		return fmt.Errorf("failed to copy signature from %q to %q: %w", sourceSigRef, dstSigRef, err)
+		return fmt.Errorf("failed to copy from %q to %q: %w",
+			src, dst, err)
 	}
 
 	return nil
