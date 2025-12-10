@@ -150,7 +150,7 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 		_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
 
 		if err != nil {
-			return ErrSignatureNotFound
+			return fmt.Errorf("%w: %w", ErrSignatureNotFound, err)
 		}
 	}
 
