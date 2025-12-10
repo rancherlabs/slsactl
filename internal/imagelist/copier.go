@@ -12,6 +12,9 @@ import (
 	"github.com/google/go-containerregistry/pkg/name"
 )
 
+// ErrSignatureNotFound indicates no signature was found for the image
+var ErrSignatureNotFound = errors.New("signature not found")
+
 var externalImages = map[string]string{
 	"sig-storage/snapshot-controller":                        "registry.k8s.io/sig-storage/snapshot-controller",
 	"sig-storage/snapshot-validation-webhook":                "registry.k8s.io/sig-storage/snapshot-validation-webhook",
@@ -147,7 +150,7 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 		_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
 
 		if err != nil {
-			return fmt.Errorf("tried old/new formats, no manifest found for %s - %w", srcImgRef, err)
+			return ErrSignatureNotFound
 		}
 	}
 
