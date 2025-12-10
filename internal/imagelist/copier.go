@@ -128,7 +128,7 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 
 	// copy image only after all safety checks but before checking signatures
 	if copyImage {
-		err := copy(ctx, srcImgRef, dstImgRef)
+		err := copyArtifact(ctx, srcImgRef, dstImgRef)
 		if err != nil {
 			return err
 		}
@@ -152,10 +152,10 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 	}
 
 	dstSigRef := fmt.Sprintf("%s:%s", targetRef.Context().Name(), signatureTag)
-	return copy(ctx, sourceSigRef, dstSigRef)
+	return copyArtifact(ctx, sourceSigRef, dstSigRef)
 }
 
-func copy(ctx context.Context, src, dst string) error {
+func copyArtifact(ctx context.Context, src, dst string) error {
 	err := crane.Copy(src, dst,
 		crane.WithContext(ctx),
 		crane.WithNoClobber(true)) // ensures won't be overwritten.
