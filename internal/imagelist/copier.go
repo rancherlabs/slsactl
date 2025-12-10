@@ -13,7 +13,7 @@ import (
 )
 
 // ErrSignatureNotFound indicates no signature was found for the image
-var ErrSignatureNotFound = errors.New("signature not found")
+var ErrNoSignaturesFound = errors.New("no signatures found")
 
 var externalImages = map[string]string{
 	"sig-storage/snapshot-controller":                        "registry.k8s.io/sig-storage/snapshot-controller",
