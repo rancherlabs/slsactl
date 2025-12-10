@@ -12,7 +12,7 @@ import (
 	"github.com/google/go-containerregistry/pkg/name"
 )
 
-// ErrNoSignaturesFound indicates no signature was found for the image
+// ErrNoSignaturesFound indicates no signature was found for the image.
 var ErrNoSignaturesFound = errors.New("no signatures found")
 
 var externalImages = map[string]string{
@@ -148,9 +148,8 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 		signatureTag = strings.TrimSuffix(signatureTag, ".sig")
 		sourceSigRef = strings.TrimSuffix(sourceSigRef, ".sig")
 		_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
-
 		if err != nil {
-			return fmt.Errorf("%w: %w", ErrSignatureNotFound, err)
+			return fmt.Errorf("%w: %w", ErrNoSignaturesFound, err)
 		}
 	}
 

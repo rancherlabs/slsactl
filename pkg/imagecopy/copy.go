@@ -2,13 +2,12 @@ package imagecopy
 
 import (
 	"context"
-	"errors"
 
 	"github.com/rancherlabs/slsactl/internal/imagelist"
 )
 
-// ErrSignatureNotFound indicates no signature was found for the image
-var ErrSignatureNotFound = imagelist.ErrSignatureNotFound
+// ErrNoSignaturesFound indicates no signature was found for the image.
+var ErrNoSignaturesFound = imagelist.ErrNoSignaturesFound
 
 // ImageAndSignature copies a single container image with its cosign signature from source
 // to target registry. The source and target must be fully qualified image references
