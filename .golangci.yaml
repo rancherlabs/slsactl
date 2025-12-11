@@ -13,6 +13,7 @@ linters:
     - funlen
     - gochecknoglobals
     - gocritic
+    - gomoddirectives
     - lll
     - mnd
     - nestif
