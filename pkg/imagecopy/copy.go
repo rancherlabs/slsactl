@@ -6,6 +6,9 @@ import (
 	"github.com/rancherlabs/slsactl/internal/imagelist"
 )
 
+// ErrNoSignaturesFound indicates no signature was found for the image.
+var ErrNoSignaturesFound = imagelist.ErrNoSignaturesFound
+
 // ImageAndSignature copies a single container image with its cosign signature from source
 // to target registry. The source and target must be fully qualified image references
 // including registry, repository, and tag.
