@@ -84,6 +84,7 @@ var (
 		"rancher/supportability-review":                                   "^https://github.com/rancher/supportability-review/.github/workflows/release.yaml@refs/tags/v",
 		"rancher/rancher-prime":                                           "^https://github.com/rancher/rancher-prime/.github/workflows/(release|alpha-release|rc-release).yml@refs/tags/v",
 		"rancher/prometheus-federator":                                    "^https://github.com/rancher/prometheus-federator/.github/workflows/(release|publish).yaml@refs/tags/v",
+		"rancher/turtles":                                                 "^https://github.com/rancher/turtles/.github/workflows/(release-v2|release).yaml@refs/tags/v",
 	}
 
 	// imageSuffixes holds a mapping between image name and the ref suffixes
