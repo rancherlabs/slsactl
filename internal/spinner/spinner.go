@@ -35,10 +35,7 @@ func New(message string) *Spinner {
 }
 
 func (s *Spinner) Start() {
-	s.wg.Add(1)
-
-	go func() {
-		defer s.wg.Done()
+	s.wg.Go(func() {
 		i := 0
 		previousLen := 0
 		msg := s.message
@@ -64,7 +61,7 @@ func (s *Spinner) Start() {
 				previousLen = len(newLen)
 			}
 		}
-	}()
+	})
 }
 
 func (s *Spinner) UpdateStatus(newStatus string) {
