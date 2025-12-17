@@ -13,7 +13,7 @@ import (
 
 func sbomCmd(img, outformat, platform string) error {
 	var buf bytes.Buffer
-	err := writeContent(img, "{{json .SBOM}}", &buf)
+	err := writeContent(img, "sbom", &buf)
 	if err != nil {
 		return fmt.Errorf("cannot write SBOM content: %w", err)
 	}

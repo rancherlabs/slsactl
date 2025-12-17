@@ -20,7 +20,7 @@ var buildKitV1 = "https://mobyproject.org/buildkit@v1"
 
 func provenanceCmd(img, format, platform string) error {
 	var data bytes.Buffer
-	err := writeContent(img, "{{json .Provenance}}", &data)
+	err := writeContent(img, "provenance", &data)
 	if err != nil {
 		return err
 	}
