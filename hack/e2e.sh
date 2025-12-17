@@ -2,11 +2,17 @@
 
 set -eox pipefail
 
-IMAGE=${IMAGE:-ghcr.io/kubewarden/policy-server:v1.19.0}
+SLSACTL=./build/bin/slsactl
 
-slsactl verify "${IMAGE}"
-slsactl download provenance "${IMAGE}"
-slsactl download provenance --format=slsav1 "${IMAGE}"
-slsactl download sbom "${IMAGE}"
-slsactl download sbom -format cyclonedxjson "${IMAGE}"
-slsactl version
+# First image uses old signature format, the second the new.
+IMAGES=("ghcr.io/kubewarden/policy-server:v1.19.0" "ghcr.io/kubewarden/policy-server:v1.31.0")
+IMAGE="${IMAGE:-}"
+
+for IMAGE in "${IMAGES[@]}"; do
+    ${SLSACTL} verify "${IMAGE}"
+    ${SLSACTL} download provenance "${IMAGE}"
+    ${SLSACTL} download provenance --format=slsav1 "${IMAGE}"
+    ${SLSACTL} download sbom "${IMAGE}"
+    ${SLSACTL} download sbom -format cyclonedxjson "${IMAGE}"
+    ${SLSACTL} version
+done

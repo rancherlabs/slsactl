@@ -19,7 +19,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-latest, windows-latest]
+        include:
+          - platform: ubuntu-latest
+            version: "" # default
+          - platform: ubuntu-latest
+            version: "latest"
+          - platform: ubuntu-latest
+            version: "v0.1.10" # pinned version
+          - platform: ubuntu-latest
+            version: "8bffa90e563b17c5d302ac8e922b1c5007d3fea5" # commit-based install
+          - platform: windows-latest
+            version: "8bffa90e563b17c5d302ac8e922b1c5007d3fea5"
+          - platform: windows-latest
+            version: "v0.1.10"
     
     runs-on: ${{ matrix.platform }}
 
@@ -27,6 +39,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
     - uses: ./actions/install-slsactl
+      with:
+        version: ${{ matrix.version }}
+
     - run: slsactl version
       shell: bash
     - name: Check for dirty worktree
