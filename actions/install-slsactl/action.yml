@@ -29,9 +29,10 @@ runs:
 
   - name: Install slsactl with go install
     if: runner.os == 'Windows'
-    shell: pwsh
+    shell: bash
     run: |
-      go install github.com/rancherlabs/slsactl@${{ inputs.version }}
+      VERSION="${{ inputs.version != '' && inputs.version || 'latest' }}"
+      go install github.com/rancherlabs/slsactl@${VERSION}
 
   - name: Install Cosign
     uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
@@ -42,6 +43,8 @@ runs:
     shell: bash
     run: |
       set -x
+      VERSION="${{ inputs.version != '' && inputs.version || 'latest' }}"
+
       if [[ "${VERSION}" == "latest" ]]; then
         echo 'Checking what the latest version is'
         VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name')

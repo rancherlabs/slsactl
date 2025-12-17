@@ -21,6 +21,13 @@ inputs:
     required: true
     type: string
 
+  version:
+    description: |
+      The slsactl version to be installed.
+    required: false
+    default: latest
+    type: string
+
 runs:
   using: composite
 
@@ -30,6 +37,8 @@ runs:
       go-version: 'stable'
 
   - uses: ./actions/install-slsactl
+    with:
+      version: ${{ inputs.version }}
 
   - name: Verify image
     shell: bash
