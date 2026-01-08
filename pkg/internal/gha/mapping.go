@@ -42,6 +42,7 @@ var (
 		"rancher/nginx-ingress-controller":                    "rancher/ingress-nginx",
 		"rancher/nginx-ingress-controller-chroot":             "rancher/ingress-nginx",
 		"rancher/rancher":                                     "rancher/rancher-prime",
+		"rancher/rancher-webhook":                             "rancher/webhook",
 		"rancher/neuvector-manager":                           "neuvector/manager",
 		"rancher/neuvector-controller":                        "neuvector/neuvector",
 		"rancher/neuvector-enforcer":                          "neuvector/neuvector",
@@ -83,6 +84,7 @@ var (
 		"rancher/image-build-cni-plugins":                                 "^https://github.com/rancher/image-build-cni-plugins/.github/workflows/(image-push|release).yml@refs/tags/v",
 		"rancher/supportability-review":                                   "^https://github.com/rancher/supportability-review/.github/workflows/release.yaml@refs/tags/v",
 		"rancher/rancher-prime":                                           "^https://github.com/rancher/rancher-prime/.github/workflows/(release|alpha-release|rc-release).yml@refs/tags/v",
+		"rancher/rancher-webhook":                                         "^https://github.com/rancher/webhook/.github/workflows/release.ya?ml@refs/tags/v",
 		"rancher/prometheus-federator":                                    "^https://github.com/rancher/prometheus-federator/.github/workflows/(release|publish).yaml@refs/tags/v",
 		"rancher/turtles":                                                 "^https://github.com/rancher/turtles/.github/workflows/(release-v2|release).ya?ml@refs/tags/v",
 	}
