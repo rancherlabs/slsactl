@@ -64,6 +64,8 @@ var (
 		"rancher/cluster-api-addon-provider-fleet":                        "^https://github.com/rancher/clusterapi-forks/.github/workflows/caapf.yaml@refs/heads/main$",
 		"rancher/ip-address-manager":                                      "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main$",
 		"rancher/cluster-api-controller":                                  "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
+		"rancher/kubeadm-bootstrap-controller":                            "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
+		"rancher/kubeadm-control-plane-controller":                        "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
 		"rancher/cluster-api-aws-controller":                              "^https://github.com/rancher/clusterapi-forks/.github/workflows/aws.yaml@refs/heads/main$",
 		"rancher/cluster-api-azure-controller":                            "^https://github.com/rancher/clusterapi-forks/.github/workflows/azure.yaml@refs/heads/main$",
 		"rancher/cluster-api-gcp-controller":                              "^https://github.com/rancher/clusterapi-forks/.github/workflows/gcp.yaml@refs/heads/main$",
