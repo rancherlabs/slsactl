@@ -93,6 +93,8 @@ var (
 		"rancher/rancher-webhook":                                         "^https://github.com/rancher/webhook/.github/workflows/release.ya?ml@refs/tags/v",
 		"rancher/prometheus-federator":                                    "^https://github.com/rancher/prometheus-federator/.github/workflows/(release|publish).yaml@refs/tags/v",
 		"rancher/turtles":                                                 "^https://github.com/rancher/turtles/.github/workflows/(release-v2|release).ya?ml@refs/tags/v",
+		"kubewarden/policy-server":                                        "^https://github.com/kubewarden/(policy-server|kubewarden-controller)/.github/workflows/release.ya?ml@refs/tags/v",
+		"kubewarden/audit-scanner":                                        "^https://github.com/kubewarden/(audit-scanner|kubewarden-controller)/.github/workflows/release.ya?ml@refs/tags/v",
 	}
 
 	// imageSuffixes holds a mapping between image name and the ref suffixes
