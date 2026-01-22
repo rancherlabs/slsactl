@@ -43,6 +43,8 @@ var (
 		"rancher/nginx-ingress-controller-chroot":             "rancher/ingress-nginx",
 		"rancher/pushprox":                                    "rancher/PushProx",
 		"rancher/rancher":                                     "rancher/rancher-prime",
+		"rancher/rancher-agent":                               "rancher/rancher-prime",
+		"rancher/system-agent-installer-rancher":              "rancher/rancher-prime",
 		"rancher/rancher-webhook":                             "rancher/webhook",
 		"rancher/neuvector-manager":                           "neuvector/manager",
 		"rancher/neuvector-controller":                        "neuvector/neuvector",
