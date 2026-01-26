@@ -18,11 +18,7 @@ const dirMode = 0o700
 // EnforceOrDie checks whether or not to enforce the landlock policy, and if so,
 // apply it. Any error will result in os.Exit.
 func EnforceOrDie() {
-	val, ok := os.LookupEnv("LANDLOCK_MODE")
-	if !ok || val == "" {
-		val = "besteffort"
-	}
-
+	val, _ := os.LookupEnv("LANDLOCK_MODE")
 	cfg := landlock.V5
 
 	switch {
