@@ -63,8 +63,8 @@ var (
 	}
 
 	identityOverride = map[string]string{
+		"rancher/azureserviceoperator":                                    "^https://github.com/rancher/clusterapi-forks/.github/workflows/azure-service-operator.yaml@refs/heads/main$",
 		"rancher/cluster-api-addon-provider-fleet":                        "^https://github.com/rancher/clusterapi-forks/.github/workflows/caapf.yaml@refs/heads/main$",
-		"rancher/ip-address-manager":                                      "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main$",
 		"rancher/cluster-api-controller":                                  "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
 		"rancher/kubeadm-bootstrap-controller":                            "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
 		"rancher/kubeadm-control-plane-controller":                        "^https://github.com/rancher/clusterapi-forks/.github/workflows/core.yaml@refs/heads/main$",
@@ -72,8 +72,8 @@ var (
 		"rancher/cluster-api-azure-controller":                            "^https://github.com/rancher/clusterapi-forks/.github/workflows/azure.yaml@refs/heads/main$",
 		"rancher/cluster-api-gcp-controller":                              "^https://github.com/rancher/clusterapi-forks/.github/workflows/gcp.yaml@refs/heads/main$",
 		"rancher/cluster-api-vsphere-controller":                          "^https://github.com/rancher/clusterapi-forks/.github/workflows/vsphere.yaml@refs/heads/main$",
-		"rancher/cluster-api-metal3-controller":                           "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3.yaml@refs/heads/main$",
-		"rancher/cluster-api-metal3-ipam-controller":                      "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main$",
+		"rancher/cluster-api-provider-metal3":                             "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3.yaml@refs/heads/main$",
+		"rancher/ip-address-manager":                                      "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main$",
 		"rancher/mirrored-cilium-cilium":                                  "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
 		"rancher/mirrored-cilium-envoy":                                   "^https://github.com/cilium/proxy/.github/workflows/build-envoy-images-release.yaml@refs/heads/v",
 		"rancher/mirrored-cilium-clustermesh-apiserver":                   "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
