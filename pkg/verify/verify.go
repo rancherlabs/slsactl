@@ -15,7 +15,8 @@ import (
 	"github.com/rancherlabs/slsactl/pkg/internal/gcp"
 	"github.com/rancherlabs/slsactl/pkg/internal/gha"
 	"github.com/rancherlabs/slsactl/pkg/internal/obs"
-	cosign "github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
+	cosignCmd "github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
+	cosign "github.com/sigstore/cosign/v3/pkg/cosign"
 )
 
 var (
@@ -59,10 +60,27 @@ func Verify(image string) error {
 		logs.Debug.SetOutput(os.Stderr)
 	}
 
+	var lastErr error
 	for _, v := range verifiers {
 		if v.Matches(image) {
-			return v.Verify(ctx, image)
+			err := v.Verify(ctx, image)
+			if err == nil {
+				return nil
+			}
+
+			// Check if it's a "no signature found" error - if so, try next verifier
+			var noSigErr *cosign.ErrNoSignaturesFound
+			if errors.As(err, &noSigErr) {
+				lastErr = err // Save last error and try next verifier
+				continue
+			}
+
+			return err
 		}
+	}
+
+	if lastErr != nil {
+		return lastErr
 	}
 
 	return fmt.Errorf("%w: %q", ErrNoVerifierFound, image)
@@ -70,6 +88,6 @@ func Verify(image string) error {
 
 type cosignImplementation struct{}
 
-func (*cosignImplementation) Verify(ctx context.Context, vc cosign.VerifyCommand, image string) error {
+func (*cosignImplementation) Verify(ctx context.Context, vc cosignCmd.VerifyCommand, image string) error {
 	return vc.Exec(ctx, []string{image})
 }
