@@ -28,6 +28,10 @@ type ImageCopier interface {
 	Copy(img, targetRegistry string) Entry
 }
 
+type ImageDownloader interface {
+	Download(img, outputDir string) Entry
+}
+
 type Result struct {
 	Product string  `json:"product,omitempty"`
 	Version string  `json:"version,omitempty"`
@@ -35,16 +39,19 @@ type Result struct {
 }
 
 type Entry struct {
-	Image  string `json:"image,omitempty"`
-	Error  error  `json:"error,omitempty"`
-	Signed bool   `json:"signed,omitempty"`
+	Image    string `json:"image,omitempty"`
+	Error    error  `json:"error,omitempty"`
+	Signed   bool   `json:"signed,omitempty"`
+	SBOMFile string `json:"sbomFile,omitempty"`
+	ProvFile string `json:"provFile,omitempty"`
 }
 
 type Processor struct {
-	ip       ImageVerifier
-	copier   ImageCopier
-	fetcher  Fetcher
-	registry string
+	ip         ImageVerifier
+	copier     ImageCopier
+	downloader ImageDownloader
+	fetcher    Fetcher
+	registry   string
 }
 
 func NewProcessor(registry string) *Processor {
@@ -57,10 +64,11 @@ func NewProcessor(registry string) *Processor {
 	}
 
 	return &Processor{
-		registry: registry,
-		ip:       new(imageVerifier),
-		fetcher:  new(HttpFetcher),
-		copier:   copier,
+		registry:   registry,
+		ip:         new(imageVerifier),
+		fetcher:    new(HttpFetcher),
+		copier:     copier,
+		downloader: new(imageDownloader),
 	}
 }
 
@@ -73,6 +81,12 @@ func (p *Processor) Verify(url string) (*Result, error) {
 func (p *Processor) Copy(url, dstRegistry string) (*Result, error) {
 	return p.process(url, "Copy images", dstRegistry, func(img, dstRegistry string) Entry {
 		return p.copier.Copy(img, dstRegistry)
+	})
+}
+
+func (p *Processor) Download(url, outputDir string) (*Result, error) {
+	return p.process(url, "Download attestations", outputDir, func(img, outputDir string) Entry {
+		return p.downloader.Download(img, outputDir)
 	})
 }
 

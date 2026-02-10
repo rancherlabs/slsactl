@@ -12,6 +12,7 @@ import (
 const productf = `usage:
     %[1]s product verify --registry <src_registry> rancher-prime:v2.12.2
     %[1]s product copy --registry <src_registry> rancher-prime:v2.12.2 <target_registry>
+    %[1]s product download --registry <src_registry> rancher-prime:v2.12.2
 `
 
 func productCmd(args []string) error {
@@ -43,6 +44,8 @@ func productCmd(args []string) error {
 
 		targetRegistry := f.Arg(1)
 		return product.Copy(registry, nameVer[0], nameVer[1], targetRegistry)
+	case "download":
+		return product.Download(registry, nameVer[0], nameVer[1])
 	default:
 		showProductUsage()
 	}
