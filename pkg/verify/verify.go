@@ -16,10 +16,10 @@ import (
 	"github.com/rancherlabs/slsactl/pkg/internal/gha"
 	"github.com/rancherlabs/slsactl/pkg/internal/obs"
 	cosignCmd "github.com/sigstore/cosign/v3/cmd/cosign/cli/verify"
-	cosign "github.com/sigstore/cosign/v3/pkg/cosign"
 )
 
 var (
+	// ErrNoVerifierFound will be returned by Verify when no verifiers match the provided image.
 	ErrNoVerifierFound = errors.New("no verifier found for image")
 
 	cosignVerifier = &cosignImplementation{}
@@ -60,30 +60,28 @@ func Verify(image string) error {
 		logs.Debug.SetOutput(os.Stderr)
 	}
 
-	var lastErr error
+	var matched []internal.Verifier
+
 	for _, v := range verifiers {
 		if v.Matches(image) {
-			err := v.Verify(ctx, image)
-			if err == nil {
-				return nil
-			}
-
-			// Check if it's a "no signature found" error - if so, try next verifier
-			var noSigErr *cosign.ErrNoSignaturesFound
-			if errors.As(err, &noSigErr) {
-				lastErr = err // Save last error and try next verifier
-				continue
-			}
-
-			return err
+			matched = append(matched, v)
 		}
 	}
 
-	if lastErr != nil {
-		return lastErr
+	if len(matched) == 0 {
+		return fmt.Errorf("%w: %q", ErrNoVerifierFound, image)
 	}
 
-	return fmt.Errorf("%w: %q", ErrNoVerifierFound, image)
+	var lastErr error
+	for _, v := range matched {
+		err := v.Verify(ctx, image)
+		if err == nil {
+			return nil
+		}
+		lastErr = errors.Join(lastErr, err) // Aggregate errors from all verifiers
+	}
+
+	return lastErr
 }
 
 type cosignImplementation struct{}
