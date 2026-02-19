@@ -7,7 +7,7 @@ toolchain go1.25.7
 require (
 	github.com/anchore/syft v1.42.0
 	github.com/google/go-containerregistry v0.20.7
-	github.com/in-toto/in-toto-golang v0.9.0
+	github.com/in-toto/in-toto-golang v0.10.0
 	github.com/landlock-lsm/go-landlock v0.7.0
 	github.com/sigstore/cosign/v3 v3.0.4
 	github.com/sigstore/fulcio v1.8.5
@@ -337,7 +337,7 @@ require (
 	github.com/sassoftware/go-rpmutils v0.4.0 // indirect
 	github.com/sassoftware/relic v7.2.1+incompatible // indirect
 	github.com/scylladb/go-set v1.0.3-0.20200225121959-cc7b2070d91e // indirect
-	github.com/secure-systems-lab/go-securesystemslib v0.9.1 // indirect
+	github.com/secure-systems-lab/go-securesystemslib v0.10.0 // indirect
 	github.com/segmentio/asm v1.2.1 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/shibumi/go-pathspec v1.3.0 // indirect
