@@ -9,7 +9,7 @@ import (
 	"github.com/rancherlabs/slsactl/internal/imagelist"
 )
 
-func Copy(registry, name, version, targetRegistry string) error {
+func Copy(registry, name, version, targetRegistry, imagesListBaseURL string) error {
 	info, err := product(name, version)
 	if err != nil {
 		return err
@@ -18,7 +18,7 @@ func Copy(registry, name, version, targetRegistry string) error {
 	fmt.Printf("Copying %s %s signatures to %q:\n\n", info.description, version, targetRegistry)
 
 	p := imagelist.NewProcessor(registry)
-	result, err := p.Copy(fmt.Sprintf(info.imagesURL, version), targetRegistry)
+	result, err := p.Copy(fmt.Sprintf(info.imagesURL, imagesListBaseURL, version), targetRegistry)
 	if err != nil {
 		return err
 	}
@@ -27,7 +27,7 @@ func Copy(registry, name, version, targetRegistry string) error {
 	result.Version = version
 
 	if len(info.windowsImagesURL) > 0 {
-		r2, err := p.Copy(fmt.Sprintf(info.windowsImagesURL, version), targetRegistry)
+		r2, err := p.Copy(fmt.Sprintf(info.windowsImagesURL, imagesListBaseURL, version), targetRegistry)
 		if err == nil {
 			result.Entries = append(result.Entries, r2.Entries...)
 		} else {

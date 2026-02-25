@@ -11,14 +11,16 @@ import (
 
 const productf = `usage:
     %[1]s product verify --registry <src_registry> rancher-prime:v2.12.2
-    %[1]s product copy --registry <src_registry> rancher-prime:v2.12.2 <target_registry>
+    %[1]s product copy --registry <src_registry> --images-list-base-url <base_url> rancher-prime:v2.12.2 <target_registry>
     %[1]s product download --registry <src_registry> rancher-prime:v2.12.2
 `
 
 func productCmd(args []string) error {
 	var registry string
+	var imagesListBaseURL string
 	f := flag.NewFlagSet("", flag.ContinueOnError)
 	f.StringVar(&registry, "registry", "", "The registry used to fetch images and artefacts.")
+	f.StringVar(&imagesListBaseURL, "images-list-base-url", "https://github.com/rancher/rancher/releases/download", "The base url for the images list artefact. default: 'https://github.com/rancher/rancher/releases/download'")
 	err := f.Parse(args[1:])
 	if err != nil {
 		return err
@@ -43,7 +45,7 @@ func productCmd(args []string) error {
 		}
 
 		targetRegistry := f.Arg(1)
-		return product.Copy(registry, nameVer[0], nameVer[1], targetRegistry)
+		return product.Copy(registry, nameVer[0], nameVer[1], targetRegistry, imagesListBaseURL)
 	case "download":
 		return product.Download(registry, nameVer[0], nameVer[1])
 	default:
