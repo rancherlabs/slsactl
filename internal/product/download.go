@@ -26,7 +26,7 @@ func Download(registry, name, version string) error {
 	fmt.Printf("Output directory: %s\n\n", outputDir)
 
 	p := imagelist.NewProcessor(registry)
-	result, err := p.Download(fmt.Sprintf(info.imagesUrl, version), outputDir)
+	result, err := p.Download(fmt.Sprintf(info.imagesURL, version), outputDir)
 	if err != nil {
 		return err
 	}
@@ -34,8 +34,8 @@ func Download(registry, name, version string) error {
 	result.Product = name
 	result.Version = version
 
-	if len(info.windowsImagesUrl) > 0 {
-		r2, err := p.Download(fmt.Sprintf(info.windowsImagesUrl, version), outputDir)
+	if len(info.windowsImagesURL) > 0 {
+		r2, err := p.Download(fmt.Sprintf(info.windowsImagesURL, version), outputDir)
 		if err == nil {
 			result.Entries = append(result.Entries, r2.Entries...)
 		} else {

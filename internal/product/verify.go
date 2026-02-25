@@ -18,7 +18,7 @@ func Verify(registry, name, version string, summary bool, outputFile bool) error
 	fmt.Printf("Verifying container images for %s %s:\n\n", info.description, version)
 
 	p := imagelist.NewProcessor(registry)
-	result, err := p.Verify(fmt.Sprintf(info.imagesUrl, version))
+	result, err := p.Verify(fmt.Sprintf(info.imagesURL, version))
 	if err != nil {
 		return err
 	}
@@ -26,8 +26,8 @@ func Verify(registry, name, version string, summary bool, outputFile bool) error
 	result.Product = name
 	result.Version = version
 
-	if len(info.windowsImagesUrl) > 0 {
-		r2, err := p.Verify(fmt.Sprintf(info.windowsImagesUrl, version))
+	if len(info.windowsImagesURL) > 0 {
+		r2, err := p.Verify(fmt.Sprintf(info.windowsImagesURL, version))
 		if err == nil {
 			result.Entries = append(result.Entries, r2.Entries...)
 		} else {
