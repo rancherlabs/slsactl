@@ -18,7 +18,7 @@ func Copy(registry, name, version, targetRegistry string) error {
 	fmt.Printf("Copying %s %s signatures to %q:\n\n", info.description, version, targetRegistry)
 
 	p := imagelist.NewProcessor(registry)
-	result, err := p.Copy(fmt.Sprintf(info.imagesUrl, version), targetRegistry)
+	result, err := p.Copy(fmt.Sprintf(info.imagesURL, version), targetRegistry)
 	if err != nil {
 		return err
 	}
@@ -26,8 +26,8 @@ func Copy(registry, name, version, targetRegistry string) error {
 	result.Product = name
 	result.Version = version
 
-	if len(info.windowsImagesUrl) > 0 {
-		r2, err := p.Copy(fmt.Sprintf(info.windowsImagesUrl, version), targetRegistry)
+	if len(info.windowsImagesURL) > 0 {
+		r2, err := p.Copy(fmt.Sprintf(info.windowsImagesURL, version), targetRegistry)
 		if err == nil {
 			result.Entries = append(result.Entries, r2.Entries...)
 		} else {

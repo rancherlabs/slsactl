@@ -19,24 +19,24 @@ var (
 	productMapping = map[string]productInfo{
 		"rancher-prime": {
 			description:      "SUSE Rancher Prime",
-			imagesUrl:        "https://github.com/rancher/rancher/releases/download/%s/rancher-images.txt",
-			windowsImagesUrl: "https://github.com/rancher/rancher/releases/download/%s/rancher-windows-images.txt",
+			imagesURL:        "%s/%s/rancher-images.txt",
+			windowsImagesURL: "%s/%s/rancher-windows-images.txt",
 		},
 		"storage": {
 			description: "SUSE Storage",
-			imagesUrl:   "https://github.com/longhorn/longhorn/releases/download/%s/longhorn-images.txt",
+			imagesURL:   "https://github.com/longhorn/longhorn/releases/download/%s/longhorn-images.txt",
 		},
 		"virtualization": {
 			description: "SUSE Virtualization",
-			imagesUrl:   "https://github.com/harvester/harvester/releases/download/%s/harvester-images-list-amd64.txt",
+			imagesURL:   "https://github.com/harvester/harvester/releases/download/%s/harvester-images-list-amd64.txt",
 		},
 	}
 )
 
 type productInfo struct {
 	description      string
-	imagesUrl        string
-	windowsImagesUrl string
+	imagesURL        string
+	windowsImagesURL string
 }
 
 type summary struct {
