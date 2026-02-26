@@ -15,6 +15,10 @@ func Copy(registry, name, version, targetRegistry, imagesListBaseURL string) err
 		return err
 	}
 
+	if imagesListBaseURL == "" {
+		imagesListBaseURL = info.defaultImagesBaseURL
+	}
+
 	fmt.Printf("Copying %s %s signatures to %q:\n\n", info.description, version, targetRegistry)
 
 	p := imagelist.NewProcessor(registry)

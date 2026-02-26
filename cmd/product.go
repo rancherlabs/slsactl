@@ -20,7 +20,7 @@ func productCmd(args []string) error {
 	var imagesListBaseURL string
 	f := flag.NewFlagSet("", flag.ContinueOnError)
 	f.StringVar(&registry, "registry", "", "The registry used to fetch images and artefacts.")
-	f.StringVar(&imagesListBaseURL, "images-list-base-url", "https://github.com/rancher/rancher/releases/download", "The base url for the images list artefact.")
+	f.StringVar(&imagesListBaseURL, "images-list-base-url", "", "The base url for the images list artefact.")
 	err := f.Parse(args[1:])
 	if err != nil {
 		return err
