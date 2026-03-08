@@ -6,7 +6,7 @@ toolchain go1.25.7
 
 require (
 	github.com/anchore/syft v1.42.1
-	github.com/google/go-containerregistry v0.21.1
+	github.com/google/go-containerregistry v0.21.2
 	github.com/in-toto/in-toto-golang v0.10.0
 	github.com/landlock-lsm/go-landlock v0.7.0
 	github.com/sigstore/cosign/v3 v3.0.5
