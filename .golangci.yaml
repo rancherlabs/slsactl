@@ -35,6 +35,15 @@ linters:
       - common-false-positives
       - legacy
       - std-error-handling
+    rules:
+      - path: internal/provenance/
+        linters:
+          - staticcheck
+        text: "in-toto/attestation"
+      - path: internal/cosign/
+        linters:
+          - staticcheck
+        text: "in-toto/attestation"
 formatters:
   enable:
     - gofmt
