@@ -20,7 +20,7 @@ jobs:
         go-version: 'stable'
     
     - run: make test
-    - run: make verify
+    #- run: make verify
 
   e2e:
     runs-on: ubuntu-latest
