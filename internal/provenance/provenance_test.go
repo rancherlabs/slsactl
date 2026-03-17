@@ -1,3 +1,4 @@
+//nolint
 package provenance_test
 
 import (
