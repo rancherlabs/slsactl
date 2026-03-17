@@ -17,11 +17,11 @@ import (
 )
 
 const (
-	// builderID defines the builder ID when the provenance has been modified.
-	builderID = "https://github.com/rancherlabs/slsactl/tree/main/buildtypes/buildkit-gha/v1"
+	// BuilderID defines the Builder ID when the provenance has been modified.
+	BuilderID = "https://github.com/rancherlabs/slsactl/tree/main/buildtypes/buildkit-gha/v1"
 )
 
-func GetCosignCertData(ctx context.Context, img string) (*v1.ProvenancePredicate, error) {
+func GetCosignCertData(ctx context.Context, img string) (*v1.ProvenancePredicate, error) { //nolint
 	ref, err := name.ParseReference(img, name.StrictValidation)
 	if err != nil {
 		return nil, fmt.Errorf("failed strict validation (image name should be fully qualified): %w", err)
@@ -84,9 +84,9 @@ func GetCosignCertData(ctx context.Context, img string) (*v1.ProvenancePredicate
 		}
 	}
 
-	override := &v1.ProvenancePredicate{}
+	override := &v1.ProvenancePredicate{} //nolint
 	override.BuildDefinition.InternalParameters = inparams
-	deps := []v1.ResourceDescriptor{
+	deps := []v1.ResourceDescriptor{ //nolint
 		{
 			URI:    repoURL,
 			Digest: common.DigestSet{"gitCommit": commitID},
@@ -100,7 +100,7 @@ func GetCosignCertData(ctx context.Context, img string) (*v1.ProvenancePredicate
 	}
 
 	override.BuildDefinition.ResolvedDependencies = deps
-	override.RunDetails.Builder.ID = builderID
+	override.RunDetails.Builder.ID = BuilderID
 
 	return override, nil
 }

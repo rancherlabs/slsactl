@@ -1,3 +1,4 @@
+//nolint
 package provenance
 
 import (
@@ -22,8 +23,9 @@ type ArchProvenance struct {
 }
 
 type SLSAV1Provenance struct {
-	LinuxAmd64 *ArchProvenanceV1 `json:"linux/amd64,omitempty"`
-	LinuxArm64 *ArchProvenanceV1 `json:"linux/arm64,omitempty"`
+	LinuxAmd64 *ArchProvenanceV1       `json:"linux/amd64,omitempty"`
+	LinuxArm64 *ArchProvenanceV1       `json:"linux/arm64,omitempty"`
+	SLSA       *v1.ProvenancePredicate `json:"SLSA"`
 }
 
 type ArchProvenanceV1 struct {
