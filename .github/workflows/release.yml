@@ -1,9 +1,11 @@
 name: release
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'The tag version to release (e.g., v0.1.24)'
+        required: true
 
 permissions: {}
 
@@ -12,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write # create GH releases
-      id-token: write # ephemeral keys (a.k.a. "keyless") signing
-      attestations: write # write GH attestations
+      contents: write      # Create GH releases
+      id-token: write      # Ephemeral keys signing
+      attestations: write  # Write GH attestations
 
     steps:
       - name: Delete tooling cache
@@ -33,14 +35,19 @@ jobs:
           go-version: stable
           cache: false
 
-      - uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@ba7bc0a3fef59531c69a25acd34668d6d3fe6f22 #v4.1.0
+
+      - name: Tag locally
+        run: |
+          git tag ${{ github.event.inputs.tag_name }}
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@ec59f474b9834571250b370d4735c50f8e2d1e29 # v7.0.0
         with:
           distribution: goreleaser
           version: '~> v2'
-          args: release --clean
+          args: release --clean --draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -48,3 +55,8 @@ jobs:
         uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
         with:
           subject-path: "dist/slsactl*"
+
+      - name: Publish Release
+        run: gh release edit ${{ github.event.inputs.tag_name }} --draft=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
