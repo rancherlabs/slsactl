@@ -90,6 +90,7 @@ var (
 		"rancher/image-build-cni-plugins":                                 "^https://github.com/rancher/image-build-cni-plugins/.github/workflows/(image-push|release).yml@refs/tags/v",
 		"rancher/pushprox":                                                "^https://github.com/rancher/PushProx/.github/workflows/release.ya?ml@refs/tags/v",
 		"rancher/supportability-review":                                   "^https://github.com/rancher/supportability-review/.github/workflows/release.yaml@refs/tags/v",
+		"rancher/supportability-review-operator":                          "^https://github.com/rancher/supportability-review-operator/.github/workflows/release.yaml@refs/tags/v",
 		"rancher/rancher-prime":                                           "^https://github.com/rancher/rancher-prime/.github/workflows/(release|alpha-release|rc-release).yml@refs/tags/v",
 		"rancher/rancher-webhook":                                         "^https://github.com/rancher/webhook/.github/workflows/release.ya?ml@refs/tags/v",
 		"rancher/prometheus-federator":                                    "^https://github.com/rancher/prometheus-federator/.github/workflows/(release|publish).yaml@refs/tags/v",
