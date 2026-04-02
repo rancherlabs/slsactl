@@ -5,23 +5,37 @@
 #    steps:
 #      ...
 #      - uses: rancherlabs/slsactl/actions/install-slsactl@main
-#        with:
-#          version: latest
 
 name: install-slsactl
+description: This GitHub action install the slsactl CLI, making it available for other steps within an GitHub workflow to refer to it.
 
 inputs:
   version:
     description: |
       The slsactl version to be installed.
     required: false
-    default: latest
+    default: ''
     type: string
 
 runs:
   using: composite
 
   steps:
+  - name: Latest version check
+    id: version
+    shell: bash
+    run: |
+      if [[ "${VERSION}" == "latest" ]]; then
+        echo "::warning title=Using the latest version is deprecated::Using the 'latest' version will no longer be supported, please remove it from your workflow and use the default version instead."
+      fi
+      if [[ "${VERSION}" == "latest" ]] || [[ "${VERSION}" == "" ]] || [[ -z "${VERSION}" ]]; then
+        VERSION="v0.1.30"
+      fi
+      echo "version=${VERSION}" >> $GITHUB_OUTPUT
+    env:
+      VERSION: ${{ inputs.version }}
+
+
   - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6
     if: runner.os == 'Windows'
     with:
@@ -31,8 +45,9 @@ runs:
     if: runner.os == 'Windows'
     shell: bash
     run: |
-      VERSION="${{ inputs.version != '' && inputs.version || 'latest' }}"
       go install github.com/rancherlabs/slsactl@${VERSION}
+    env:
+      VERSION: ${{ steps.version.outputs.version }}
 
   - name: Install Cosign
     uses: sigstore/cosign-installer@cad07c2e89fa2edd6e2d7bab4c1aa38e53f76003 # v4.1.1
@@ -41,21 +56,9 @@ runs:
   - name: Install slsactl from gh release
     if: runner.os == 'Linux'
     shell: bash
+
     run: |
       set -x
-      VERSION="${{ inputs.version != '' && inputs.version || 'latest' }}"
-
-      if [[ "${VERSION}" == "latest" ]]; then
-        echo 'Checking what the latest version is'
-        VERSION=$(curl -s 'https://api.github.com/repos/rancherlabs/slsactl/releases/latest' | jq -r '.tag_name')
-        
-        echo "Using last tag ${VERSION} as version"
-      fi
-
-      if [[ -z "${VERSION}" ]]; then
-        echo "WARN: version resolution failed, falling back to @latest"
-        VERSION='latest'
-      fi
 
       if [[ "${VERSION}" =~ ^v ]]; then
         echo "Downloading checksum file and signatures for release ${VERSION}"
@@ -101,7 +104,7 @@ runs:
       
       rm -f "slsactl_${VERSION#v}_checksums.txt" "slsactl_${VERSION#v}_checksums.txt.sigstore.json" "${FILE}" slsactl
     env:
-      VERSION: ${{ inputs.version }}
+      VERSION: ${{ steps.version.outputs.version }}
       REPO: github.com/rancherlabs/slsactl
 
   - name: Print version
