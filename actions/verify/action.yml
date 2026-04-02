@@ -12,6 +12,7 @@
 #          image: <registry>/<image>:<tag>
 
 name: verify
+description: This GitHub action verifies whether a given image has been signed using the cosign signature specification.
 
 inputs:
   image:
@@ -25,7 +26,7 @@ inputs:
     description: |
       The slsactl version to be installed.
     required: false
-    default: latest
+    default: ''
     type: string
 
 runs:
@@ -43,6 +44,6 @@ runs:
   - name: Verify image
     shell: bash
     run: |
-      slsactl verify ${{ env.IMAGE }}
+      slsactl verify "${IMAGE}"
     env:
       IMAGE: ${{ inputs.image }}
