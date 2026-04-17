@@ -25,6 +25,8 @@ define go-install-tool
 set -e ;\
 echo "Downloading $(2)" ;\
 GOBIN=$(TOOLS_BIN) go install $(2) ;\
+TOOL_BIN=$$(echo "$(2)" | sed 's|@.*||' | xargs basename) ;\
+mv $(TOOLS_BIN)/$$TOOL_BIN $(1) ;\
 }
 endef
 
