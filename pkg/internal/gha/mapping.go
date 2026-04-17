@@ -104,5 +104,10 @@ var (
 	// subject identity.
 	imageSuffixes = map[string][]string{
 		"rancher/hardened-multus-cni": {"-arch"},
+		"rancher/system-agent": {
+			"-linux-amd64-suc",
+			"-linux-arm64-suc",
+			"-suc",
+		},
 	}
 )
