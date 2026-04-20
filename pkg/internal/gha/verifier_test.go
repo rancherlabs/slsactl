@@ -170,6 +170,18 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "^https://github.com/rancher/system-agent-installer-k3s/.github/workflows/release.(yml|yaml)@refs/tags/v1.34.2\\+k3s1$",
 		},
 		{
+			image: "rancher/system-agent:v0.3.16-rc.2-linux-amd64-suc",
+			want:  "^https://github.com/rancher/system-agent/.github/workflows/release.(yml|yaml)@refs/tags/v0.3.16-rc.2$",
+		},
+		{
+			image: "rancher/system-agent:v0.3.16-rc.2-linux-arm64-suc",
+			want:  "^https://github.com/rancher/system-agent/.github/workflows/release.(yml|yaml)@refs/tags/v0.3.16-rc.2$",
+		},
+		{
+			image: "rancher/system-agent:v0.3.16-rc.2-suc",
+			want:  "^https://github.com/rancher/system-agent/.github/workflows/release.(yml|yaml)@refs/tags/v0.3.16-rc.2$",
+		},
+		{
 			image: "rancher/system-agent-installer-rke2:v1.34.2-rke2r1-windows-ltsc2022-amd64",
 			want:  "^https://github.com/rancher/system-agent-installer-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v1.34.2\\+rke2r1$",
 		},
