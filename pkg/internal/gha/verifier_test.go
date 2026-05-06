@@ -193,6 +193,26 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rancher/system-agent-installer-rke2:v1.34.2-rke2r1-windows-1809-arm64",
 			want:  "^https://github.com/rancher/system-agent-installer-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v1.34.2\\+rke2r1$",
 		},
+		{
+			image: "ghcr.io/kubewarden/adm-controller/policy-server:v1.36.0-alpha",
+			want:  "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+		},
+		{
+			image: "ghcr.io/kubewarden/adm-controller/audit-scanner:v1.36.0-alpha",
+			want:  "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+		},
+		{
+			image: "ghcr.io/kubewarden/adm-controller/controller:v1.36.0-alpha",
+			want:  "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+		},
+		{
+			image: "ghcr.io/kubewarden/policy-server:v1.19.0",
+			want:  "^https://github.com/kubewarden/(policy-server|kubewarden-controller)/.github/workflows/release.ya?ml@refs/tags/v",
+		},
+		{
+			image: "ghcr.io/kubewarden/audit-scanner:v1.19.0",
+			want:  "^https://github.com/kubewarden/(audit-scanner|kubewarden-controller)/.github/workflows/release.ya?ml@refs/tags/v",
+		},
 	}
 
 	for _, tc := range tests {
