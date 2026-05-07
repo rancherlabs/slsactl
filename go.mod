@@ -3,7 +3,7 @@ module github.com/rancherlabs/slsactl
 go 1.25.8
 
 require (
-	github.com/anchore/syft v1.43.0
+	github.com/anchore/syft v1.44.0
 	github.com/google/go-containerregistry v0.21.5
 	github.com/in-toto/in-toto-golang v0.10.0
 	github.com/landlock-lsm/go-landlock v0.8.1
