@@ -57,6 +57,8 @@ var (
 		"rancher/neuvector-compliance-config":                 "neuvector/compliance-config",
 		"rancher/supportability-review-internal":              "rancher/supportability-review",
 		"rancher/supportability-review-app-frontend":          "rancher/supportability-review-operator",
+		"rancher/cluster-api-provider-rke2-bootstrap":         "rancher/cluster-api-provider-rke2",
+		"rancher/cluster-api-provider-rke2-controlplane":      "rancher/cluster-api-provider-rke2",
 	}
 
 	mutableRepo = map[string]bool{
