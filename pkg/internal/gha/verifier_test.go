@@ -213,6 +213,14 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "ghcr.io/kubewarden/audit-scanner:v1.19.0",
 			want:  "^https://github.com/kubewarden/(audit-scanner|kubewarden-controller)/.github/workflows/release.ya?ml@refs/tags/v",
 		},
+		{
+			image: "rancher/cluster-api-provider-rke2-bootstrap:v0.24.3",
+			want:  "^https://github.com/rancher/cluster-api-provider-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.24.3$",
+		},
+		{
+			image: "rancher/cluster-api-provider-rke2-controlplane:v0.24.3",
+			want:  "^https://github.com/rancher/cluster-api-provider-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.24.3$",
+		},
 	}
 
 	for _, tc := range tests {
