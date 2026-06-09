@@ -8,7 +8,7 @@ require (
 	github.com/in-toto/in-toto-golang v0.11.0
 	github.com/landlock-lsm/go-landlock v0.8.1
 	github.com/sigstore/cosign/v3 v3.0.6
-	github.com/sigstore/fulcio v1.8.6
+	github.com/sigstore/fulcio v1.8.7
 	github.com/stretchr/testify v1.11.1
 )
 
