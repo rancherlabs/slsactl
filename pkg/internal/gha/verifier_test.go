@@ -80,6 +80,10 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rancher/hardened-multus-dynamic-networks-controller:v0.3.7-build20250711",
 			want:  "^https://github.com/rancher/image-build-multus-dynamic-networks-controller/.github/workflows/release.(yml|yaml)@refs/tags/v0.3.7-build20250711$",
 		},
+		{
+			image: "rancher/hardened-foo:v1.2.3",
+			want:  "^https://github.com/rancher/image-build-foo/.github/workflows/release.(yml|yaml)@refs/tags/v1.2.3$",
+		},
 
 		{
 			image:   "",

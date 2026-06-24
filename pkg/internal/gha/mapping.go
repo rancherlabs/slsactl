@@ -39,6 +39,7 @@ var (
 		"rancher/hardened-traefik":                            "rancher/image-build-traefik",
 		"rancher/hardened-csi-snapshotter":                    "rancher/image-build-external-snapshotter",
 		"rancher/hardened-snapshot-controller":                "rancher/image-build-external-snapshotter",
+		"rancher/hardened-vsphere-csi-syncer":                 "rancher/image-build-vsphere-csi-driver",
 		"rancher/nginx-ingress-controller":                    "rancher/ingress-nginx",
 		"rancher/nginx-ingress-controller-chroot":             "rancher/ingress-nginx",
 		"rancher/kube-webhook-certgen":                        "rancher/ingress-nginx",

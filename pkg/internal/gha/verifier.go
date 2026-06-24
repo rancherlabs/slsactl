@@ -180,5 +180,9 @@ func overrideRepo(repo string) string {
 		return v
 	}
 
+	if strings.HasPrefix(repo, "rancher/hardened-") {
+		return strings.Replace(repo, "rancher/hardened-", "rancher/image-build-", 1)
+	}
+
 	return repo
 }
