@@ -225,6 +225,10 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rancher/cluster-api-provider-rke2-controlplane:v0.24.3",
 			want:  "^https://github.com/rancher/cluster-api-provider-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.24.3$",
 		},
+		{
+			image: "rancher/rancher-ai-agent:v1.0.2",
+			want:  "^https://github.com/rancher/rancher-ai-agent/.github/workflows/release.(yml|yaml)@refs/tags/main/v1.0.2$",
+		},
 	}
 
 	for _, tc := range tests {
