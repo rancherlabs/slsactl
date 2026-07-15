@@ -8,7 +8,7 @@ require (
 	github.com/in-toto/in-toto-golang v0.11.0
 	github.com/landlock-lsm/go-landlock v0.9.0
 	github.com/sigstore/cosign/v3 v3.1.1
-	github.com/sigstore/fulcio v1.8.7
+	github.com/sigstore/fulcio v1.8.8
 	github.com/stretchr/testify v1.11.1
 )
 
@@ -85,7 +85,7 @@ require (
 	github.com/aquasecurity/go-pep440-version v0.0.1 // indirect
 	github.com/aquasecurity/go-version v0.0.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
-	github.com/aws/aws-sdk-go-v2 v1.41.7 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.42.0 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.7.10 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.32.18 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.17 // indirect
@@ -104,7 +104,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.30.17 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.42.1 // indirect
-	github.com/aws/smithy-go v1.25.1 // indirect
+	github.com/aws/smithy-go v1.27.1 // indirect
 	github.com/awslabs/amazon-ecr-credential-helper/ecr-login v0.12.0 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/becheran/wildmatch-go v1.0.0 // indirect
@@ -147,7 +147,7 @@ require (
 	github.com/containerd/plugin v1.1.0 // indirect
 	github.com/containerd/ttrpc v1.2.8 // indirect
 	github.com/containerd/typeurl/v2 v2.2.3 // indirect
-	github.com/coreos/go-oidc/v3 v3.18.0 // indirect
+	github.com/coreos/go-oidc/v3 v3.19.0 // indirect
 	github.com/cyberphone/json-canonicalization v0.0.0-20241213102144-19d51d7fe467 // indirect
 	github.com/cyphar/filepath-securejoin v0.6.1 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -388,7 +388,7 @@ require (
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/detectors/gcp v1.42.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.68.0 // indirect
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.68.0 // indirect
+	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.69.0 // indirect
 	go.opentelemetry.io/otel v1.44.0 // indirect
 	go.opentelemetry.io/otel/metric v1.44.0 // indirect
 	go.opentelemetry.io/otel/sdk v1.44.0 // indirect
@@ -412,10 +412,10 @@ require (
 	golang.org/x/tools v0.46.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
 	gonum.org/v1/gonum v0.17.0 // indirect
-	google.golang.org/api v0.283.0 // indirect
+	google.golang.org/api v0.286.0 // indirect
 	google.golang.org/genproto v0.0.0-20260406210006-6f92a3bedf2d // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260526163538-3dc84a4a5aaa // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260523011958-0a33c5d7ca68 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260610212136-7ab31c22f7ad // indirect
 	google.golang.org/grpc v1.81.1 // indirect
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
