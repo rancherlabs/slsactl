@@ -4,7 +4,7 @@ go 1.26.3
 
 require (
 	github.com/anchore/syft v1.50.0
-	github.com/google/go-containerregistry v0.21.8
+	github.com/google/go-containerregistry v0.21.9
 	github.com/in-toto/in-toto-golang v0.11.0
 	github.com/landlock-lsm/go-landlock v0.9.0
 	github.com/sigstore/cosign/v3 v3.1.2
