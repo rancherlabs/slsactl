@@ -9,7 +9,7 @@ require (
 	github.com/landlock-lsm/go-landlock v0.9.0
 	github.com/sigstore/cosign/v3 v3.1.3
 	github.com/sigstore/fulcio v1.8.8
-	github.com/stretchr/testify v1.12.0
+	github.com/stretchr/testify v1.12.1
 )
 
 require (
