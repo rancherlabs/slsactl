@@ -84,7 +84,90 @@ func TestCertificateIdentity(t *testing.T) {
 			image: "rancher/hardened-foo:v1.2.3",
 			want:  "^https://github.com/rancher/image-build-foo/.github/workflows/release.(yml|yaml)@refs/tags/v1.2.3$",
 		},
-
+		{
+			image: "harvester/harvester-node-manager:prime-v1.0.0",
+			want:  "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-node-manager-webhook:prime-v1.0.0",
+			want:  "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-mcp-server:v1.0.0",
+			want:  "^https://github.com/harvester/harvester-mcp-server/.github/workflows/release.yml@refs/(heads/main|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-network-controller:prime-v1.0.0",
+			want:  "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-network-helper:prime-v1.0.0",
+			want:  "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-network-webhook:prime-v1.0.0",
+			want:  "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-load-balancer:prime-v1.0.0",
+			want:  "^https://github.com/harvester/load-balancer-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-load-balancer-webhook:prime-v1.0.0",
+			want:  "^https://github.com/harvester/load-balancer-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-networkfs-manager:prime-v1.0.0",
+			want:  "^https://github.com/harvester/networkfs-manager/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-node-disk-manager:prime-v1.0.0",
+			want:  "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-node-disk-manager-webhook:prime-v1.0.0",
+			want:  "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-seeder:prime-v1.0.0",
+			want:  "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-os:prime-v1.0.0",
+			want:  "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/sle-micro|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-nvidia-driver-toolkit:prime-v1.0.0",
+			want:  "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/sle-micro|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-kernel-module-devel:prime-v1.0.0",
+			want:  "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/sle-micro|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-pcidevices:prime-v1.0.0",
+			want:  "^https://github.com/harvester/pcidevices/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-vm-import-controller:prime-v1.0.0",
+			want:  "^https://github.com/harvester/vm-import-controller/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester:v1.8.0",
+			want:  "^https://github.com/harvester/suse-virtualization/.github/workflows/build-factory.yml@refs/(heads/v.*|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-webhook:v1.8.0",
+			want:  "^https://github.com/harvester/suse-virtualization/.github/workflows/build-factory.yml@refs/(heads/v.*|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-upgrade:v1.8.0",
+			want:  "^https://github.com/harvester/suse-virtualization/.github/workflows/build-factory.yml@refs/(heads/v.*|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-cluster-repo:v1.8.0",
+			want:  "^https://github.com/harvester/suse-virtualization/.github/workflows/build-factory.yml@refs/(heads/v.*|tags/v.*)$",
+		},
 		{
 			image:   "",
 			wantErr: "invalid image name",
