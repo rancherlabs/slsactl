@@ -6,7 +6,7 @@ require (
 	github.com/anchore/syft v1.51.0
 	github.com/google/go-containerregistry v0.22.0
 	github.com/in-toto/in-toto-golang v0.11.0
-	github.com/landlock-lsm/go-landlock v0.9.0
+	github.com/landlock-lsm/go-landlock v0.10.0
 	github.com/sigstore/cosign/v3 v3.1.3
 	github.com/sigstore/fulcio v1.8.8
 	github.com/stretchr/testify v1.12.1
