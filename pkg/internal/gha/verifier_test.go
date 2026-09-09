@@ -97,6 +97,74 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "^https://github.com/harvester/harvester-mcp-server/.github/workflows/release.yml@refs/(heads/main|tags/v.*)$",
 		},
 		{
+			image: "harvester/harvester-lvm-csi-plugin:prime-v1.0.0",
+			want:  "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-lvm-provisioner:prime-v1.0.0",
+			want:  "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-lvm-csi-driver-webhook:prime-v1.0.0",
+			want:  "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/support-bundle-kit:v1.0.0",
+			want:  "^https://github.com/rancher/support-bundle-kit/.github/workflows/template-build.yml@refs/(heads/master|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-kubeovn-operator:prime-v1.0.0",
+			want:  "^https://github.com/harvester/kubeovn-operator/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-eventrouter:prime-v1.0.0",
+			want:  "^https://github.com/harvester/eventrouter/.github/workflows/factory.yml@refs/(heads/master|tags/prime-.*)$",
+		},
+		{
+			image: "harvester/harvester-ansible-operator:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-forklift-api:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-forklift-controller:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-forklift-operator:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-openstack-populator:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-ova-provider-server:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-ovirt-populator:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-populator-controller:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-validation:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-virt-v2v:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
+			image: "harvester/harvester-vsphere-xcopy-populator:v1.0.0",
+			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
+		},
+		{
 			image: "harvester/harvester-network-controller:prime-v1.0.0",
 			want:  "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
 		},
@@ -154,19 +222,19 @@ func TestCertificateIdentity(t *testing.T) {
 		},
 		{
 			image: "harvester/harvester:v1.8.0",
-			want:  "^https://github.com/harvester/suse-virtualization/.github/workflows/build-factory.yml@refs/(heads/v.*|tags/v.*)$",
+			want:  "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
 		},
 		{
 			image: "harvester/harvester-webhook:v1.8.0",
-			want:  "^https://github.com/harvester/suse-virtualization/.github/workflows/build-factory.yml@refs/(heads/v.*|tags/v.*)$",
+			want:  "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
 		},
 		{
 			image: "harvester/harvester-upgrade:v1.8.0",
-			want:  "^https://github.com/harvester/suse-virtualization/.github/workflows/build-factory.yml@refs/(heads/v.*|tags/v.*)$",
+			want:  "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
 		},
 		{
 			image: "harvester/harvester-cluster-repo:v1.8.0",
-			want:  "^https://github.com/harvester/suse-virtualization/.github/workflows/build-factory.yml@refs/(heads/v.*|tags/v.*)$",
+			want:  "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
 		},
 		{
 			image:   "",
