@@ -48,14 +48,16 @@ func TestMatches(t *testing.T) {
 	}
 }
 
+type certificateIdentityTest struct {
+	image   string
+	want    string
+	wantErr string
+}
+
 func TestCertificateIdentity(t *testing.T) {
 	t.Parallel()
 
-	tests := []struct {
-		image   string
-		want    string
-		wantErr string
-	}{
+	tests := []certificateIdentityTest{
 		{
 			image: "rancher/rke2:v0.0.7",
 			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
@@ -83,158 +85,6 @@ func TestCertificateIdentity(t *testing.T) {
 		{
 			image: "rancher/hardened-foo:v1.2.3",
 			want:  "^https://github.com/rancher/image-build-foo/.github/workflows/release.(yml|yaml)@refs/tags/v1.2.3$",
-		},
-		{
-			image: "harvester/harvester-node-manager:prime-v1.0.0",
-			want:  "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-node-manager-webhook:prime-v1.0.0",
-			want:  "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-mcp-server:v1.0.0",
-			want:  "^https://github.com/harvester/harvester-mcp-server/.github/workflows/release.yml@refs/(heads/main|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-lvm-csi-plugin:prime-v1.0.0",
-			want:  "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-lvm-provisioner:prime-v1.0.0",
-			want:  "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-lvm-csi-driver-webhook:prime-v1.0.0",
-			want:  "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/support-bundle-kit:v1.0.0",
-			want:  "^https://github.com/rancher/support-bundle-kit/.github/workflows/template-build.yml@refs/(heads/master|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-kubeovn-operator:prime-v1.0.0",
-			want:  "^https://github.com/harvester/kubeovn-operator/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-eventrouter:prime-v1.0.0",
-			want:  "^https://github.com/harvester/eventrouter/.github/workflows/factory.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-ansible-operator:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-forklift-api:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-forklift-controller:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-forklift-operator:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-openstack-populator:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-ova-provider-server:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-ovirt-populator:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-populator-controller:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-validation:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-virt-v2v:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-vsphere-xcopy-populator:v1.0.0",
-			want:  "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-network-controller:prime-v1.0.0",
-			want:  "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-network-helper:prime-v1.0.0",
-			want:  "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-network-webhook:prime-v1.0.0",
-			want:  "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-load-balancer:prime-v1.0.0",
-			want:  "^https://github.com/harvester/load-balancer-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-load-balancer-webhook:prime-v1.0.0",
-			want:  "^https://github.com/harvester/load-balancer-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-networkfs-manager:prime-v1.0.0",
-			want:  "^https://github.com/harvester/networkfs-manager/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-node-disk-manager:prime-v1.0.0",
-			want:  "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-node-disk-manager-webhook:prime-v1.0.0",
-			want:  "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-seeder:prime-v1.0.0",
-			want:  "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-os:prime-v1.0.0",
-			want:  "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/sle-micro|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-nvidia-driver-toolkit:prime-v1.0.0",
-			want:  "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/sle-micro|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-kernel-module-devel:prime-v1.0.0",
-			want:  "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/sle-micro|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-pcidevices:prime-v1.0.0",
-			want:  "^https://github.com/harvester/pcidevices/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester-vm-import-controller:prime-v1.0.0",
-			want:  "^https://github.com/harvester/vm-import-controller/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$",
-		},
-		{
-			image: "harvester/harvester:v1.8.0",
-			want:  "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-webhook:v1.8.0",
-			want:  "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-upgrade:v1.8.0",
-			want:  "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
-		},
-		{
-			image: "harvester/harvester-cluster-repo:v1.8.0",
-			want:  "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
 		},
 		{
 			image:   "",
@@ -377,6 +227,78 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "^https://github.com/rancher/cluster-api-provider-rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.24.3$",
 		},
 	}
+
+	testCertificateIdentities(t, tests)
+}
+
+func TestHarvesterCertificateIdentities(t *testing.T) {
+	t.Parallel()
+
+	const (
+		csiLVMIdentity             = "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$"
+		eventrouterIdentity        = "^https://github.com/harvester/eventrouter/.github/workflows/factory.yml@refs/(heads/master|tags/prime-.*)$"
+		forkliftIdentity           = "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$"
+		harvesterIdentity          = "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$"
+		kubeovnIdentity            = "^https://github.com/harvester/kubeovn-operator/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$"
+		loadBalancerIdentity       = "^https://github.com/harvester/load-balancer-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$"
+		mcpServerIdentity          = "^https://github.com/harvester/harvester-mcp-server/.github/workflows/release.yml@refs/(heads/main|tags/v.*)$"
+		networkControllerIdentity  = "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$"
+		networkFSIdentity          = "^https://github.com/harvester/networkfs-manager/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$"
+		nodeDiskManagerIdentity    = "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/master|tags/prime-.*)$"
+		nodeManagerIdentity        = "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$"
+		osIdentity                 = "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/sle-micro|tags/prime-.*)$"
+		pciDevicesIdentity         = "^https://github.com/harvester/pcidevices/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$"
+		seederIdentity             = "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$"
+		supportBundleKitIdentity   = "^https://github.com/rancher/support-bundle-kit/.github/workflows/template-build.yml@refs/(heads/master|tags/v.*)$"
+		vmImportControllerIdentity = "^https://github.com/harvester/vm-import-controller/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$"
+	)
+
+	tests := []certificateIdentityTest{
+		{image: "harvester/harvester-node-manager:prime-v1.0.0", want: nodeManagerIdentity},
+		{image: "harvester/harvester-node-manager-webhook:prime-v1.0.0", want: nodeManagerIdentity},
+		{image: "harvester/harvester-mcp-server:v1.0.0", want: mcpServerIdentity},
+		{image: "harvester/harvester-lvm-csi-plugin:prime-v1.0.0", want: csiLVMIdentity},
+		{image: "harvester/harvester-lvm-provisioner:prime-v1.0.0", want: csiLVMIdentity},
+		{image: "harvester/harvester-lvm-csi-driver-webhook:prime-v1.0.0", want: csiLVMIdentity},
+		{image: "harvester/support-bundle-kit:v1.0.0", want: supportBundleKitIdentity},
+		{image: "harvester/harvester-kubeovn-operator:prime-v1.0.0", want: kubeovnIdentity},
+		{image: "harvester/harvester-eventrouter:prime-v1.0.0", want: eventrouterIdentity},
+		{image: "harvester/harvester-ansible-operator:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-forklift-api:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-forklift-controller:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-forklift-operator:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-openstack-populator:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-ova-provider-server:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-ovirt-populator:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-populator-controller:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-validation:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-virt-v2v:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-vsphere-xcopy-populator:v1.0.0", want: forkliftIdentity},
+		{image: "harvester/harvester-network-controller:prime-v1.0.0", want: networkControllerIdentity},
+		{image: "harvester/harvester-network-helper:prime-v1.0.0", want: networkControllerIdentity},
+		{image: "harvester/harvester-network-webhook:prime-v1.0.0", want: networkControllerIdentity},
+		{image: "harvester/harvester-load-balancer:prime-v1.0.0", want: loadBalancerIdentity},
+		{image: "harvester/harvester-load-balancer-webhook:prime-v1.0.0", want: loadBalancerIdentity},
+		{image: "harvester/harvester-networkfs-manager:prime-v1.0.0", want: networkFSIdentity},
+		{image: "harvester/harvester-node-disk-manager:prime-v1.0.0", want: nodeDiskManagerIdentity},
+		{image: "harvester/harvester-node-disk-manager-webhook:prime-v1.0.0", want: nodeDiskManagerIdentity},
+		{image: "harvester/harvester-seeder:prime-v1.0.0", want: seederIdentity},
+		{image: "harvester/harvester-os:prime-v1.0.0", want: osIdentity},
+		{image: "harvester/harvester-nvidia-driver-toolkit:prime-v1.0.0", want: osIdentity},
+		{image: "harvester/harvester-kernel-module-devel:prime-v1.0.0", want: osIdentity},
+		{image: "harvester/harvester-pcidevices:prime-v1.0.0", want: pciDevicesIdentity},
+		{image: "harvester/harvester-vm-import-controller:prime-v1.0.0", want: vmImportControllerIdentity},
+		{image: "harvester/harvester:v1.8.0", want: harvesterIdentity},
+		{image: "harvester/harvester-webhook:v1.8.0", want: harvesterIdentity},
+		{image: "harvester/harvester-upgrade:v1.8.0", want: harvesterIdentity},
+		{image: "harvester/harvester-cluster-repo:v1.8.0", want: harvesterIdentity},
+	}
+
+	testCertificateIdentities(t, tests)
+}
+
+func testCertificateIdentities(t *testing.T, tests []certificateIdentityTest) {
+	t.Helper()
 
 	for _, tc := range tests {
 		t.Run(tc.image, func(t *testing.T) {
