@@ -235,22 +235,22 @@ func TestHarvesterCertificateIdentities(t *testing.T) {
 	t.Parallel()
 
 	const (
-		csiLVMIdentity             = "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$"
-		eventrouterIdentity        = "^https://github.com/harvester/eventrouter/.github/workflows/factory.yml@refs/(heads/master|tags/prime-.*)$"
-		forkliftIdentity           = "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*)|tags/v.*)$"
+		csiLVMIdentity             = "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/(main|v.*)|tags/prime-.*)$"
+		eventrouterIdentity        = "^https://github.com/harvester/eventrouter/.github/workflows/factory.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
+		forkliftIdentity           = "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*|v.*)|tags/v.*)$"
 		harvesterIdentity          = "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$"
-		kubeovnIdentity            = "^https://github.com/harvester/kubeovn-operator/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$"
-		loadBalancerIdentity       = "^https://github.com/harvester/load-balancer-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$"
-		mcpServerIdentity          = "^https://github.com/harvester/harvester-mcp-server/.github/workflows/release.yml@refs/(heads/main|tags/v.*)$"
-		networkControllerIdentity  = "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$"
-		networkFSIdentity          = "^https://github.com/harvester/networkfs-manager/.github/workflows/factory.yml@refs/(heads/main|tags/prime-.*)$"
-		nodeDiskManagerIdentity    = "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/master|tags/prime-.*)$"
-		nodeManagerIdentity        = "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$"
-		osIdentity                 = "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/sle-micro|tags/prime-.*)$"
-		pciDevicesIdentity         = "^https://github.com/harvester/pcidevices/.github/workflows/template-build.yml@refs/(heads/master|tags/prime-.*)$"
-		seederIdentity             = "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$"
+		kubeovnIdentity            = "^https://github.com/harvester/kubeovn-operator/.github/workflows/template-build.yml@refs/(heads/(main|v.*|release-.*)|tags/prime-.*)$"
+		loadBalancerIdentity       = "^https://github.com/harvester/load-balancer-harvester/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
+		mcpServerIdentity          = "^https://github.com/harvester/harvester-mcp-server/.github/workflows/release.yml@refs/(heads/(main|v.*)|tags/v.*)$"
+		networkControllerIdentity  = "^https://github.com/harvester/network-controller-harvester/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
+		networkFSIdentity          = "^https://github.com/harvester/networkfs-manager/.github/workflows/factory.yml@refs/(heads/(main|v.*)|tags/prime-.*)$"
+		nodeDiskManagerIdentity    = "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/(master|v.*)|tags/prime-.*)$"
+		nodeManagerIdentity        = "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
+		osIdentity                 = "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/(sle-micro|harvester-v.*)|tags/prime-.*)$"
+		pciDevicesIdentity         = "^https://github.com/harvester/pcidevices/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
+		seederIdentity             = "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$"
 		supportBundleKitIdentity   = "^https://github.com/rancher/support-bundle-kit/.github/workflows/template-build.yml@refs/(heads/master|tags/v.*)$"
-		vmImportControllerIdentity = "^https://github.com/harvester/vm-import-controller/.github/workflows/template-build.yml@refs/(heads/main|tags/prime-.*)$"
+		vmImportControllerIdentity = "^https://github.com/harvester/vm-import-controller/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$"
 	)
 
 	tests := []certificateIdentityTest{
