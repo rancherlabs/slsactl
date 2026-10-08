@@ -29,7 +29,7 @@ runs:
         echo "::warning title=Using the latest version is deprecated::Using the 'latest' version will no longer be supported, please remove it from your workflow and use the default version instead."
       fi
       if [[ "${VERSION}" == "latest" ]] || [[ "${VERSION}" == "" ]] || [[ -z "${VERSION}" ]]; then
-        VERSION="v0.1.30"
+        VERSION="v0.1.42"
       fi
       echo "version=${VERSION}" >> $GITHUB_OUTPUT
     env:
