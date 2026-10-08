@@ -238,7 +238,7 @@ func TestHarvesterCertificateIdentities(t *testing.T) {
 		csiLVMIdentity             = "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/(main|v.*)|tags/prime-.*)$"
 		eventrouterIdentity        = "^https://github.com/harvester/eventrouter/.github/workflows/factory.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
 		forkliftIdentity           = "^https://github.com/harvester/forklift-packaging/.github/workflows/template-build.yml@refs/(heads/(main|release/v.*|v.*)|tags/v.*)$"
-		harvesterIdentity          = "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$"
+		harvesterIdentity          = "^https://github.com/harvester/harvester/.github/workflows/build-prime.yml@refs/(heads/(prime-)?v.*|tags/(prime-)?v.*)$"
 		kubeovnIdentity            = "^https://github.com/harvester/kubeovn-operator/.github/workflows/template-build.yml@refs/(heads/(main|v.*|release-.*)|tags/prime-.*)$"
 		loadBalancerIdentity       = "^https://github.com/harvester/load-balancer-harvester/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
 		mcpServerIdentity          = "^https://github.com/harvester/harvester-mcp-server/.github/workflows/release.yml@refs/(heads/(main|v.*)|tags/v.*)$"

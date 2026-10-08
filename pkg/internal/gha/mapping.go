@@ -161,7 +161,7 @@ var (
 		"harvester/pcidevices":                                            "^https://github.com/harvester/pcidevices/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$",
 		"harvester/seeder":                                                "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$",
 		"harvester/vm-import-controller":                                  "^https://github.com/harvester/vm-import-controller/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$",
-		"harvester/harvester":                                             "^https://github.com/harvester/harvester/.github/workflows/build-factory.yml@refs/(heads/(master|release-.*|v.*)|tags/v.*)$",
+		"harvester/harvester":                                             "^https://github.com/harvester/harvester/.github/workflows/build-prime.yml@refs/(heads/(prime-)?v.*|tags/(prime-)?v.*)$",
 	}
 
 	// imageSuffixes holds a mapping between image name and the ref suffixes
