@@ -9,6 +9,7 @@
 #          version: latest
 
 name: install-slsactl
+description: This GitHub action install the slsactl CLI, making it available for other steps within an GitHub workflow to refer to it.
 
 inputs:
   version:
