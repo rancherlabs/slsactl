@@ -11,11 +11,16 @@ linters:
     - forbidigo
     - forcetypeassert
     - funlen
+    - exhaustruct_v5 # fix errors and re-enable
     - gochecknoglobals
+    - goconst # fix errors and re-enable
     - gocritic
+    - gomodguard
+    - gomodguard_v2 # fix errors and re-enable
     - gomoddirectives
     - lll
     - mnd
+    - modernize # fix errors and re-enable
     - nestif
     - nlreturn
     - paralleltest
