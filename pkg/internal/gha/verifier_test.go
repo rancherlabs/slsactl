@@ -246,7 +246,7 @@ func TestHarvesterCertificateIdentities(t *testing.T) {
 		networkFSIdentity          = "^https://github.com/harvester/networkfs-manager/.github/workflows/factory.yml@refs/(heads/(main|v.*)|tags/prime-.*)$"
 		nodeDiskManagerIdentity    = "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/(master|v.*)|tags/prime-.*)$"
 		nodeManagerIdentity        = "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
-		osIdentity                 = "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/(sle-micro|harvester-v.*)|tags/prime-.*)$"
+		osIdentity                 = "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/(sle-micro|harvester-v.*)|tags/(prime-)?v.*)$"
 		pciDevicesIdentity         = "^https://github.com/harvester/pcidevices/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$"
 		seederIdentity             = "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$"
 		supportBundleKitIdentity   = "^https://github.com/rancher/support-bundle-kit/.github/workflows/template-build.yml@refs/(heads/master|tags/v.*)$"
@@ -286,6 +286,8 @@ func TestHarvesterCertificateIdentities(t *testing.T) {
 		{image: "harvester/harvester-os:prime-v1.0.0", want: osIdentity},
 		{image: "harvester/harvester-nvidia-driver-toolkit:prime-v1.0.0", want: osIdentity},
 		{image: "harvester/harvester-kernel-module-devel:prime-v1.0.0", want: osIdentity},
+		{image: "harvester/harvester-os:v1.9-20261019", want: osIdentity},
+		{image: "harvester/harvester-nvidia-driver-toolkit:v1.10.0-dev-20261011", want: osIdentity},
 		{image: "harvester/harvester-pcidevices:prime-v1.0.0", want: pciDevicesIdentity},
 		{image: "harvester/harvester-vm-import-controller:prime-v1.0.0", want: vmImportControllerIdentity},
 		{image: "harvester/harvester:v1.8.0", want: harvesterIdentity},

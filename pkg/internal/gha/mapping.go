@@ -157,7 +157,7 @@ var (
 		"harvester/networkfs-manager":                                     "^https://github.com/harvester/networkfs-manager/.github/workflows/factory.yml@refs/(heads/(main|v.*)|tags/prime-.*)$",
 		"harvester/node-disk-manager":                                     "^https://github.com/harvester/node-disk-manager/.github/workflows/factory.yaml@refs/(heads/(master|v.*)|tags/prime-.*)$",
 		"harvester/node-manager":                                          "^https://github.com/harvester/node-manager/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$",
-		"harvester/os2":                                                   "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/(sle-micro|harvester-v.*)|tags/prime-.*)$",
+		"harvester/os2":                                                   "^https://github.com/harvester/os2/.github/workflows/factory.yml@refs/(heads/(sle-micro|harvester-v.*)|tags/(prime-)?v.*)$",
 		"harvester/pcidevices":                                            "^https://github.com/harvester/pcidevices/.github/workflows/template-build.yml@refs/(heads/(master|v.*)|tags/prime-.*)$",
 		"harvester/seeder":                                                "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$",
 		"harvester/vm-import-controller":                                  "^https://github.com/harvester/vm-import-controller/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$",
