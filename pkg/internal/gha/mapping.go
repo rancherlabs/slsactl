@@ -52,6 +52,7 @@ var (
 		"rancher/kube-webhook-certgen":                        "rancher/ingress-nginx",
 		"rancher/pushprox":                                    "rancher/PushProx",
 		"rancher/rancher":                                     "rancher/rancher-prime",
+		"rancher/rancher-server":                              "rancher/rancher-prime",
 		"rancher/rancher-agent":                               "rancher/rancher-prime",
 		"rancher/system-agent-installer-rancher":              "rancher/rancher-prime",
 		"rancher/rancher-webhook":                             "rancher/webhook",
