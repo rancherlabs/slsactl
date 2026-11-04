@@ -65,6 +65,7 @@ var (
 		"rancher/neuvector-compliance-config":                 "neuvector/compliance-config",
 		"rancher/supportability-review-internal":              "rancher/supportability-review",
 		"rancher/supportability-review-app-frontend":          "rancher/supportability-review-operator",
+		"rancherlabs/swiss-army-knife":                        "rancherlabs/swiss-army-knife-v2",
 		"rancher/cluster-api-provider-rke2-bootstrap":         "rancher/cluster-api-provider-rke2",
 		"rancher/cluster-api-provider-rke2-controlplane":      "rancher/cluster-api-provider-rke2",
 		"rancher/cluster-api-provider-rke2-extension":         "rancher/cluster-api-provider-rke2",
