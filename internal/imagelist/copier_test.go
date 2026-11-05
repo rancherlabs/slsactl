@@ -1,6 +1,7 @@
 package imagelist
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/google/go-containerregistry/pkg/name"
@@ -49,7 +50,7 @@ func TestOverrideSignatureSource(t *testing.T) {
 		},
 		{
 			image: "127.0.0.1:5000/rancher/mirrored-sig-storage-livenessprobe",
-			want:  "registry.k8s.io/sig-storage/rancher/mirrored-sig-storage-livenessprobe",
+			want:  "registry.k8s.io/sig-storage/livenessprobe",
 		},
 		{
 			image: "127.0.0.1:5000/rancher/mirrored-sig-storage-snapshot-controller",
@@ -67,6 +68,26 @@ func TestOverrideSignatureSource(t *testing.T) {
 			image: "127.0.0.1:5000/rancher/mirrored-cilium-cilium",
 			want:  "quay.io/cilium/cilium",
 		},
+		{
+			image: "127.0.0.1:5000/rancher/mirrored-prometheus-operator-prometheus-operator",
+			want:  "quay.io/prometheus-operator/prometheus-operator",
+		},
+		{
+			image: "127.0.0.1:5000/rancher/mirrored-jkroepke-kube-webhook-certgen",
+			want:  "ghcr.io/jkroepke/kube-webhook-certgen",
+		},
+		{
+			image: "127.0.0.1:5000/rancher/mirrored-curlimages-curl",
+			want:  "curlimages/curl",
+		},
+		{
+			image: "127.0.0.1:5000/rancher/mirrored-fluent-fluent-bit",
+			want:  "fluent/fluent-bit",
+		},
+		{
+			image: "127.0.0.1:5000/rancher/mirrored-bci-micro",
+			want:  "registry.suse.com/bci/bci-micro",
+		},
 	}
 
 	for _, tc := range tests {
@@ -79,6 +100,27 @@ func TestOverrideSignatureSource(t *testing.T) {
 
 			got := signatureSource(srcRef, tag)
 			assert.Equal(t, tc.want+":"+tag, got)
+		})
+	}
+}
+
+// TestExternalImagesEntries guards against malformed values in externalImages
+// (stray whitespace, embedded tags or digests) that only show up when
+// signatures are looked up against a real registry.
+func TestExternalImagesEntries(t *testing.T) {
+	t.Parallel()
+
+	for key, value := range externalImages {
+		t.Run(key, func(t *testing.T) {
+			t.Parallel()
+
+			assert.Equal(t, strings.TrimSpace(key), key, "key has surrounding whitespace")
+			assert.Equal(t, strings.TrimSpace(value), value, "value has surrounding whitespace")
+			assert.NotContains(t, value, "@", "value must not contain a digest")
+
+			// NewRepository rejects references carrying a tag or digest.
+			_, err := name.NewRepository(value)
+			assert.NoError(t, err, "value must be a plain repository")
 		})
 	}
 }
