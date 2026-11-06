@@ -28,7 +28,15 @@ var externalImages = map[string]string{
 	"rancher/mirrored-sig-storage-csi-snapshotter":                    "registry.k8s.io/sig-storage/csi-snapshotter",
 	"rancher/mirrored-sig-storage-livenessprobe":                      "registry.k8s.io/sig-storage/livenessprobe",
 	"rancher/mirrored-sig-storage-snapshot-controller":                "registry.k8s.io/sig-storage/snapshot-controller",
-	"rancher/appco-redis":                                             "dp.apps.rancher.io/containers/redis",
+	"rancher/appco-alertmanager":                                      "dp.apps.rancher.io/containers/alertmanager",
+	"rancher/appco-grafana":                                           "dp.apps.rancher.io/containers/grafana",
+	"rancher/appco-k8s-sidecar":                                       "dp.apps.rancher.io/containers/k8s-sidecar",
+	"rancher/appco-kubernetes-cluster-autoscaler":                     "dp.apps.rancher.io/containers/kubernetes-cluster-autoscaler",
+	"rancher/appco-kube-rbac-proxy":                                   "dp.apps.rancher.io/containers/kube-rbac-proxy",
+	"rancher/appco-kube-state-metrics":                                "dp.apps.rancher.io/containers/kube-state-metrics",
+	"rancher/appco-node-exporter":                                     "dp.apps.rancher.io/containers/node-exporter",
+	"rancher/appco-thanos":                                            "dp.apps.rancher.io/containers/thanos",
+	"rancher/charts/appco-kubernetes-cluster-autoscaler":              "dp.apps.rancher.io/charts/kubernetes-cluster-autoscaler",
 	"rancher/mirrored-cilium-cilium":                                  "quay.io/cilium/cilium",
 	"rancher/mirrored-cilium-cilium-envoy":                            "quay.io/cilium/cilium-envoy",
 	"rancher/mirrored-cilium-clustermesh-apiserver":                   "quay.io/cilium/clustermesh-apiserver",
@@ -57,19 +65,13 @@ var externalImages = map[string]string{
 }
 
 type imageCopier struct {
-	m            sync.Mutex
-	mirroredOnly bool
-	copyImages   bool
+	m          sync.Mutex
+	copyImages bool
 }
 
 func (i *imageCopier) Copy(srcImg, dstRegistry string) Entry {
 	entry := Entry{
 		Image: srcImg,
-	}
-
-	if i.mirroredOnly && !strings.Contains(srcImg, "mirrored") {
-		entry.Error = errors.New("skipping non-mirrored image: " + srcImg)
-		return entry
 	}
 
 	ref, err := name.ParseReference(srcImg, name.WeakValidation)

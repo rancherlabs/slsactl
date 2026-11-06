@@ -61,8 +61,8 @@ func TestOverrideSignatureSource(t *testing.T) {
 			want:  "registry.k8s.io/sig-storage/csi-attacher",
 		},
 		{
-			image: "127.0.0.1:5000/rancher/appco-redis",
-			want:  "dp.apps.rancher.io/containers/redis",
+			image: "127.0.0.1:5000/rancher/appco-alertmanager",
+			want:  "dp.apps.rancher.io/containers/alertmanager",
 		},
 		{
 			image: "127.0.0.1:5000/rancher/mirrored-cilium-cilium",
