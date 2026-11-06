@@ -59,9 +59,7 @@ func NewProcessor(registry string) *Processor {
 		registry = registry + "/"
 	}
 
-	copier := &imageCopier{
-		mirroredOnly: true,
-	}
+	copier := &imageCopier{}
 
 	return &Processor{
 		registry:   registry,
