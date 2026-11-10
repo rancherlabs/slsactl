@@ -168,7 +168,7 @@ func TestCopySignatureIgnoresNonSignatureReferrers(t *testing.T) {
 
 	err := CopySignature(context.Background(), srcImg, dst+":v1", true)
 	require.ErrorIs(t, err, ErrNoSignaturesFound)
-	assert.Equal(t, 0, referrerCount(t, dst, "v1"), "non-signature referrers must not be copied")
+	assert.Equal(t, 0, referrerCount(t, dst), "non-signature referrers must not be copied")
 }
 
 func TestCopySignatureIgnoresAttestationBundle(t *testing.T) {
@@ -189,7 +189,7 @@ func TestCopySignatureIgnoresAttestationBundle(t *testing.T) {
 
 	err = CopySignature(context.Background(), srcImg, dst+":v1", true)
 	require.ErrorIs(t, err, ErrNoSignaturesFound)
-	assert.Equal(t, 0, referrerCount(t, dst, "v1"), "attestation bundles must not be copied as signatures")
+	assert.Equal(t, 0, referrerCount(t, dst), "attestation bundles must not be copied as signatures")
 }
 
 func TestCopySignatureFallbackTagFiltersNonSignatures(t *testing.T) {
@@ -202,7 +202,7 @@ func TestCopySignatureFallbackTagFiltersNonSignatures(t *testing.T) {
 
 	err := CopySignature(context.Background(), srcImg, dst+":v1", true)
 	require.ErrorIs(t, err, ErrNoSignaturesFound)
-	assert.Equal(t, 0, referrerCount(t, dst, "v1"), "non-signature referrers must not be copied")
+	assert.Equal(t, 0, referrerCount(t, dst), "non-signature referrers must not be copied")
 }
 
 func TestCopySignatureFallbackTagFiltersMixedReferrers(t *testing.T) {
@@ -219,7 +219,7 @@ func TestCopySignatureFallbackTagFiltersMixedReferrers(t *testing.T) {
 		[]byte(`{"messageSignature":{}}`), nil)
 
 	require.NoError(t, CopySignature(context.Background(), srcImg, dst+":v1", true))
-	assert.Equal(t, 1, referrerCount(t, dst, "v1"), "only signature referrers must be copied")
+	assert.Equal(t, 1, referrerCount(t, dst), "only signature referrers must be copied")
 
 	digest, err := crane.Digest(dst + ":v1")
 	require.NoError(t, err)
@@ -272,10 +272,10 @@ func pushPlainImage(t *testing.T, repo string) string {
 	return repo + ":v1"
 }
 
-func referrerCount(t *testing.T, repo, tag string) int {
+func referrerCount(t *testing.T, repo string) int {
 	t.Helper()
 
-	digest, err := crane.Digest(repo + ":" + tag)
+	digest, err := crane.Digest(repo + ":v1")
 	require.NoError(t, err)
 	subject, err := name.NewDigest(repo + "@" + digest)
 	require.NoError(t, err)
@@ -339,7 +339,7 @@ func TestCopySignatureFormatPrecedence(t *testing.T) {
 
 		_, err = crane.Digest(dst + ":" + plainTag)
 		assert.Error(t, err, "plain tag must not be copied when .sig exists")
-		assert.Equal(t, 0, referrerCount(t, dst, "v1"), "referrers must not be copied when .sig exists")
+		assert.Equal(t, 0, referrerCount(t, dst), "referrers must not be copied when .sig exists")
 	})
 
 	t.Run("plain tag wins over referrers", func(t *testing.T) {
@@ -356,7 +356,7 @@ func TestCopySignatureFormatPrecedence(t *testing.T) {
 		got, err := crane.Digest(dst + ":" + plainTag)
 		require.NoError(t, err)
 		assert.Equal(t, plainDigest, got)
-		assert.Equal(t, 0, referrerCount(t, dst, "v1"), "referrers must not be copied when the plain tag exists")
+		assert.Equal(t, 0, referrerCount(t, dst), "referrers must not be copied when the plain tag exists")
 	})
 }
 
