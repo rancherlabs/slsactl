@@ -17,6 +17,14 @@ import (
 // ErrNoSignaturesFound indicates no signature was found for the image.
 var ErrNoSignaturesFound = errors.New("no signatures found")
 
+var errNoReferrers = errors.New("no signature referrers found")
+
+// Artifact types of OCI 1.1 signature referrers (cosign v3 bundles and cosign OCI 1.1 signatures).
+const (
+	sigstoreBundleTypePrefix = "application/vnd.dev.sigstore.bundle"
+	cosignSignatureType      = "application/vnd.dev.cosign.artifact.sig.v1+json"
+)
+
 var externalImages = map[string]string{
 	"sig-storage/snapshot-controller":                                 "registry.k8s.io/sig-storage/snapshot-controller",
 	"sig-storage/snapshot-validation-webhook":                         "registry.k8s.io/sig-storage/snapshot-validation-webhook",
@@ -34,6 +42,7 @@ var externalImages = map[string]string{
 	"rancher/appco-kubernetes-cluster-autoscaler":                     "dp.apps.rancher.io/containers/kubernetes-cluster-autoscaler",
 	"rancher/appco-kube-rbac-proxy":                                   "dp.apps.rancher.io/containers/kube-rbac-proxy",
 	"rancher/appco-kube-state-metrics":                                "dp.apps.rancher.io/containers/kube-state-metrics",
+	"rancher/appco-redis":                                             "dp.apps.rancher.io/containers/redis",
 	"rancher/appco-node-exporter":                                     "dp.apps.rancher.io/containers/node-exporter",
 	"rancher/appco-thanos":                                            "dp.apps.rancher.io/containers/thanos",
 	"rancher/charts/appco-kubernetes-cluster-autoscaler":              "dp.apps.rancher.io/charts/kubernetes-cluster-autoscaler",
@@ -189,13 +198,19 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 	if err == nil {
 		return nil
 	}
+
+	if !errors.Is(err, errNoReferrers) {
+		// discovery or transfer failure: not a confirmed absence of signatures
+		return err
+	}
 	errList = append(errList, err)
 
 	return fmt.Errorf("%w: %w", ErrNoSignaturesFound, errors.Join(errList...))
 }
 
-// copyReferrers copies every manifest referring to digest in srcRepo into dstRepo,
-// by digest using the Referrers API.
+// copyReferrers copies the signature manifests referring to digest in srcRepo into dstRepo,
+// by digest using the Referrers API. Other referrers (SBOMs, attestations) are ignored.
+// Returns errNoReferrers when no signature referrer exists.
 func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 	subject, err := name.NewDigest(fmt.Sprintf("%s@%s", srcRepo, digest))
 	if err != nil {
@@ -214,19 +229,32 @@ func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 		return fmt.Errorf("failed to read referrers for %q: %w", subject, err)
 	}
 
-	if len(m.Manifests) == 0 {
-		return fmt.Errorf("failed to find manifests for %q", subject)
-	}
+	found := false
 
 	for _, desc := range m.Manifests {
+		if !isSignatureArtifact(desc.ArtifactType) {
+			continue
+		}
+
+		found = true
 		src := fmt.Sprintf("%s@%s", srcRepo, desc.Digest)
 		dst := fmt.Sprintf("%s@%s", dstRepo, desc.Digest)
-		if err := copyArtifact(ctx, src, dst); err != nil {
+
+		err := copyArtifact(ctx, src, dst)
+		if err != nil {
 			return err
 		}
 	}
 
+	if !found {
+		return fmt.Errorf("%w for %q", errNoReferrers, subject)
+	}
+
 	return nil
+}
+
+func isSignatureArtifact(artifactType string) bool {
+	return artifactType == cosignSignatureType || strings.HasPrefix(artifactType, sigstoreBundleTypePrefix)
 }
 
 func copyArtifact(ctx context.Context, src, dst string) error {

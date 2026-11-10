@@ -33,6 +33,13 @@ func newRegistry(t *testing.T, referrers bool) string {
 func pushSignedImage(t *testing.T, repo string) (string, v1.Hash) {
 	t.Helper()
 
+	return pushReferrerImage(t, repo, "application/vnd.dev.sigstore.bundle.v0.3+json")
+}
+
+// pushReferrerImage pushes an image tagged v1 and a referrer of the given artifact type.
+func pushReferrerImage(t *testing.T, repo, artifactType string) (string, v1.Hash) {
+	t.Helper()
+
 	img, err := random.Image(64, 1)
 	require.NoError(t, err)
 	imgRef := repo + ":v1"
@@ -46,7 +53,7 @@ func pushSignedImage(t *testing.T, repo string) (string, v1.Hash) {
 	require.NoError(t, err)
 
 	sig := mutate.MediaType(empty.Image, types.OCIManifestSchema1)
-	sig = mutate.ConfigMediaType(sig, types.OCIConfigJSON)
+	sig = mutate.ConfigMediaType(sig, types.MediaType(artifactType))
 	sig = mutate.Subject(sig, v1.Descriptor{MediaType: mt, Digest: d, Size: sz}).(v1.Image)
 	sigDigest, err := sig.Digest()
 	require.NoError(t, err)
@@ -109,6 +116,30 @@ func TestCopySignatureNoSignatures(t *testing.T) {
 
 	err = CopySignature(context.Background(), src+":v1", dst+":v1", false)
 	require.ErrorIs(t, err, ErrNoSignaturesFound)
+}
+
+func TestCopySignatureIgnoresNonSignatureReferrers(t *testing.T) {
+	t.Parallel()
+
+	src := newRegistry(t, true) + "/rancher/app"
+	dst := newRegistry(t, true) + "/rancher/app"
+
+	srcImg, _ := pushReferrerImage(t, src, "application/spdx+json")
+
+	err := CopySignature(context.Background(), srcImg, dst+":v1", true)
+	require.ErrorIs(t, err, ErrNoSignaturesFound)
+	assert.Equal(t, 0, referrerCount(t, dst, "v1"), "non-signature referrers must not be copied")
+}
+
+func TestCopySignatureReferrerTransferFailure(t *testing.T) {
+	t.Parallel()
+
+	src := newRegistry(t, true) + "/rancher/app"
+	srcImg, _ := pushSignedImage(t, src)
+
+	err := CopySignature(context.Background(), srcImg, "127.0.0.1:1/rancher/app:v1", false)
+	require.Error(t, err)
+	require.NotErrorIs(t, err, ErrNoSignaturesFound)
 }
 
 // pushTaggedSignature pushes a random image tagged sha256-<hex of imgRef digest><suffix>
@@ -229,18 +260,22 @@ func TestCopySignatureFormatPrecedence(t *testing.T) {
 
 // leafErrors flattens wrapped and joined errors into their leaves.
 func leafErrors(err error) []error {
-	switch e := err.(type) {
-	case interface{ Unwrap() []error }:
-		var out []error
-		for _, c := range e.Unwrap() {
+	var multi interface{ Unwrap() []error }
+	if errors.As(err, &multi) {
+		out := make([]error, 0, 4)
+		for _, c := range multi.Unwrap() {
 			out = append(out, leafErrors(c)...)
 		}
+
 		return out
-	case interface{ Unwrap() error }:
-		return leafErrors(e.Unwrap())
-	default:
-		return []error{err}
 	}
+
+	var single interface{ Unwrap() error }
+	if errors.As(err, &single) {
+		return leafErrors(single.Unwrap())
+	}
+
+	return []error{err}
 }
 
 // TestCopySignatureNoSignaturesErrors checks that the aggregated error carries
@@ -271,5 +306,5 @@ func TestCopySignatureNoSignaturesErrors(t *testing.T) {
 
 	assert.Contains(t, causes[0].Error(), ".sig")
 	assert.NotContains(t, causes[1].Error(), ".sig")
-	assert.Contains(t, causes[2].Error(), "failed to find manifests")
+	assert.Contains(t, causes[2].Error(), "no signature referrers found")
 }
