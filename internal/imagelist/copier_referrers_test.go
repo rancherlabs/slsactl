@@ -16,6 +16,7 @@ import (
 	"github.com/google/go-containerregistry/pkg/v1/mutate"
 	"github.com/google/go-containerregistry/pkg/v1/random"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
+	"github.com/google/go-containerregistry/pkg/v1/static"
 	"github.com/google/go-containerregistry/pkg/v1/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -51,6 +52,12 @@ func pushReferrerImage(t *testing.T, repo, artifactType string) (string, v1.Hash
 func pushArtifactReferrer(t *testing.T, repo string, img v1.Image, artifactType string) v1.Hash {
 	t.Helper()
 
+	if strings.HasPrefix(artifactType, sigstoreBundleTypePrefix) {
+		return pushBundleReferrer(t, repo, img, artifactType,
+			[]byte(`{"messageSignature":{}}`),
+			map[string]string{sigstoreBundleContentAnnotation: "message-signature"})
+	}
+
 	d, err := img.Digest()
 	require.NoError(t, err)
 	mt, err := img.MediaType()
@@ -63,6 +70,34 @@ func pushArtifactReferrer(t *testing.T, repo string, img v1.Image, artifactType 
 	sigDigest, err := sig.Digest()
 	require.NoError(t, err)
 
+	r, err := name.ParseReference(fmt.Sprintf("%s@%s", repo, sigDigest))
+	require.NoError(t, err)
+	require.NoError(t, remote.Write(r, sig))
+
+	return sigDigest
+}
+
+func pushBundleReferrer(t *testing.T, repo string, img v1.Image, artifactType string, bundle []byte, annotations map[string]string) v1.Hash {
+	t.Helper()
+
+	d, err := img.Digest()
+	require.NoError(t, err)
+	mt, err := img.MediaType()
+	require.NoError(t, err)
+	sz, err := img.Size()
+	require.NoError(t, err)
+
+	sig := mutate.MediaType(empty.Image, types.OCIManifestSchema1)
+	sig = mutate.ConfigMediaType(sig, types.MediaType(artifactType))
+	sig, err = mutate.Append(sig, mutate.Addendum{
+		Layer: static.NewLayer(bundle, types.MediaType(artifactType)),
+	})
+	require.NoError(t, err)
+	sig = mutate.Annotations(sig, annotations).(v1.Image)
+	sig = mutate.Subject(sig, v1.Descriptor{MediaType: mt, Digest: d, Size: sz}).(v1.Image)
+
+	sigDigest, err := sig.Digest()
+	require.NoError(t, err)
 	r, err := name.ParseReference(fmt.Sprintf("%s@%s", repo, sigDigest))
 	require.NoError(t, err)
 	require.NoError(t, remote.Write(r, sig))
@@ -136,6 +171,27 @@ func TestCopySignatureIgnoresNonSignatureReferrers(t *testing.T) {
 	assert.Equal(t, 0, referrerCount(t, dst, "v1"), "non-signature referrers must not be copied")
 }
 
+func TestCopySignatureIgnoresAttestationBundle(t *testing.T) {
+	t.Parallel()
+
+	src := newRegistry(t, true) + "/rancher/app"
+	dst := newRegistry(t, true) + "/rancher/app"
+
+	srcImg := pushPlainImage(t, src)
+	image, err := crane.Pull(srcImg)
+	require.NoError(t, err)
+	pushBundleReferrer(t, src, image, sigstoreBundleTypePrefix+".v0.3+json",
+		[]byte(`{"dsseEnvelope":{"payload":"eyJwcmVkaWNhdGVUeXBlIjoiaHR0cHM6Ly9zbHNhLmRldi9wcm92ZW5hbmNlL3YxIn0="}}`),
+		map[string]string{
+			sigstoreBundleContentAnnotation:   "dsse-envelope",
+			sigstoreBundlePredicateAnnotation: "https://slsa.dev/provenance/v1",
+		})
+
+	err = CopySignature(context.Background(), srcImg, dst+":v1", true)
+	require.ErrorIs(t, err, ErrNoSignaturesFound)
+	assert.Equal(t, 0, referrerCount(t, dst, "v1"), "attestation bundles must not be copied as signatures")
+}
+
 func TestCopySignatureFallbackTagFiltersNonSignatures(t *testing.T) {
 	t.Parallel()
 
@@ -159,7 +215,8 @@ func TestCopySignatureFallbackTagFiltersMixedReferrers(t *testing.T) {
 	image, err := crane.Pull(srcImg)
 	require.NoError(t, err)
 	pushArtifactReferrer(t, src, image, "application/spdx+json")
-	sigDigest := pushArtifactReferrer(t, src, image, sigstoreBundleTypePrefix+".v0.3+json")
+	sigDigest := pushBundleReferrer(t, src, image, sigstoreBundleTypePrefix+".v0.3+json",
+		[]byte(`{"messageSignature":{}}`), nil)
 
 	require.NoError(t, CopySignature(context.Background(), srcImg, dst+":v1", true))
 	assert.Equal(t, 1, referrerCount(t, dst, "v1"), "only signature referrers must be copied")

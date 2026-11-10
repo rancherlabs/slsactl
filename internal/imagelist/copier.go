@@ -2,6 +2,7 @@ package imagelist
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -11,6 +12,7 @@ import (
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/crane"
 	"github.com/google/go-containerregistry/pkg/name"
+	v1 "github.com/google/go-containerregistry/pkg/v1"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
 )
 
@@ -23,6 +25,9 @@ var errNoReferrers = errors.New("no signature referrers found")
 const (
 	sigstoreBundleTypePrefix = "application/vnd.dev.sigstore.bundle"
 	cosignSignatureType      = "application/vnd.dev.cosign.artifact.sig.v1+json"
+
+	sigstoreBundleContentAnnotation   = "dev.sigstore.bundle.content"
+	sigstoreBundlePredicateAnnotation = "dev.sigstore.bundle.predicateType"
 )
 
 var externalImages = map[string]string{
@@ -189,7 +194,9 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 	sourceSigRef = strings.TrimSuffix(sourceSigRef, ".sig")
 	plainSigRef, err := name.ParseReference(sourceSigRef)
 	if err == nil {
-		desc, getErr := remote.Get(plainSigRef, remote.WithContext(ctx))
+		desc, getErr := remote.Get(plainSigRef,
+			remote.WithContext(ctx),
+			remote.WithAuthFromKeychain(authn.DefaultKeychain))
 		if getErr != nil {
 			err = getErr
 		} else if desc.MediaType.IsIndex() {
@@ -240,7 +247,11 @@ func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 	found := false
 
 	for _, desc := range m.Manifests {
-		if !isSignatureArtifact(desc.ArtifactType) {
+		isSignature, err := isSignatureArtifact(ctx, srcRepo, desc)
+		if err != nil {
+			return err
+		}
+		if !isSignature {
 			continue
 		}
 
@@ -248,7 +259,7 @@ func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 		src := fmt.Sprintf("%s@%s", srcRepo, desc.Digest)
 		dst := fmt.Sprintf("%s@%s", dstRepo, desc.Digest)
 
-		err := copyArtifact(ctx, src, dst)
+		err = copyArtifact(ctx, src, dst)
 		if err != nil {
 			return err
 		}
@@ -261,8 +272,82 @@ func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 	return nil
 }
 
-func isSignatureArtifact(artifactType string) bool {
-	return artifactType == cosignSignatureType || strings.HasPrefix(artifactType, sigstoreBundleTypePrefix)
+func isSignatureArtifact(ctx context.Context, srcRepo string, desc v1.Descriptor) (bool, error) {
+	if desc.ArtifactType == cosignSignatureType {
+		return true, nil
+	}
+	if !strings.HasPrefix(desc.ArtifactType, sigstoreBundleTypePrefix) {
+		return false, nil
+	}
+
+	if isSignature, decided := isSignatureBundleAnnotations(desc.Annotations); decided {
+		return isSignature, nil
+	}
+
+	ref, err := name.NewDigest(fmt.Sprintf("%s@%s", srcRepo, desc.Digest))
+	if err != nil {
+		return false, fmt.Errorf("failed to parse bundle digest: %w", err)
+	}
+	bundle, err := remote.Get(ref,
+		remote.WithContext(ctx),
+		remote.WithAuthFromKeychain(authn.DefaultKeychain))
+	if err != nil {
+		return false, fmt.Errorf("failed to fetch signature bundle %q: %w", ref, err)
+	}
+
+	image, err := bundle.Image()
+	if err != nil {
+		return false, fmt.Errorf("failed to read signature bundle image %q: %w", ref, err)
+	}
+	manifest, err := image.Manifest()
+	if err != nil {
+		return false, fmt.Errorf("failed to read signature bundle manifest %q: %w", ref, err)
+	}
+	if isSignature, decided := isSignatureBundleAnnotations(manifest.Annotations); decided {
+		return isSignature, nil
+	}
+
+	layers, err := image.Layers()
+	if err != nil {
+		return false, fmt.Errorf("failed to read signature bundle layers %q: %w", ref, err)
+	}
+
+	for _, layer := range layers {
+		reader, err := layer.Uncompressed()
+		if err != nil {
+			continue
+		}
+		var content struct {
+			MessageSignature json.RawMessage `json:"messageSignature"`
+			DSSEEnvelope     json.RawMessage `json:"dsseEnvelope"`
+		}
+		decodeErr := json.NewDecoder(reader).Decode(&content)
+		_ = reader.Close()
+		if decodeErr == nil {
+			if len(content.DSSEEnvelope) > 0 {
+				return false, nil
+			}
+			if len(content.MessageSignature) > 0 {
+				return true, nil
+			}
+		}
+	}
+
+	return false, nil
+}
+
+func isSignatureBundleAnnotations(annotations map[string]string) (bool, bool) {
+	if annotations[sigstoreBundlePredicateAnnotation] != "" {
+		return false, true
+	}
+	switch annotations[sigstoreBundleContentAnnotation] {
+	case "message-signature":
+		return true, true
+	case "dsse-envelope":
+		return false, true
+	default:
+		return false, false
+	}
 }
 
 func copyArtifact(ctx context.Context, src, dst string) error {
