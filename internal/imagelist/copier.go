@@ -35,6 +35,7 @@ var externalImages = map[string]string{
 	"rancher/appco-kube-rbac-proxy":                                   "dp.apps.rancher.io/containers/kube-rbac-proxy",
 	"rancher/appco-kube-state-metrics":                                "dp.apps.rancher.io/containers/kube-state-metrics",
 	"rancher/appco-node-exporter":                                     "dp.apps.rancher.io/containers/node-exporter",
+	"rancher/appco-redis":                                             "dp.apps.rancher.io/containers/redis",
 	"rancher/appco-thanos":                                            "dp.apps.rancher.io/containers/thanos",
 	"rancher/charts/appco-kubernetes-cluster-autoscaler":              "dp.apps.rancher.io/charts/kubernetes-cluster-autoscaler",
 	"rancher/mirrored-cilium-cilium":                                  "quay.io/cilium/cilium",
