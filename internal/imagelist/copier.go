@@ -183,13 +183,21 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 	}
 	errList = append(errList, err)
 
-	// try one last time for the new format (no .sig suffix)
+	// Try the no-suffix format. The same tag is also used for the OCI referrers
+	// fallback index, which must be handled by copyReferrers instead.
 	signatureTag = strings.TrimSuffix(signatureTag, ".sig")
 	sourceSigRef = strings.TrimSuffix(sourceSigRef, ".sig")
-	_, err = crane.Manifest(sourceSigRef, crane.WithContext(ctx))
+	plainSigRef, err := name.ParseReference(sourceSigRef)
 	if err == nil {
-		dstSigRef := fmt.Sprintf("%s:%s", targetRef.Context().Name(), signatureTag)
-		return copyArtifact(ctx, sourceSigRef, dstSigRef)
+		desc, getErr := remote.Get(plainSigRef, remote.WithContext(ctx))
+		if getErr != nil {
+			err = getErr
+		} else if desc.MediaType.IsIndex() {
+			err = fmt.Errorf("%q is an OCI image index, not a standalone signature", sourceSigRef)
+		} else {
+			dstSigRef := fmt.Sprintf("%s:%s", targetRef.Context().Name(), signatureTag)
+			return copyArtifact(ctx, sourceSigRef, dstSigRef)
+		}
 	}
 	errList = append(errList, err)
 

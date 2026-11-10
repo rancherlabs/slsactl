@@ -45,13 +45,18 @@ func pushReferrerImage(t *testing.T, repo, artifactType string) (string, v1.Hash
 	imgRef := repo + ":v1"
 	require.NoError(t, crane.Push(img, imgRef))
 
+	return imgRef, pushArtifactReferrer(t, repo, img, artifactType)
+}
+
+func pushArtifactReferrer(t *testing.T, repo string, img v1.Image, artifactType string) v1.Hash {
+	t.Helper()
+
 	d, err := img.Digest()
 	require.NoError(t, err)
 	mt, err := img.MediaType()
 	require.NoError(t, err)
 	sz, err := img.Size()
 	require.NoError(t, err)
-
 	sig := mutate.MediaType(empty.Image, types.OCIManifestSchema1)
 	sig = mutate.ConfigMediaType(sig, types.MediaType(artifactType))
 	sig = mutate.Subject(sig, v1.Descriptor{MediaType: mt, Digest: d, Size: sz}).(v1.Image)
@@ -62,7 +67,7 @@ func pushReferrerImage(t *testing.T, repo, artifactType string) (string, v1.Hash
 	require.NoError(t, err)
 	require.NoError(t, remote.Write(r, sig))
 
-	return imgRef, sigDigest
+	return sigDigest
 }
 
 func TestCopySignatureReferrers(t *testing.T) {
@@ -129,6 +134,46 @@ func TestCopySignatureIgnoresNonSignatureReferrers(t *testing.T) {
 	err := CopySignature(context.Background(), srcImg, dst+":v1", true)
 	require.ErrorIs(t, err, ErrNoSignaturesFound)
 	assert.Equal(t, 0, referrerCount(t, dst, "v1"), "non-signature referrers must not be copied")
+}
+
+func TestCopySignatureFallbackTagFiltersNonSignatures(t *testing.T) {
+	t.Parallel()
+
+	src := newRegistry(t, false) + "/rancher/app"
+	dst := newRegistry(t, true) + "/rancher/app"
+
+	srcImg, _ := pushReferrerImage(t, src, "application/spdx+json")
+
+	err := CopySignature(context.Background(), srcImg, dst+":v1", true)
+	require.ErrorIs(t, err, ErrNoSignaturesFound)
+	assert.Equal(t, 0, referrerCount(t, dst, "v1"), "non-signature referrers must not be copied")
+}
+
+func TestCopySignatureFallbackTagFiltersMixedReferrers(t *testing.T) {
+	t.Parallel()
+
+	src := newRegistry(t, false) + "/rancher/app"
+	dst := newRegistry(t, true) + "/rancher/app"
+
+	srcImg := pushPlainImage(t, src)
+	image, err := crane.Pull(srcImg)
+	require.NoError(t, err)
+	pushArtifactReferrer(t, src, image, "application/spdx+json")
+	sigDigest := pushArtifactReferrer(t, src, image, sigstoreBundleTypePrefix+".v0.3+json")
+
+	require.NoError(t, CopySignature(context.Background(), srcImg, dst+":v1", true))
+	assert.Equal(t, 1, referrerCount(t, dst, "v1"), "only signature referrers must be copied")
+
+	digest, err := crane.Digest(dst + ":v1")
+	require.NoError(t, err)
+	subject, err := name.NewDigest(dst + "@" + digest)
+	require.NoError(t, err)
+	idx, err := remote.Referrers(subject)
+	require.NoError(t, err)
+	manifest, err := idx.IndexManifest()
+	require.NoError(t, err)
+	require.Len(t, manifest.Manifests, 1)
+	assert.Equal(t, sigDigest, manifest.Manifests[0].Digest)
 }
 
 func TestCopySignatureReferrerTransferFailure(t *testing.T) {
