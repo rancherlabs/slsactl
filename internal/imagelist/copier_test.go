@@ -61,6 +61,10 @@ func TestOverrideSignatureSource(t *testing.T) {
 			want:  "docker.io/longhornio/csi-attacher",
 		},
 		{
+			image: "127.0.0.1:5000/rancher/mirrored-longhornio-longhorn-manager",
+			want:  "docker.io/longhornio/longhorn-manager",
+		},
+		{
 			image: "127.0.0.1:5000/rancher/appco-alertmanager",
 			want:  "dp.apps.rancher.io/containers/alertmanager",
 		},
