@@ -1,7 +1,9 @@
 package imagelist
 
 import (
+	"bytes"
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -28,6 +30,11 @@ const (
 
 	sigstoreBundleContentAnnotation   = "dev.sigstore.bundle.content"
 	sigstoreBundlePredicateAnnotation = "dev.sigstore.bundle.predicateType"
+
+	// cosignSignPredicateType is the in-toto predicate type of the DSSE envelope that
+	// cosign v3 writes when signing an image: it is a signature, not an attestation.
+	cosignSignPredicateType = "https://sigstore.dev/cosign/sign/v1"
+	ociEmptyMediaType       = "application/vnd.oci.empty.v1+json"
 )
 
 var externalImages = map[string]string{
@@ -273,6 +280,11 @@ func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 }
 
 func isSignatureArtifact(ctx context.Context, srcRepo string, desc v1.Descriptor) (bool, error) {
+	desc, err := resolveReferrerDescriptor(ctx, srcRepo, desc)
+	if err != nil {
+		return false, err
+	}
+
 	if desc.ArtifactType == cosignSignatureType {
 		return true, nil
 	}
@@ -325,7 +337,8 @@ func isSignatureArtifact(ctx context.Context, srcRepo string, desc v1.Descriptor
 		_ = reader.Close()
 		if decodeErr == nil {
 			if len(content.DSSEEnvelope) > 0 {
-				return false, nil
+				// a DSSE envelope is a signature or an attestation depending on its predicate
+				return dssePredicateType(content.DSSEEnvelope) == cosignSignPredicateType, nil
 			}
 			if len(content.MessageSignature) > 0 {
 				return true, nil
@@ -336,18 +349,96 @@ func isSignatureArtifact(ctx context.Context, srcRepo string, desc v1.Descriptor
 	return false, nil
 }
 
-func isSignatureBundleAnnotations(annotations map[string]string) (bool, bool) {
-	if annotations[sigstoreBundlePredicateAnnotation] != "" {
-		return false, true
+// ociEmptyMediaType is the media type of the empty config of artifact manifests.
+
+// resolveReferrerDescriptor returns desc with the real artifactType and annotations of the
+// referrer. Registries that serve referrers through the tag schema fallback (e.g. ghcr.io,
+// registry.rancher.com) store an index whose descriptors carry the config media type
+// (application/vnd.oci.empty.v1+json) instead of the artifactType, and no annotations, so
+// in that case the referrer manifest is read.
+func resolveReferrerDescriptor(ctx context.Context, srcRepo string, desc v1.Descriptor) (v1.Descriptor, error) {
+	if desc.ArtifactType != "" && desc.ArtifactType != ociEmptyMediaType {
+		return desc, nil
 	}
-	switch annotations[sigstoreBundleContentAnnotation] {
-	case "message-signature":
+
+	ref, err := name.NewDigest(fmt.Sprintf("%s@%s", srcRepo, desc.Digest))
+	if err != nil {
+		return desc, fmt.Errorf("failed to parse referrer digest: %w", err)
+	}
+
+	raw, err := remote.Get(ref,
+		remote.WithContext(ctx),
+		remote.WithAuthFromKeychain(authn.DefaultKeychain))
+	if err != nil {
+		return desc, fmt.Errorf("failed to fetch referrer manifest %q: %w", ref, err)
+	}
+
+	manifest, err := v1.ParseManifest(bytes.NewReader(raw.Manifest))
+	if err != nil {
+		return desc, fmt.Errorf("failed to parse referrer manifest %q: %w", ref, err)
+	}
+
+	desc.ArtifactType = manifest.ArtifactType
+	if desc.ArtifactType == "" || desc.ArtifactType == ociEmptyMediaType {
+		// no artifactType: the artifact is identified by its (single) layer media type
+		if len(manifest.Layers) == 1 {
+			desc.ArtifactType = string(manifest.Layers[0].MediaType)
+		} else {
+			desc.ArtifactType = string(manifest.Config.MediaType)
+		}
+	}
+	if len(desc.Annotations) == 0 {
+		desc.Annotations = manifest.Annotations
+	}
+
+	return desc, nil
+}
+
+// isSignatureBundleAnnotations classifies a sigstore bundle from its annotations.
+// decided is false when the annotations are not conclusive and the bundle must be inspected.
+func isSignatureBundleAnnotations(annotations map[string]string) (isSignature, decided bool) {
+	switch predicate := annotations[sigstoreBundlePredicateAnnotation]; predicate {
+	case "":
+	case cosignSignPredicateType:
 		return true, true
-	case "dsse-envelope":
-		return false, true
 	default:
-		return false, false
+		return false, true
 	}
+
+	if annotations[sigstoreBundleContentAnnotation] == "message-signature" {
+		return true, true
+	}
+
+	// "dsse-envelope" alone says nothing: cosign v3 signatures are DSSE envelopes too.
+	return false, false
+}
+
+// dssePredicateType returns the in-toto predicateType carried by a DSSE envelope payload,
+// or an empty string when it cannot be read.
+func dssePredicateType(envelope json.RawMessage) string {
+	var env struct {
+		Payload string `json:"payload"`
+	}
+	if err := json.Unmarshal(envelope, &env); err != nil {
+		return ""
+	}
+
+	payload, err := base64.StdEncoding.DecodeString(env.Payload)
+	if err != nil {
+		payload, err = base64.RawURLEncoding.DecodeString(strings.TrimRight(env.Payload, "="))
+		if err != nil {
+			return ""
+		}
+	}
+
+	var statement struct {
+		PredicateType string `json:"predicateType"`
+	}
+	if err := json.Unmarshal(payload, &statement); err != nil {
+		return ""
+	}
+
+	return statement.PredicateType
 }
 
 func copyArtifact(ctx context.Context, src, dst string) error {
