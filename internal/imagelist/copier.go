@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/http"
 	"os"
 	"strings"
 	"sync"
@@ -16,6 +17,7 @@ import (
 	"github.com/google/go-containerregistry/pkg/name"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
 	"github.com/google/go-containerregistry/pkg/v1/remote"
+	"github.com/google/go-containerregistry/pkg/v1/remote/transport"
 )
 
 // ErrNoSignaturesFound indicates no signature was found for the image.
@@ -23,7 +25,10 @@ var ErrNoSignaturesFound = errors.New("no signatures found")
 
 var errNoReferrers = errors.New("no signature referrers found")
 
-// Artifact types of OCI 1.1 signature referrers (cosign v3 bundles and cosign OCI 1.1 signatures).
+// Constants describing the signature artifacts cosign publishes: the artifact types of
+// OCI 1.1 signature referrers (cosign v3 bundles and cosign OCI 1.1 signatures), the
+// sigstore bundle annotations, and the predicate and config media types used to tell
+// signatures from attestations when the registry gives no conclusive descriptor.
 const (
 	sigstoreBundleTypePrefix = "application/vnd.dev.sigstore.bundle"
 	cosignSignatureType      = "application/vnd.dev.cosign.artifact.sig.v1+json"
@@ -34,7 +39,8 @@ const (
 	// cosignSignPredicateType is the in-toto predicate type of the DSSE envelope that
 	// cosign v3 writes when signing an image: it is a signature, not an attestation.
 	cosignSignPredicateType = "https://sigstore.dev/cosign/sign/v1"
-	ociEmptyMediaType       = "application/vnd.oci.empty.v1+json"
+	// ociEmptyMediaType is the media type of the empty config of artifact manifests.
+	ociEmptyMediaType = "application/vnd.oci.empty.v1+json"
 )
 
 var externalImages = map[string]string{
@@ -42,7 +48,7 @@ var externalImages = map[string]string{
 	"sig-storage/snapshot-validation-webhook":                         "registry.k8s.io/sig-storage/snapshot-validation-webhook",
 	"rancher/mirrored-sig-storage-csi-node-driver-registrar":          "registry.k8s.io/sig-storage/csi-node-driver-registrar",
 	"rancher/mirrored-sig-storage-csi-attacher":                       "registry.k8s.io/sig-storage/csi-attacher",
-	"rancher/mirrored-longhornio-csi-attacher":                        "registry.k8s.io/sig-storage/csi-attacher",
+	"rancher/mirrored-longhornio-csi-attacher":                        "docker.io/longhornio/csi-attacher",
 	"rancher/mirrored-sig-storage-csi-provisioner":                    "registry.k8s.io/sig-storage/csi-provisioner",
 	"rancher/mirrored-sig-storage-csi-resizer":                        "registry.k8s.io/sig-storage/csi-resizer",
 	"rancher/mirrored-sig-storage-csi-snapshotter":                    "registry.k8s.io/sig-storage/csi-snapshotter",
@@ -193,6 +199,9 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 		dstSigRef := fmt.Sprintf("%s:%s", targetRef.Context().Name(), signatureTag)
 		return copyArtifact(ctx, sourceSigRef, dstSigRef)
 	}
+	if isAuthFailure(err) {
+		return fmt.Errorf("authentication failed while looking for signature %q: %w", sourceSigRef, err)
+	}
 	errList = append(errList, err)
 
 	// Try the no-suffix format. The same tag is also used for the OCI referrers
@@ -201,10 +210,11 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 	sourceSigRef = strings.TrimSuffix(sourceSigRef, ".sig")
 	plainSigRef, err := name.ParseReference(sourceSigRef)
 	if err == nil {
-		desc, getErr := remote.Get(plainSigRef,
-			remote.WithContext(ctx),
-			remote.WithAuthFromKeychain(authn.DefaultKeychain))
+		desc, getErr := fetchManifest(ctx, plainSigRef)
 		if getErr != nil {
+			if isAuthFailure(getErr) {
+				return fmt.Errorf("authentication failed while looking for signature %q: %w", sourceSigRef, getErr)
+			}
 			err = getErr
 		} else if desc.MediaType.IsIndex() {
 			err = fmt.Errorf("%q is an OCI image index, not a standalone signature", sourceSigRef)
@@ -230,8 +240,10 @@ func CopySignature(ctx context.Context, srcImgRef, dstImgRef string, copyImage b
 	return fmt.Errorf("%w: %w", ErrNoSignaturesFound, errors.Join(errList...))
 }
 
-// copyReferrers copies the signature manifests referring to digest in srcRepo into dstRepo,
-// by digest using the Referrers API. Other referrers (SBOMs, attestations) are ignored.
+// copyReferrers copies the signature manifests referring to digest in srcRepo into
+// dstRepo, addressed by digest. Signatures are discovered with remote.Referrers, which
+// uses the Referrers API on registries that implement it and the referrers tag schema
+// fallback on those that do not. Other referrers (SBOMs, attestations) are ignored.
 // Returns errNoReferrers when no signature referrer exists.
 func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 	subject, err := name.NewDigest(fmt.Sprintf("%s@%s", srcRepo, digest))
@@ -239,9 +251,7 @@ func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 		return fmt.Errorf("failed to parse subject digest: %w", err)
 	}
 
-	idx, err := remote.Referrers(subject,
-		remote.WithContext(ctx),
-		remote.WithAuthFromKeychain(authn.DefaultKeychain))
+	idx, err := remote.Referrers(subject, remoteOptions(ctx)...)
 	if err != nil {
 		return fmt.Errorf("failed to list referrers for %q: %w", subject, err)
 	}
@@ -280,7 +290,7 @@ func copyReferrers(ctx context.Context, srcRepo, dstRepo, digest string) error {
 }
 
 func isSignatureArtifact(ctx context.Context, srcRepo string, desc v1.Descriptor) (bool, error) {
-	desc, err := resolveReferrerDescriptor(ctx, srcRepo, desc)
+	desc, raw, err := resolveReferrerDescriptor(ctx, srcRepo, desc)
 	if err != nil {
 		return false, err
 	}
@@ -296,24 +306,22 @@ func isSignatureArtifact(ctx context.Context, srcRepo string, desc v1.Descriptor
 		return isSignature, nil
 	}
 
-	ref, err := name.NewDigest(fmt.Sprintf("%s@%s", srcRepo, desc.Digest))
-	if err != nil {
-		return false, fmt.Errorf("failed to parse bundle digest: %w", err)
-	}
-	bundle, err := remote.Get(ref,
-		remote.WithContext(ctx),
-		remote.WithAuthFromKeychain(authn.DefaultKeychain))
-	if err != nil {
-		return false, fmt.Errorf("failed to fetch signature bundle %q: %w", ref, err)
+	// The annotations are not conclusive: inspect the bundle manifest and layers.
+	// If resolveReferrerDescriptor already fetched the referrer manifest, reuse it.
+	if raw == nil {
+		raw, err = fetchReferrer(ctx, srcRepo, desc.Digest)
+		if err != nil {
+			return false, err
+		}
 	}
 
-	image, err := bundle.Image()
+	image, err := raw.Image()
 	if err != nil {
-		return false, fmt.Errorf("failed to read signature bundle image %q: %w", ref, err)
+		return false, fmt.Errorf("failed to read signature bundle image %q: %w", desc.Digest, err)
 	}
 	manifest, err := image.Manifest()
 	if err != nil {
-		return false, fmt.Errorf("failed to read signature bundle manifest %q: %w", ref, err)
+		return false, fmt.Errorf("failed to read signature bundle manifest %q: %w", desc.Digest, err)
 	}
 	if isSignature, decided := isSignatureBundleAnnotations(manifest.Annotations); decided {
 		return isSignature, nil
@@ -321,7 +329,7 @@ func isSignatureArtifact(ctx context.Context, srcRepo string, desc v1.Descriptor
 
 	layers, err := image.Layers()
 	if err != nil {
-		return false, fmt.Errorf("failed to read signature bundle layers %q: %w", ref, err)
+		return false, fmt.Errorf("failed to read signature bundle layers %q: %w", desc.Digest, err)
 	}
 
 	for _, layer := range layers {
@@ -349,38 +357,31 @@ func isSignatureArtifact(ctx context.Context, srcRepo string, desc v1.Descriptor
 	return false, nil
 }
 
-// ociEmptyMediaType is the media type of the empty config of artifact manifests.
-
 // resolveReferrerDescriptor returns desc with the real artifactType and annotations of the
-// referrer. Registries that serve referrers through the tag schema fallback (e.g. ghcr.io,
-// registry.rancher.com) store an index whose descriptors carry the config media type
-// (application/vnd.oci.empty.v1+json) instead of the artifactType, and no annotations, so
-// in that case the referrer manifest is read.
-func resolveReferrerDescriptor(ctx context.Context, srcRepo string, desc v1.Descriptor) (v1.Descriptor, error) {
+// referrer, plus the fetched referrer manifest when one was needed. Registries that serve
+// referrers through the tag schema fallback (e.g. ghcr.io, registry.rancher.com) store an
+// index whose descriptors carry the config media type (application/vnd.oci.empty.v1+json)
+// instead of the artifactType, and no annotations, so in that case the referrer manifest is
+// read and returned so callers do not fetch it again.
+func resolveReferrerDescriptor(ctx context.Context, srcRepo string, desc v1.Descriptor) (v1.Descriptor, *remote.Descriptor, error) {
 	if desc.ArtifactType != "" && desc.ArtifactType != ociEmptyMediaType {
-		return desc, nil
+		return desc, nil, nil
 	}
 
-	ref, err := name.NewDigest(fmt.Sprintf("%s@%s", srcRepo, desc.Digest))
+	raw, err := fetchReferrer(ctx, srcRepo, desc.Digest)
 	if err != nil {
-		return desc, fmt.Errorf("failed to parse referrer digest: %w", err)
-	}
-
-	raw, err := remote.Get(ref,
-		remote.WithContext(ctx),
-		remote.WithAuthFromKeychain(authn.DefaultKeychain))
-	if err != nil {
-		return desc, fmt.Errorf("failed to fetch referrer manifest %q: %w", ref, err)
+		return desc, nil, err
 	}
 
 	manifest, err := v1.ParseManifest(bytes.NewReader(raw.Manifest))
 	if err != nil {
-		return desc, fmt.Errorf("failed to parse referrer manifest %q: %w", ref, err)
+		return desc, nil, fmt.Errorf("failed to read referrer manifest %q: %w", desc.Digest, err)
 	}
 
 	desc.ArtifactType = manifest.ArtifactType
 	if desc.ArtifactType == "" || desc.ArtifactType == ociEmptyMediaType {
-		// no artifactType: the artifact is identified by its (single) layer media type
+		// no artifactType: the artifact is identified by its media type, taken from the
+		// single layer when the manifest has one, otherwise from the config
 		if len(manifest.Layers) == 1 {
 			desc.ArtifactType = string(manifest.Layers[0].MediaType)
 		} else {
@@ -391,12 +392,30 @@ func resolveReferrerDescriptor(ctx context.Context, srcRepo string, desc v1.Desc
 		desc.Annotations = manifest.Annotations
 	}
 
-	return desc, nil
+	return desc, raw, nil
+}
+
+// fetchReferrer reads the manifest of the referrer with the given digest in srcRepo.
+// Both callers that need a referrer manifest use it: resolveReferrerDescriptor (to read
+// the real artifactType) and the bundle inspection in isSignatureArtifact (to read the
+// layers), so the digest-parsing and fetch error text stays identical in both paths.
+func fetchReferrer(ctx context.Context, srcRepo string, digest v1.Hash) (*remote.Descriptor, error) {
+	ref, err := name.NewDigest(fmt.Sprintf("%s@%s", srcRepo, digest))
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse referrer digest %q: %w", digest, err)
+	}
+
+	raw, err := fetchManifest(ctx, ref)
+	if err != nil {
+		return nil, fmt.Errorf("failed to fetch referrer manifest %q: %w", ref, err)
+	}
+
+	return raw, nil
 }
 
 // isSignatureBundleAnnotations classifies a sigstore bundle from its annotations.
 // decided is false when the annotations are not conclusive and the bundle must be inspected.
-func isSignatureBundleAnnotations(annotations map[string]string) (isSignature, decided bool) {
+func isSignatureBundleAnnotations(annotations map[string]string) (bool, bool) {
 	switch predicate := annotations[sigstoreBundlePredicateAnnotation]; predicate {
 	case "":
 	case cosignSignPredicateType:
@@ -419,7 +438,8 @@ func dssePredicateType(envelope json.RawMessage) string {
 	var env struct {
 		Payload string `json:"payload"`
 	}
-	if err := json.Unmarshal(envelope, &env); err != nil {
+	err := json.Unmarshal(envelope, &env)
+	if err != nil {
 		return ""
 	}
 
@@ -434,11 +454,37 @@ func dssePredicateType(envelope json.RawMessage) string {
 	var statement struct {
 		PredicateType string `json:"predicateType"`
 	}
-	if err := json.Unmarshal(payload, &statement); err != nil {
+	err = json.Unmarshal(payload, &statement)
+	if err != nil {
 		return ""
 	}
 
 	return statement.PredicateType
+}
+
+// isAuthFailure reports whether err is a registry authentication or authorization
+// failure (HTTP 401/403). Such failures say nothing about whether a signature exists:
+// it may live behind a login, so they must not be reported as ErrNoSignaturesFound.
+func isAuthFailure(err error) bool {
+	var transportErr *transport.Error
+	if !errors.As(err, &transportErr) {
+		return false
+	}
+	return transportErr.StatusCode == http.StatusUnauthorized || transportErr.StatusCode == http.StatusForbidden
+}
+
+// remoteOptions returns the options every registry read uses: the caller's context and
+// the credentials of the default keychain (environment, docker config file).
+func remoteOptions(ctx context.Context) []remote.Option {
+	return []remote.Option{
+		remote.WithContext(ctx),
+		remote.WithAuthFromKeychain(authn.DefaultKeychain),
+	}
+}
+
+// fetchManifest reads the manifest of ref with the shared registry options.
+func fetchManifest(ctx context.Context, ref name.Reference) (*remote.Descriptor, error) {
+	return remote.Get(ref, remoteOptions(ctx)...)
 }
 
 func copyArtifact(ctx context.Context, src, dst string) error {

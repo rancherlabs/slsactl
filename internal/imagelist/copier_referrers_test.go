@@ -5,8 +5,10 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"net/http"
 	"net/http/httptest"
 	"strings"
+	"sync/atomic"
 	"testing"
 
 	"github.com/google/go-containerregistry/pkg/crane"
@@ -635,4 +637,73 @@ func TestCopySignatureFallbackEmptyArtifactTypeAttestationOnly(t *testing.T) {
 	err = CopySignature(context.Background(), srcImg, dst+":v1", true)
 	require.ErrorIs(t, err, ErrNoSignaturesFound)
 	assert.Equal(t, 0, referrerCount(t, dst))
+}
+
+// newAuthRejectingRegistry returns a registry that answers every signature tag lookup
+// (tags named sha256-<digest>) with HTTP 401, like a private registry whose signature
+// tags require a login the caller does not have.
+func newAuthRejectingRegistry(t *testing.T) string {
+	t.Helper()
+
+	handler := registry.New(registry.WithReferrersSupport(true))
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.Contains(r.URL.Path, "/manifests/sha256-") {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		handler.ServeHTTP(w, r)
+	}))
+	t.Cleanup(s.Close)
+	return strings.TrimPrefix(s.URL, "http://")
+}
+
+// A registry that rejects signature tag lookups with 401 must be reported as an
+// authentication failure, not as a missing signature: the signature may exist behind
+// a login, and ErrNoSignaturesFound hides the credential problem instead of surfacing it.
+func TestCopySignatureAuthFailureIsNotMissingSignature(t *testing.T) {
+	t.Parallel()
+
+	src := newAuthRejectingRegistry(t) + "/rancher/app"
+	dst := newRegistry(t, true) + "/rancher/app"
+
+	srcImg := pushPlainImage(t, src)
+
+	err := CopySignature(context.Background(), srcImg, dst+":v1", false)
+	require.Error(t, err)
+	require.NotErrorIs(t, err, ErrNoSignaturesFound)
+	require.Contains(t, err.Error(), "authentication failed")
+}
+
+// A referrer served through the tag schema fallback (ghcr.io, registry.rancher.com) is
+// reported by the fallback index with the config media type as artifactType and no
+// annotations. Classifying it must fetch its manifest exactly once: the fetch that
+// resolves the real artifactType is reused for the bundle inspection. crane.Copy fetches
+// the manifest again when copying, but that fetch belongs to the library, not to us, and
+// is not counted here.
+func TestSignatureArtifactFallbackFetchesManifestOnce(t *testing.T) {
+	t.Parallel()
+
+	var referrerGets atomic.Int64
+	handler := registry.New(registry.WithReferrersSupport(false))
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet && strings.Contains(r.URL.Path, "/manifests/sha256:") {
+			referrerGets.Add(1)
+		}
+		handler.ServeHTTP(w, r)
+	}))
+	t.Cleanup(s.Close)
+
+	src := strings.TrimPrefix(s.URL, "http://") + "/rancher/app"
+	srcImg := pushPlainImage(t, src)
+	image, err := crane.Pull(srcImg)
+	require.NoError(t, err)
+	sigDigest := pushEmptyConfigBundle(t, src, image, dsseBundle(cosignSignPredicateType), nil)
+
+	// The descriptor as the fallback index reports it: empty config media type, no annotations.
+	desc := v1.Descriptor{Digest: sigDigest, ArtifactType: ociEmptyMediaType}
+
+	isSig, err := isSignatureArtifact(context.Background(), src, desc)
+	require.NoError(t, err)
+	require.True(t, isSig, "the cosign v3 bundle must be classified as a signature")
+	assert.Equal(t, int64(1), referrerGets.Load(), "the referrer manifest must be fetched once per classification")
 }
