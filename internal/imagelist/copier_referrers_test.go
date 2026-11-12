@@ -2,10 +2,13 @@ package imagelist
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
 	"fmt"
+	"net/http"
 	"net/http/httptest"
 	"strings"
+	"sync/atomic"
 	"testing"
 
 	"github.com/google/go-containerregistry/pkg/crane"
@@ -409,4 +412,298 @@ func TestCopySignatureNoSignaturesErrors(t *testing.T) {
 	assert.Contains(t, causes[0].Error(), ".sig")
 	assert.NotContains(t, causes[1].Error(), ".sig")
 	assert.Contains(t, causes[2].Error(), "no signature referrers found")
+}
+
+// dsseBundle returns a sigstore bundle with a DSSE envelope whose in-toto statement
+// carries the given predicateType, the way cosign v3 writes signatures (predicate
+// https://sigstore.dev/cosign/sign/v1) and attestations.
+func dsseBundle(predicateType string) []byte {
+	statement := fmt.Sprintf(`{"_type":"https://in-toto.io/Statement/v1","subject":[{"digest":{"sha256":"00"}}],"predicateType":%q,"predicate":{}}`, predicateType)
+	payload := base64.StdEncoding.EncodeToString([]byte(statement))
+
+	return []byte(fmt.Sprintf(`{"mediaType":"application/vnd.dev.sigstore.bundle.v0.3+json","dsseEnvelope":{"payloadType":"application/vnd.in-toto+json","payload":%q,"signatures":[{"sig":"AA=="}]}}`, payload))
+}
+
+// cosign v3 signs images with a DSSE envelope using the cosign sign predicate; those
+// bundles are signatures and must be copied, whichever annotations the registry exposes.
+func TestCopySignatureCosignV3DSSEBundle(t *testing.T) {
+	t.Parallel()
+
+	const bundleType = sigstoreBundleTypePrefix + ".v0.3+json"
+
+	tests := []struct {
+		name        string
+		annotations map[string]string
+		predicate   string
+		wantCopied  bool
+	}{
+		{
+			name: "cosign sign predicate annotation",
+			annotations: map[string]string{
+				sigstoreBundleContentAnnotation:   "dsse-envelope",
+				sigstoreBundlePredicateAnnotation: cosignSignPredicateType,
+			},
+			predicate:  cosignSignPredicateType,
+			wantCopied: true,
+		},
+		{
+			name:        "dsse-envelope annotation only, cosign sign payload",
+			annotations: map[string]string{sigstoreBundleContentAnnotation: "dsse-envelope"},
+			predicate:   cosignSignPredicateType,
+			wantCopied:  true,
+		},
+		{
+			name:       "no annotations, cosign sign payload",
+			predicate:  cosignSignPredicateType,
+			wantCopied: true,
+		},
+		{
+			name:        "dsse-envelope annotation only, provenance payload",
+			annotations: map[string]string{sigstoreBundleContentAnnotation: "dsse-envelope"},
+			predicate:   "https://slsa.dev/provenance/v1",
+		},
+		{
+			name:      "no annotations, provenance payload",
+			predicate: "https://slsa.dev/provenance/v1",
+		},
+		{
+			name: "provenance predicate annotation",
+			annotations: map[string]string{
+				sigstoreBundleContentAnnotation:   "dsse-envelope",
+				sigstoreBundlePredicateAnnotation: "https://slsa.dev/provenance/v1",
+			},
+			predicate: "https://slsa.dev/provenance/v1",
+		},
+	}
+
+	for _, referrersAPI := range []bool{true, false} {
+		for _, tc := range tests {
+			t.Run(fmt.Sprintf("referrers API %t/%s", referrersAPI, tc.name), func(t *testing.T) {
+				t.Parallel()
+
+				src := newRegistry(t, referrersAPI) + "/rancher/app"
+				dst := newRegistry(t, true) + "/rancher/app"
+
+				srcImg := pushPlainImage(t, src)
+				image, err := crane.Pull(srcImg)
+				require.NoError(t, err)
+				pushBundleReferrer(t, src, image, bundleType, dsseBundle(tc.predicate), tc.annotations)
+
+				err = CopySignature(context.Background(), srcImg, dst+":v1", true)
+				if !tc.wantCopied {
+					require.ErrorIs(t, err, ErrNoSignaturesFound)
+					assert.Equal(t, 0, referrerCount(t, dst), "attestation bundles must not be copied as signatures")
+
+					return
+				}
+
+				require.NoError(t, err)
+				assert.Equal(t, 1, referrerCount(t, dst), "cosign v3 DSSE signature must be copied")
+			})
+		}
+	}
+}
+
+// A cosign v3 signature next to an attestation: only the signature is copied.
+func TestCopySignatureCosignV3DSSESignatureAndAttestation(t *testing.T) {
+	t.Parallel()
+
+	const bundleType = sigstoreBundleTypePrefix + ".v0.3+json"
+
+	src := newRegistry(t, true) + "/rancher/app"
+	dst := newRegistry(t, true) + "/rancher/app"
+
+	srcImg := pushPlainImage(t, src)
+	image, err := crane.Pull(srcImg)
+	require.NoError(t, err)
+
+	pushBundleReferrer(t, src, image, bundleType, dsseBundle("https://slsa.dev/provenance/v1"),
+		map[string]string{
+			sigstoreBundleContentAnnotation:   "dsse-envelope",
+			sigstoreBundlePredicateAnnotation: "https://slsa.dev/provenance/v1",
+		})
+	sigDigest := pushBundleReferrer(t, src, image, bundleType, dsseBundle(cosignSignPredicateType),
+		map[string]string{
+			sigstoreBundleContentAnnotation:   "dsse-envelope",
+			sigstoreBundlePredicateAnnotation: cosignSignPredicateType,
+		})
+
+	require.NoError(t, CopySignature(context.Background(), srcImg, dst+":v1", true))
+
+	digest, err := crane.Digest(dst + ":v1")
+	require.NoError(t, err)
+	subject, err := name.NewDigest(dst + "@" + digest)
+	require.NoError(t, err)
+	idx, err := remote.Referrers(subject)
+	require.NoError(t, err)
+	manifest, err := idx.IndexManifest()
+	require.NoError(t, err)
+	require.Len(t, manifest.Manifests, 1)
+	assert.Equal(t, sigDigest, manifest.Manifests[0].Digest)
+}
+
+// pushEmptyConfigBundle pushes a bundle referrer shaped like the ones cosign v3 writes to
+// registries: empty config (application/vnd.oci.empty.v1+json), the bundle media type only in
+// the layer and the bundle annotations on the manifest. On a registry using the referrers tag
+// schema fallback, the index descriptors then carry the config media type as artifactType and
+// no annotations.
+func pushEmptyConfigBundle(t *testing.T, repo string, img v1.Image, bundle []byte, annotations map[string]string) v1.Hash {
+	t.Helper()
+
+	d, err := img.Digest()
+	require.NoError(t, err)
+	mt, err := img.MediaType()
+	require.NoError(t, err)
+	sz, err := img.Size()
+	require.NoError(t, err)
+
+	ref := mutate.MediaType(empty.Image, types.OCIManifestSchema1)
+	ref = mutate.ConfigMediaType(ref, ociEmptyMediaType)
+	ref, err = mutate.Append(ref, mutate.Addendum{
+		Layer: static.NewLayer(bundle, types.MediaType(sigstoreBundleTypePrefix+".v0.3+json")),
+	})
+	require.NoError(t, err)
+	ref = mutate.Annotations(ref, annotations).(v1.Image)
+	ref = mutate.Subject(ref, v1.Descriptor{MediaType: mt, Digest: d, Size: sz}).(v1.Image)
+
+	refDigest, err := ref.Digest()
+	require.NoError(t, err)
+	r, err := name.ParseReference(fmt.Sprintf("%s@%s", repo, refDigest))
+	require.NoError(t, err)
+	require.NoError(t, remote.Write(r, ref))
+
+	return refDigest
+}
+
+// Registries serving referrers through the tag schema fallback (ghcr.io, registry.rancher.com)
+// report application/vnd.oci.empty.v1+json as the artifactType of every referrer: signatures
+// must still be recognised, and attestations and SBOMs still skipped.
+func TestCopySignatureFallbackEmptyArtifactType(t *testing.T) {
+	t.Parallel()
+
+	for _, referrersAPI := range []bool{true, false} {
+		t.Run(fmt.Sprintf("referrers API %t", referrersAPI), func(t *testing.T) {
+			t.Parallel()
+
+			src := newRegistry(t, referrersAPI) + "/rancher/app"
+			dst := newRegistry(t, true) + "/rancher/app"
+
+			srcImg := pushPlainImage(t, src)
+			image, err := crane.Pull(srcImg)
+			require.NoError(t, err)
+
+			pushEmptyConfigBundle(t, src, image, dsseBundle("https://slsa.dev/provenance/v1"),
+				map[string]string{
+					sigstoreBundleContentAnnotation:   "dsse-envelope",
+					sigstoreBundlePredicateAnnotation: "https://slsa.dev/provenance/v1",
+				})
+			sigDigest := pushEmptyConfigBundle(t, src, image, dsseBundle(cosignSignPredicateType),
+				map[string]string{
+					sigstoreBundleContentAnnotation:   "dsse-envelope",
+					sigstoreBundlePredicateAnnotation: cosignSignPredicateType,
+				})
+
+			require.NoError(t, CopySignature(context.Background(), srcImg, dst+":v1", true))
+
+			digest, err := crane.Digest(dst + ":v1")
+			require.NoError(t, err)
+			subject, err := name.NewDigest(dst + "@" + digest)
+			require.NoError(t, err)
+			idx, err := remote.Referrers(subject)
+			require.NoError(t, err)
+			manifest, err := idx.IndexManifest()
+			require.NoError(t, err)
+			require.Len(t, manifest.Manifests, 1, "only the signature must be copied")
+			assert.Equal(t, sigDigest, manifest.Manifests[0].Digest)
+		})
+	}
+}
+
+func TestCopySignatureFallbackEmptyArtifactTypeAttestationOnly(t *testing.T) {
+	t.Parallel()
+
+	src := newRegistry(t, false) + "/rancher/app"
+	dst := newRegistry(t, true) + "/rancher/app"
+
+	srcImg := pushPlainImage(t, src)
+	image, err := crane.Pull(srcImg)
+	require.NoError(t, err)
+	pushEmptyConfigBundle(t, src, image, dsseBundle("https://slsa.dev/provenance/v1"),
+		map[string]string{
+			sigstoreBundleContentAnnotation:   "dsse-envelope",
+			sigstoreBundlePredicateAnnotation: "https://slsa.dev/provenance/v1",
+		})
+
+	err = CopySignature(context.Background(), srcImg, dst+":v1", true)
+	require.ErrorIs(t, err, ErrNoSignaturesFound)
+	assert.Equal(t, 0, referrerCount(t, dst))
+}
+
+// newAuthRejectingRegistry returns a registry that answers every signature tag lookup
+// (tags named sha256-<digest>) with HTTP 401, like a private registry whose signature
+// tags require a login the caller does not have.
+func newAuthRejectingRegistry(t *testing.T) string {
+	t.Helper()
+
+	handler := registry.New(registry.WithReferrersSupport(true))
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.Contains(r.URL.Path, "/manifests/sha256-") {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		handler.ServeHTTP(w, r)
+	}))
+	t.Cleanup(s.Close)
+	return strings.TrimPrefix(s.URL, "http://")
+}
+
+// A registry that rejects signature tag lookups with 401 must be reported as an
+// authentication failure, not as a missing signature: the signature may exist behind
+// a login, and ErrNoSignaturesFound hides the credential problem instead of surfacing it.
+func TestCopySignatureAuthFailureIsNotMissingSignature(t *testing.T) {
+	t.Parallel()
+
+	src := newAuthRejectingRegistry(t) + "/rancher/app"
+	dst := newRegistry(t, true) + "/rancher/app"
+
+	srcImg := pushPlainImage(t, src)
+
+	err := CopySignature(context.Background(), srcImg, dst+":v1", false)
+	require.Error(t, err)
+	require.NotErrorIs(t, err, ErrNoSignaturesFound)
+	require.Contains(t, err.Error(), "authentication failed")
+}
+
+// A referrer served through the tag schema fallback (ghcr.io, registry.rancher.com) is
+// reported by the fallback index with the config media type as artifactType and no
+// annotations. Classifying it must fetch its manifest exactly once: the fetch that
+// resolves the real artifactType is reused for the bundle inspection. crane.Copy fetches
+// the manifest again when copying, but that fetch belongs to the library, not to us, and
+// is not counted here.
+func TestSignatureArtifactFallbackFetchesManifestOnce(t *testing.T) {
+	t.Parallel()
+
+	var referrerGets atomic.Int64
+	handler := registry.New(registry.WithReferrersSupport(false))
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet && strings.Contains(r.URL.Path, "/manifests/sha256:") {
+			referrerGets.Add(1)
+		}
+		handler.ServeHTTP(w, r)
+	}))
+	t.Cleanup(s.Close)
+
+	src := strings.TrimPrefix(s.URL, "http://") + "/rancher/app"
+	srcImg := pushPlainImage(t, src)
+	image, err := crane.Pull(srcImg)
+	require.NoError(t, err)
+	sigDigest := pushEmptyConfigBundle(t, src, image, dsseBundle(cosignSignPredicateType), nil)
+
+	// The descriptor as the fallback index reports it: empty config media type, no annotations.
+	desc := v1.Descriptor{Digest: sigDigest, ArtifactType: ociEmptyMediaType}
+
+	isSig, err := isSignatureArtifact(context.Background(), src, desc)
+	require.NoError(t, err)
+	require.True(t, isSig, "the cosign v3 bundle must be classified as a signature")
+	assert.Equal(t, int64(1), referrerGets.Load(), "the referrer manifest must be fetched once per classification")
 }
