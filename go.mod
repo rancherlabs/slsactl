@@ -3,7 +3,7 @@ module github.com/rancherlabs/slsactl
 go 1.27.4
 
 require (
-	github.com/anchore/syft v1.56.0
+	github.com/anchore/syft v1.57.0
 	github.com/google/go-containerregistry v0.22.1
 	github.com/in-toto/in-toto-golang v0.11.0
 	github.com/landlock-lsm/go-landlock v0.11.0
@@ -82,7 +82,7 @@ require (
 	github.com/anchore/go-sync v0.1.2 // indirect
 	github.com/anchore/go-version v1.2.2-0.20200701162849-18adb9c92b9b // indirect
 	github.com/anchore/packageurl-go v0.2.0 // indirect
-	github.com/anchore/stereoscope v0.4.0 // indirect
+	github.com/anchore/stereoscope v0.4.1 // indirect
 	github.com/andybalholm/brotli v1.2.7 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/apparentlymart/go-textseg/v17 v17.0.1 // indirect
