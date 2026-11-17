@@ -125,6 +125,8 @@ var (
 		"rancher/cluster-api-vsphere-controller":                          "^https://github.com/rancher/clusterapi-forks/.github/workflows/vsphere.yaml@refs/heads/main$",
 		"rancher/cluster-api-provider-metal3":                             "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3.yaml@refs/heads/main$",
 		"rancher/ip-address-manager":                                      "^https://github.com/rancher/clusterapi-forks/.github/workflows/metal3-ipam.yaml@refs/heads/main$",
+		"rancher/k3s-bootstrap-controller":                                "^https://github.com/rancher/clusterapi-forks/.github/workflows/k3s.yaml@refs/heads/main$",
+		"rancher/k3s-control-plane-controller":                            "^https://github.com/rancher/clusterapi-forks/.github/workflows/k3s.yaml@refs/heads/main$",
 		"rancher/mirrored-cilium-cilium":                                  "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
 		"rancher/mirrored-cilium-envoy":                                   "^https://github.com/cilium/proxy/.github/workflows/build-envoy-images-release.yaml@refs/heads/v",
 		"rancher/mirrored-cilium-clustermesh-apiserver":                   "^https://github.com/cilium/cilium/.github/workflows/build-images-releases.yaml@refs/tags/v",
