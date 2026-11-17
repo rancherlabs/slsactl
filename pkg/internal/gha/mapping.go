@@ -70,6 +70,7 @@ var (
 		"rancher/cluster-api-provider-rke2-bootstrap":         "rancher/cluster-api-provider-rke2",
 		"rancher/cluster-api-provider-rke2-controlplane":      "rancher/cluster-api-provider-rke2",
 		"rancher/cluster-api-provider-rke2-extension":         "rancher/cluster-api-provider-rke2",
+		"rancher/fluent-bit":                                  "rancher/kube-logging-fluent-bit",
 		"harvester/harvester-lvm-csi-plugin":                  "harvester/csi-driver-lvm",
 		"harvester/harvester-lvm-provisioner":                 "harvester/csi-driver-lvm",
 		"harvester/harvester-lvm-csi-driver-webhook":          "harvester/csi-driver-lvm",
