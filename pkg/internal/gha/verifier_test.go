@@ -200,15 +200,15 @@ func TestCertificateIdentity(t *testing.T) {
 		},
 		{
 			image: "ghcr.io/kubewarden/adm-controller/policy-server:v1.36.0-alpha",
-			want:  "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+			want:  "^https://github.com/kubewarden/(adm-controller/.github/workflows/release.ya?ml@refs/tags/v|github-actions/.github/workflows/container-release.yml@)",
 		},
 		{
 			image: "ghcr.io/kubewarden/adm-controller/audit-scanner:v1.36.0-alpha",
-			want:  "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+			want:  "^https://github.com/kubewarden/(adm-controller/.github/workflows/release.ya?ml@refs/tags/v|github-actions/.github/workflows/container-release.yml@)",
 		},
 		{
 			image: "ghcr.io/kubewarden/adm-controller/controller:v1.36.0-alpha",
-			want:  "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+			want:  "^https://github.com/kubewarden/(adm-controller/.github/workflows/release.ya?ml@refs/tags/v|github-actions/.github/workflows/container-release.yml@)",
 		},
 		{
 			image: "ghcr.io/kubewarden/policy-server:v1.19.0",
@@ -434,7 +434,7 @@ func TestVerify(t *testing.T) {
 			setup: func(m *upstreamMock) {
 				vc := verify.VerifyCommand{
 					CertVerifyOptions: options.CertVerifyOptions{
-						CertIdentityRegexp: "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+						CertIdentityRegexp: "^https://github.com/kubewarden/(adm-controller/.github/workflows/release.ya?ml@refs/tags/v|github-actions/.github/workflows/container-release.yml@)",
 						CertOidcIssuer:     "https://token.actions.githubusercontent.com",
 					},
 					CertGithubWorkflowRepository: "kubewarden/adm-controller",
