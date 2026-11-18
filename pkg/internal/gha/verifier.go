@@ -156,6 +156,18 @@ func getCertIdentity(imageName string) (string, error) {
 		ref = "v" + ref
 	}
 
+	ref = trimTagSuffixes(repo, ref)
+	repo = overrideRepo(repo)
+
+	// Check whether there is an identity override for the specific repo.
+	if identity, found := identityOverride[repo]; found {
+		return identity, nil
+	}
+
+	return fmt.Sprintf("^https://github.com/%s/.github/workflows/release.(yml|yaml)@refs/tags/%s$", repo, ref), nil
+}
+
+func trimTagSuffixes(repo, ref string) string {
 	suffixes := archSuffixes
 	if s, ok := imageSuffixes[repo]; ok {
 		suffixes = append(suffixes, s...)
@@ -165,14 +177,7 @@ func getCertIdentity(imageName string) (string, error) {
 		ref = strings.TrimSuffix(ref, suffix)
 	}
 
-	repo = overrideRepo(repo)
-
-	// Check whether there is an identity override for the specific repo.
-	if identity, found := identityOverride[repo]; found {
-		return identity, nil
-	}
-
-	return fmt.Sprintf("^https://github.com/%s/.github/workflows/release.(yml|yaml)@refs/tags/%s$", repo, ref), nil
+	return ref
 }
 
 func overrideRepo(repo string) string {
