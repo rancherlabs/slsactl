@@ -171,6 +171,17 @@ var (
 		"harvester/harvester":                                             "^https://github.com/harvester/harvester/.github/workflows/build-prime.yml@refs/(heads/(prime-)?v.*|tags/(prime-)?v.*)$",
 	}
 
+	// workflowRepository holds the GitHub repository that must start the
+	// signing workflow. The workflow ref is pinned to the Git tag of the
+	// image. Use it when the certificate identity alone does not bind the
+	// source repository or the exact release tag.
+	// The image tag, without its arch suffix, must be equal to the Git tag.
+	workflowRepository = map[string]string{
+		"adm-controller/policy-server": "kubewarden/adm-controller",
+		"adm-controller/audit-scanner": "kubewarden/adm-controller",
+		"adm-controller/controller":    "kubewarden/adm-controller",
+	}
+
 	// imageSuffixes holds a mapping between image name and the ref suffixes
 	// they may have which will need to be trimmed before defining the expected
 	// subject identity.

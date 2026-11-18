@@ -319,6 +319,60 @@ func testCertificateIdentities(t *testing.T, tests []certificateIdentityTest) {
 	}
 }
 
+func TestWorkflowPin(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		image    string
+		wantRepo string
+		wantRef  string
+		wantErr  string
+	}{
+		{
+			image:    "ghcr.io/kubewarden/adm-controller/policy-server:v1.39.0",
+			wantRepo: "kubewarden/adm-controller",
+			wantRef:  "refs/tags/v1.39.0",
+		},
+		{
+			image:    "ghcr.io/kubewarden/adm-controller/audit-scanner:v1.39.0-rc.4",
+			wantRepo: "kubewarden/adm-controller",
+			wantRef:  "refs/tags/v1.39.0-rc.4",
+		},
+		{
+			image:    "ghcr.io/kubewarden/adm-controller/controller:v1.39.0-amd64",
+			wantRepo: "kubewarden/adm-controller",
+			wantRef:  "refs/tags/v1.39.0",
+		},
+		{
+			image: "ghcr.io/kubewarden/policy-server:v1.19.0",
+		},
+		{
+			image: "rancher/rke2:v0.0.7",
+		},
+		{
+			image:   "foo/bar",
+			wantErr: "missing image tag",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.image, func(t *testing.T) {
+			t.Parallel()
+
+			gotRepo, gotRef, err := getWorkflowPin(tc.image)
+
+			assert.Equal(t, tc.wantRepo, gotRepo)
+			assert.Equal(t, tc.wantRef, gotRef)
+
+			if tc.wantErr == "" {
+				assert.NoError(t, err)
+			} else {
+				assert.ErrorContains(t, err, tc.wantErr)
+			}
+		})
+	}
+}
+
 func TestVerify(t *testing.T) {
 	t.Parallel()
 
@@ -372,6 +426,26 @@ func TestVerify(t *testing.T) {
 					errors.New(`upstream failure`))
 			},
 			wantErr: errors.New(`upstream failure`),
+		},
+		{
+			name:    "Pin workflow repository and ref",
+			context: context.TODO(),
+			image:   "ghcr.io/kubewarden/adm-controller/policy-server:v1.38.2",
+			setup: func(m *upstreamMock) {
+				vc := verify.VerifyCommand{
+					CertVerifyOptions: options.CertVerifyOptions{
+						CertIdentityRegexp: "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+						CertOidcIssuer:     "https://token.actions.githubusercontent.com",
+					},
+					CertGithubWorkflowRepository: "kubewarden/adm-controller",
+					CertGithubWorkflowRef:        "refs/tags/v1.38.2",
+					RekorURL:                     options.DefaultRekorURL,
+					CheckClaims:                  true,
+					HashAlgorithm:                crypto.SHA256,
+					NewBundleFormat:              true,
+				}
+				m.On("Verify", context.TODO(), vc, "ghcr.io/kubewarden/adm-controller/policy-server:v1.38.2").Return(nil)
+			},
 		},
 	}
 
