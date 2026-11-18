@@ -52,15 +52,22 @@ func (v *Verifier) Verify(ctx context.Context, image string) error {
 		}
 	}
 
+	workflowRepo, workflowRef, err := getWorkflowPin(image)
+	if err != nil {
+		return err
+	}
+
 	vc := verify.VerifyCommand{
 		CertVerifyOptions: options.CertVerifyOptions{
 			CertIdentityRegexp: certIdentity,
 			CertOidcIssuer:     "https://token.actions.githubusercontent.com",
 		},
-		RekorURL:        options.DefaultRekorURL,
-		CheckClaims:     true,
-		HashAlgorithm:   v.HashAlgorithm,
-		NewBundleFormat: true,
+		CertGithubWorkflowRepository: workflowRepo,
+		CertGithubWorkflowRef:        workflowRef,
+		RekorURL:                     options.DefaultRekorURL,
+		CheckClaims:                  true,
+		HashAlgorithm:                v.HashAlgorithm,
+		NewBundleFormat:              true,
 	}
 
 	return v.UpstreamVerifier.Verify(ctx, vc, image)
@@ -156,6 +163,35 @@ func getCertIdentity(imageName string) (string, error) {
 		ref = "v" + ref
 	}
 
+	ref = trimTagSuffixes(repo, ref)
+	repo = overrideRepo(repo)
+
+	// Check whether there is an identity override for the specific repo.
+	if identity, found := identityOverride[repo]; found {
+		return identity, nil
+	}
+
+	return fmt.Sprintf("^https://github.com/%s/.github/workflows/release.(yml|yaml)@refs/tags/%s$", repo, ref), nil
+}
+
+// getWorkflowPin returns the GitHub workflow repository and ref that the
+// signing certificate must contain. For images without an entry in
+// workflowRepository, it returns empty values, and cosign skips the checks.
+func getWorkflowPin(imageName string) (string, string, error) {
+	repo, ref, err := getImageRepoRef(imageName)
+	if err != nil {
+		return "", "", fmt.Errorf("failed to parse image name: %w", err)
+	}
+
+	workflowRepo, found := workflowRepository[overrideRepo(repo)]
+	if !found {
+		return "", "", nil
+	}
+
+	return workflowRepo, "refs/tags/" + trimTagSuffixes(repo, ref), nil
+}
+
+func trimTagSuffixes(repo, ref string) string {
 	suffixes := archSuffixes
 	if s, ok := imageSuffixes[repo]; ok {
 		suffixes = append(suffixes, s...)
@@ -165,14 +201,7 @@ func getCertIdentity(imageName string) (string, error) {
 		ref = strings.TrimSuffix(ref, suffix)
 	}
 
-	repo = overrideRepo(repo)
-
-	// Check whether there is an identity override for the specific repo.
-	if identity, found := identityOverride[repo]; found {
-		return identity, nil
-	}
-
-	return fmt.Sprintf("^https://github.com/%s/.github/workflows/release.(yml|yaml)@refs/tags/%s$", repo, ref), nil
+	return ref
 }
 
 func overrideRepo(repo string) string {

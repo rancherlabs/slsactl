@@ -150,9 +150,9 @@ var (
 		"rancher/turtles":                                                 "^https://github.com/rancher/turtles/.github/workflows/(release-v2|release).ya?ml@refs/tags/v",
 		"kubewarden/policy-server":                                        "^https://github.com/kubewarden/(policy-server|kubewarden-controller)/.github/workflows/release.ya?ml@refs/tags/v",
 		"kubewarden/audit-scanner":                                        "^https://github.com/kubewarden/(audit-scanner|kubewarden-controller)/.github/workflows/release.ya?ml@refs/tags/v",
-		"adm-controller/policy-server":                                    "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
-		"adm-controller/audit-scanner":                                    "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
-		"adm-controller/controller":                                       "^https://github.com/kubewarden/adm-controller/.github/workflows/release.ya?ml@refs/tags/v",
+		"adm-controller/policy-server":                                    "^https://github.com/kubewarden/(adm-controller/.github/workflows/release.ya?ml@refs/tags/v|github-actions/.github/workflows/container-release.yml@)",
+		"adm-controller/audit-scanner":                                    "^https://github.com/kubewarden/(adm-controller/.github/workflows/release.ya?ml@refs/tags/v|github-actions/.github/workflows/container-release.yml@)",
+		"adm-controller/controller":                                       "^https://github.com/kubewarden/(adm-controller/.github/workflows/release.ya?ml@refs/tags/v|github-actions/.github/workflows/container-release.yml@)",
 		"harvester/harvester-mcp-server":                                  "^https://github.com/harvester/harvester-mcp-server/.github/workflows/release.yml@refs/(heads/(main|v.*)|tags/v.*)$",
 		"harvester/csi-driver-lvm":                                        "^https://github.com/harvester/csi-driver-lvm/.github/workflows/factory.yml@refs/(heads/(main|v.*)|tags/prime-.*)$",
 		"rancher/support-bundle-kit":                                      "^https://github.com/rancher/support-bundle-kit/.github/workflows/template-build.yml@refs/(heads/master|tags/v.*)$",
@@ -169,6 +169,17 @@ var (
 		"harvester/seeder":                                                "^https://github.com/harvester/seeder/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$",
 		"harvester/vm-import-controller":                                  "^https://github.com/harvester/vm-import-controller/.github/workflows/template-build.yml@refs/(heads/(main|v.*)|tags/prime-.*)$",
 		"harvester/harvester":                                             "^https://github.com/harvester/harvester/.github/workflows/build-prime.yml@refs/(heads/(prime-)?v.*|tags/(prime-)?v.*)$",
+	}
+
+	// workflowRepository holds the GitHub repository that must start the
+	// signing workflow. The workflow ref is pinned to the Git tag of the
+	// image. Use it when the certificate identity alone does not bind the
+	// source repository or the exact release tag.
+	// The image tag, without its arch suffix, must be equal to the Git tag.
+	workflowRepository = map[string]string{
+		"adm-controller/policy-server": "kubewarden/adm-controller",
+		"adm-controller/audit-scanner": "kubewarden/adm-controller",
+		"adm-controller/controller":    "kubewarden/adm-controller",
 	}
 
 	// imageSuffixes holds a mapping between image name and the ref suffixes
