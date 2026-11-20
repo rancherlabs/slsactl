@@ -63,6 +63,14 @@ func TestCertificateIdentity(t *testing.T) {
 			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7$",
 		},
 		{
+			image: "registry.rancher.com/rancher/rc-server:v2.16.0-rc1",
+			want:  "^https://github.com/rancher/rancher-prime/.github/workflows/(release|alpha-release|rc-release).yml@refs/tags/v",
+		},
+		{
+			image: "rancher/rancher-server:v2.16.0",
+			want:  "^https://github.com/rancher/rancher-prime/.github/workflows/(release|alpha-release|rc-release).yml@refs/tags/v",
+		},
+		{
 			image: "rancher/rke2:v0.0.7-rke2foo2",
 			want:  "^https://github.com/rancher/rke2/.github/workflows/release.(yml|yaml)@refs/tags/v0.0.7(\\+|&#43;)rke2foo2$",
 		},
